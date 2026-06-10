@@ -149,7 +149,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
     <span style="font-size:9px;color:var(--text3);letter-spacing:1px;margin-right:3px;">SCAN TF</span>
     <button class="tf-btn active" onclick="setTF('5m',this)">5M</button>
     <button class="tf-btn" onclick="setTF('15m',this)">15M</button>
-    <button class="tf-btn" onclick="setTF('1h',this)">1h</button>
+    <button class="tf-btn" onclick="setTF('1h',this)">1H</button>
   </div>
   <div class="topbar-right">
     <div class="countdown-box">
@@ -219,10 +219,10 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
         </div>
       </div>
       <div class="chart-cell">
-        <div class="chart-cell-header"><span class="tf-label">1h</span><span class="rsi-live" id="rsi1HLive" style="color:var(--text3)">RSI —</span></div>
-        <div class="chart-canvas-wrap"><canvas id="chart1H"></canvas></div>
+        <div class="chart-cell-header"><span class="tf-label">1H</span><span class="rsi-live" id="rsi1hLive" style="color:var(--text3)">RSI —</span></div>
+        <div class="chart-canvas-wrap"><canvas id="chart1h"></canvas></div>
         <div class="rsi-bar-wrap">
-          <div class="rsi-track"><div class="rsi-fill" id="rsiFill1H"></div><div class="rsi-thumb" id="rsiThumb1H"></div></div>
+          <div class="rsi-track"><div class="rsi-fill" id="rsiFill1h"></div><div class="rsi-thumb" id="rsiThumb1h"></div></div>
           <div class="rsi-limits"><span>0</span><span style="color:var(--green)">30</span><span>50</span><span style="color:var(--red)">75</span><span>100</span></div>
         </div>
       </div>
@@ -294,7 +294,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
 const SIGNALS_URL = 'https://nexus-corporacion.github.io/RSI/signals.json';
 const BITGET_API  = 'https://api.bitget.com';
 const RSI_H = 75, RSI_L = 30, RSI_P = 14;
-const RELOAD_INTERVAL = 300; // 5 minutos en segundos (sincronizado con Actions)
+const RELOAD_INTERVAL = 300; 
 
 // ─── STATE ─────────────────────────────────────────────────
 let currentTF = '5m';
@@ -344,125 +344,48 @@ function fmtPrc(n){if(!n)return'—';const f=parseFloat(n);if(f>1000)return f.to
 function fmtChg(n){const f=parseFloat(n||0);return(f>=0?'+':'')+f.toFixed(2)+'%';}
 function rsiColor(v){if(v>=RSI_H)return'var(--red)';if(v<=RSI_L)return'var(--green)';if(v>70)return'var(--orange)';if(v<30)return'#7EC8E3';return'var(--text)';}
 
-// ─── LOAD SIGNALS FROM JSON ────────────────────────────────
+// ─── LOAD SIGNALS ──────────────────────────────────────────
 async function loadSignals(){
   const btn=document.getElementById('scanBtn');
   btn.textContent='⏳ CARGANDO';btn.classList.add('scanning');
   document.getElementById('statusTxt').textContent='CARGANDO';
-  document.getElementById('scanProgress').style.width='40%';
-
   try{
     const r=await fetch(SIGNALS_URL+'?t='+Date.now(),{cache:'no-store'});
     if(!r.ok) throw new Error('HTTP '+r.status);
     const data=await r.json();
     lastData=data;
-
-    document.getElementById('scanProgress').style.width='100%';
-    setTimeout(()=>document.getElementById('scanProgress').style.width='0%',400);
-
-    // Verificar antigüedad
-    const ageMins=Math.floor((Date.now()-data.updated_ts)/60000);
-    const ageEl=document.getElementById('ageWarn');
-    if(ageMins>10){
-      if(!ageEl){
-        const w=document.createElement('div');
-        w.id='ageWarn';w.className='age-warn';
-        w.textContent=`⚠ Datos de hace ${ageMins} min — GitHub Actions puede estar inactivo`;
-        document.querySelector('.left-panel').prepend(w);
-      }
-    } else {
-      if(ageEl) ageEl.remove();
-    }
-
-    // Datos del TF actual
     applyTFData(data, currentTF);
-
-    // Actualizar ticker bar con precios del TF 5m
     updateTickerFromSignals(data);
-
     document.getElementById('totalScanned').textContent=data.total_pairs||'—';
     document.getElementById('lastScan').textContent=data.updated?data.updated.slice(11,16)+' UTC':'—';
     document.getElementById('statusTxt').textContent='LIVE';
-
   }catch(e){
-    console.error('Error cargando signals.json:',e);
     document.getElementById('statusTxt').textContent='ERROR JSON';
-    // Sin fallback directo — Bitget bloquea desde browser en masa
-    document.getElementById('highList').innerHTML='<div class="empty-msg" style="color:var(--red)">Error cargando datos<br><span style="font-size:9px;color:var(--text3)">GitHub Actions puede estar inactivo</span></div>';
-    document.getElementById('lowList').innerHTML='<div class="empty-msg" style="color:var(--text3)">—</div>';
   }
-
   btn.textContent='⚡ ACTUALIZAR';btn.classList.remove('scanning');
 }
 
 function applyTFData(data, tf){
-  const tfData = data.signals[tf];
-  if(!tfData){
-    document.getElementById('highList').innerHTML='<div class="empty-msg">TF no disponible</div>';
-    document.getElementById('lowList').innerHTML='<div class="empty-msg">—</div>';
-    return;
-  }
-
+  const tfKey = tf.toLowerCase();
+  const tfData = data.signals[tfKey] || data.signals[tf];
+  if(!tfData) return;
   highSigs = tfData.high || [];
   lowSigs  = tfData.low  || [];
-
-  // Detectar nuevas señales y notificar
-  highSigs.forEach(s=>{
-    const key=s.sym+'-H-'+tf;
-    if(!prevSigs.has(key)){prevSigs.add(key);showToast(s.sym,s.rsi,'sell');playBubbleHard();}
-  });
-  lowSigs.forEach(s=>{
-    const key=s.sym+'-L-'+tf;
-    if(!prevSigs.has(key)){prevSigs.add(key);showToast(s.sym,s.rsi,'buy');playBubbleSoft();}
-  });
-
-  // Limpiar prevSigs de las que ya no están
-  const currentKeys=new Set([
-    ...highSigs.map(s=>s.sym+'-H-'+tf),
-    ...lowSigs.map(s=>s.sym+'-L-'+tf)
-  ]);
-  for(const k of prevSigs){if(k.endsWith('-'+tf)&&!currentKeys.has(k))prevSigs.delete(k);}
-
   renderSigs();
-  const tot=highSigs.length+lowSigs.length;
-  document.getElementById('totalSignals').textContent=tot;
+  document.getElementById('totalSignals').textContent=highSigs.length+lowSigs.length;
   document.getElementById('highCnt').textContent=highSigs.length;
   document.getElementById('lowCnt').textContent=lowSigs.length;
 }
 
-// ─── RENDER SIGNALS ────────────────────────────────────────
 function renderSigs(){
   const hL=document.getElementById('highList');
   const lL=document.getElementById('lowList');
   document.getElementById('highCount').textContent=highSigs.length;
   document.getElementById('lowCount').textContent=lowSigs.length;
-
-  hL.innerHTML=highSigs.length?highSigs.map(s=>`
-    <div class="signal-card bearish ${selectedSym===s.sym?'active':''}" onclick="selectSym('${s.sym}','${s.price}','${s.change}')">
-      <div>
-        <div class="sig-symbol">${s.sym.replace('USDT','')}<span style="color:var(--text3);font-size:9px;">/USDT</span></div>
-        <div class="sig-price">${s.price}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="rsi-badge high">${s.rsi}</div>
-        <div class="sig-change ${s.change>=0?'pos':'neg'}">${fmtChg(s.change)}</div>
-      </div>
-    </div>`).join(''):'<div class="empty-msg">Sin señales altas</div>';
-
-  lL.innerHTML=lowSigs.length?lowSigs.map(s=>`
-    <div class="signal-card bullish ${selectedSym===s.sym?'active':''}" onclick="selectSym('${s.sym}','${s.price}','${s.change}')">
-      <div>
-        <div class="sig-symbol">${s.sym.replace('USDT','')}<span style="color:var(--text3);font-size:9px;">/USDT</span></div>
-        <div class="sig-price">${s.price}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="rsi-badge low">${s.rsi}</div>
-        <div class="sig-change ${s.change>=0?'pos':'neg'}">${fmtChg(s.change)}</div>
-      </div>
-    </div>`).join(''):'<div class="empty-msg">Sin señales bajas</div>';
+  hL.innerHTML=highSigs.length?highSigs.map(s=>`<div class="signal-card bearish ${selectedSym===s.sym?'active':''}" onclick="selectSym('${s.sym}','${s.price}','${s.change}')"><div><div class="sig-symbol">${s.sym.replace('USDT','')}<span style="color:var(--text3);font-size:9px;">/USDT</span></div><div class="sig-price">${s.price}</div></div><div style="text-align:right"><div class="rsi-badge high">${s.rsi}</div><div class="sig-change ${s.change>=0?'pos':'neg'}">${fmtChg(s.change)}</div></div></div>`).join(''):'<div class="empty-msg">Sin señales altas</div>';
+  lL.innerHTML=lowSigs.length?lowSigs.map(s=>`<div class="signal-card bullish ${selectedSym===s.sym?'active':''}" onclick="selectSym('${s.sym}','${s.price}','${s.change}')"><div><div class="sig-symbol">${s.sym.replace('USDT','')}<span style="color:var(--text3);font-size:9px;">/USDT</span></div><div class="sig-price">${s.price}</div></div><div style="text-align:right"><div class="rsi-badge low">${s.rsi}</div><div class="sig-change ${s.change>=0?'pos':'neg'}">${fmtChg(s.change)}</div></div></div>`).join(''):'<div class="empty-msg">Sin señales bajas</div>';
 }
 
-// ─── TF SWITCH ─────────────────────────────────────────────
 function setTF(tf,btn){
   currentTF=tf;
   document.querySelectorAll('.tf-btn').forEach(b=>b.classList.remove('active'));
@@ -470,25 +393,17 @@ function setTF(tf,btn){
   if(lastData) applyTFData(lastData, tf);
 }
 
-// ─── SELECT SYMBOL — llama directo a Bitget para ese par ───
 async function selectSym(symbol, price, change){
-  selectedSym=symbol;
-  renderSigs();
-
+  selectedSym=symbol; renderSigs();
   document.getElementById('noSelect').style.display='none';
-  document.getElementById('chartHeader').style.display='flex';
-  document.getElementById('chartGrid').style.display='grid';
-  document.getElementById('rsiMultiRow').style.display='flex';
+  ['chartHeader','chartGrid','rsiMultiRow'].forEach(id=>document.getElementById(id).style.display='flex');
+  if(window.innerWidth<=768)document.getElementById('chartGrid').style.display='block';
+  else document.getElementById('chartGrid').style.display='grid';
+  
   document.getElementById('chartSymbol').textContent=symbol.replace('USDT','')+'/USDT';
   document.getElementById('chartPrice').textContent=fmtPrc(price);
 
-  const chgEl=document.getElementById('chartChange');
-  const chgF=parseFloat(change||0);
-  chgEl.textContent=fmtChg(chgF);
-  chgEl.className='chart-change-badge '+(chgF>=0?'pos':'neg');
-
-  // Cargar datos del par en paralelo desde Bitget directamente
-  const [kl5,kl15,kl1H,funding,oi,ls,depth,liqs,ticker]=await Promise.all([
+  const [kl5,kl15,kl1h,funding,oi,ls,depth,liqs,ticker]=await Promise.all([
     bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=5m&limit=100`),
     bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=15m&limit=100`),
     bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=1h&limit=100`),
@@ -500,153 +415,80 @@ async function selectSym(symbol, price, change){
     bgFetch(`/api/v2/mix/market/ticker?symbol=${symbol}&productType=USDT-FUTURES`)
   ]);
 
-  // Ticker
   const tk=Array.isArray(ticker)?ticker[0]:ticker;
   if(tk){
-    document.getElementById('chartPrice').textContent=fmtPrc(tk.lastPr||tk.last||price);
     document.getElementById('metaVol').textContent=fmtNum(tk.usdtVolume||tk.quoteVol);
     document.getElementById('metaHigh').textContent=fmtPrc(tk.high24h);
     document.getElementById('metaLow').textContent=fmtPrc(tk.low24h);
-    document.getElementById('metaMark').textContent=fmtPrc(tk.markPrice||tk.lastPr);
-    document.getElementById('mktLast').textContent=fmtPrc(tk.lastPr||tk.last);
+    document.getElementById('metaMark').textContent=fmtPrc(tk.markPrice);
+    document.getElementById('mktLast').textContent=fmtPrc(tk.lastPr);
     document.getElementById('mktMark').textContent=fmtPrc(tk.markPrice);
     document.getElementById('mktIdx').textContent=fmtPrc(tk.indexPrice);
-    document.getElementById('mktVol').textContent=fmtNum(tk.usdtVolume||tk.quoteVol);
+    document.getElementById('mktVol').textContent=fmtNum(tk.usdtVolume);
     document.getElementById('mktHL').textContent=`${fmtPrc(tk.high24h)} / ${fmtPrc(tk.low24h)}`;
-    const chgV=parseFloat(tk.change24h||tk.priceChangePercent||change||0);
-    chgEl.textContent=fmtChg(chgV);
-    chgEl.className='chart-change-badge '+(chgV>=0?'pos':'neg');
+  }
+  
+  if(funding){
+    const f=Array.isArray(funding)?funding[0]:funding;
+    const rate=parseFloat(f.fundingRate||0);
+    document.getElementById('fundingNum').textContent=(rate*100).toFixed(4)+'%';
+    document.getElementById('fundingNext').textContent='próx: '+(f.nextFundingTime?new Date(parseInt(f.nextFundingTime)).toLocaleTimeString():'—');
   }
 
-  // Funding
-  const fd=Array.isArray(funding)?funding[0]:funding;
-  if(fd){
-    const rate=parseFloat(fd.fundingRate||0);
-    const fn=document.getElementById('fundingNum');
-    fn.textContent=(rate*100).toFixed(4)+'%';
-    fn.style.color=rate>0?'var(--red)':rate<0?'var(--green)':'var(--text2)';
-    document.getElementById('fundingNext').textContent='próx: '+(fd.nextFundingTime?new Date(parseInt(fd.nextFundingTime)).toLocaleTimeString():'—');
-  }
-
-  // OI
-  const od=Array.isArray(oi)?oi[0]:oi;
-  if(od) document.getElementById('oiNum').textContent=fmtNum(od.openInterestValue||od.openInterestUsd||od.size);
-
-  // L/S
-  const ld=Array.isArray(ls)?ls[0]:ls;
-  if(ld){
-    const lp=parseFloat(ld.longAccountRatio||ld.longRatio||0.5);
-    const lpp=(lp*100).toFixed(1),spp=((1-lp)*100).toFixed(1);
-    document.getElementById('lsL').style.width=lpp+'%';
-    document.getElementById('lsLP').textContent=lpp+'%';
-    document.getElementById('lsSP').textContent=spp+'%';
-  }
-
-  if(depth) renderOB(depth);
-  const liqArr=Array.isArray(liqs)?liqs:(liqs?[liqs]:[]);
-  renderLiqs(liqArr);
-
-  // Charts RSI
   drawRSIChart('chart5m',kl5,'5m');
   drawRSIChart('chart15m',kl15,'15m');
-  drawRSIChart('chart1H',kl1H,'1h');
+  drawRSIChart('chart1h',kl1h,'1h');
   updateBadge('5m',kl5);
   updateBadge('15m',kl15);
-  updateBadge('1h',kl1H);
+  updateBadge('1h',kl1h);
 }
 
 async function bgFetch(path){
   try{const r=await fetch(BITGET_API+path);const d=await r.json();return d.data||null;}catch(e){return null;}
 }
 
-// ─── CHART ─────────────────────────────────────────────────
-function updateBadge(tf,kl){
-  if(!kl||kl.length<20)return;
-  const closes=kl.map(k=>parseFloat(k[4])).reverse();
-  const rsi=calcRSI(closes,RSI_P);if(rsi===null)return;
-  const v=rsi.toFixed(1),col=rsiColor(rsi);
-  ['Live','Val','Fill','Thumb'].forEach((suf,idx)=>{
-    const el=document.getElementById('rsi'+tf+suf);
-    if(!el)return;
-    if(suf==='Live'){el.textContent='RSI '+v;el.style.color=col;}
-    else if(suf==='Val'){el.textContent=v;el.style.color=col;}
-    else if(suf==='Fill'){el.style.width=rsi+'%';el.style.background=col;}
-    else if(suf==='Thumb'){el.style.left=rsi+'%';el.style.background=col;el.style.color=col;}
-  });
+function updateBadge(tf, kl){
+  if (!kl || kl.length < 20) return;
+  const closes = kl.map(k => parseFloat(k[4])).reverse();
+  const rsi = calcRSI(closes, RSI_P);
+  if (rsi === null) return;
+  const v = rsi.toFixed(1), col = rsiColor(rsi);
+  const t = tf.toLowerCase();
+  
+  const elLive = document.getElementById('rsi' + t + 'Live');
+  const elVal = document.getElementById('rsiVal' + t);
+  const elFill = document.getElementById('rsiFill' + t);
+  const elThumb = document.getElementById('rsiThumb' + t);
+
+  if(elLive){ elLive.textContent = 'RSI ' + v; elLive.style.color = col; }
+  if(elVal){ elVal.textContent = v; elVal.style.color = col; }
+  if(elFill){ elFill.style.width = rsi + '%'; elFill.style.background = col; }
+  if(elThumb){ elThumb.style.left = rsi + '%'; elThumb.style.background = col; }
 }
 
 function drawRSIChart(id,kl,tf){
   if(!kl||kl.length<20)return;
-  const canvas=document.getElementById(id);if(!canvas)return;
-  if(charts[tf]){charts[tf].destroy();charts[tf]=null;}
+  const canvas=document.getElementById(id); if(!canvas) return;
+  if(charts[id]){charts[id].destroy();}
   const data=[...kl].reverse().slice(-80);
   const closes=data.map(k=>parseFloat(k[4]));
-  const labels=data.map(k=>{const d=new Date(parseInt(k[0]));return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');});
-  const rsiSeries=[],rsiLabels=[];
-  for(let i=RSI_P;i<closes.length;i++){const r=calcRSI(closes.slice(0,i+1),RSI_P);rsiSeries.push(r);rsiLabels.push(labels[i]);}
-  const ctx=canvas.getContext('2d');
-  charts[tf]=new Chart(ctx,{
+  const rsiSeries=[];
+  for(let i=RSI_P;i<closes.length;i++){rsiSeries.push(calcRSI(closes.slice(0,i+1),RSI_P));}
+  const labels=rsiSeries.map((_,i)=>'');
+  charts[id]=new Chart(canvas.getContext('2d'),{
     type:'line',
-    data:{labels:rsiLabels,datasets:[{data:rsiSeries,borderWidth:1.8,pointRadius:0,pointHoverRadius:3,fill:false,tension:0.4,
-      segment:{borderColor:c=>{const v=c.p1.parsed.y;if(v>=RSI_H)return'#FF3B6B';if(v<=RSI_L)return'#00FF94';if(v>70)return'#FF8C00';if(v<30)return'#7EC8E3';return'#00E5FF';}}}]},
-    options:{responsive:true,maintainAspectRatio:false,animation:{duration:200},
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(13,20,32,.95)',borderColor:'rgba(0,229,255,.15)',borderWidth:1,titleColor:'#7A9BB5',bodyColor:'#E8F4F8',bodyFont:{family:'JetBrains Mono',size:10},callbacks:{label:c=>'RSI: '+(c.raw!==null?c.raw.toFixed(2):'—')}}},
-      scales:{
-        x:{grid:{color:'rgba(255,255,255,.025)',drawTicks:false},ticks:{color:'#3D5A6E',font:{family:'JetBrains Mono',size:8},maxTicksLimit:6,maxRotation:0},border:{color:'rgba(255,255,255,.04)'}},
-        y:{min:0,max:100,grid:{color:c=>{const v=c.tick.value;if(v===RSI_H)return'rgba(255,59,107,.35)';if(v===RSI_L)return'rgba(0,255,148,.35)';if(v===50)return'rgba(255,255,255,.07)';return'rgba(255,255,255,.025)';},drawTicks:false},ticks:{color:'#3D5A6E',font:{family:'JetBrains Mono',size:8},stepSize:10},border:{color:'rgba(255,255,255,.04)'}}
-      }
-    }
+    data:{labels,datasets:[{data:rsiSeries,borderWidth:1.5,pointRadius:0,fill:false,tension:0.4,segment:{borderColor:c=>rsiColor(c.p1.parsed.y)}}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{display:false},y:{min:0,max:100,ticks:{stepSize:25,color:'#3D5A6E'}}}}
   });
 }
 
-// ─── ORDER BOOK ────────────────────────────────────────────
-function renderOB(depth){
-  const asks=(depth.asks||[]).slice(0,5).reverse();
-  const bids=(depth.bids||[]).slice(0,5);
-  const maxQ=Math.max(...[...asks,...bids].map(x=>parseFloat(x[1])));
-  let h='';
-  asks.forEach(([p,q])=>{const pct=(parseFloat(q)/maxQ*100).toFixed(0);h+=`<div class="ob-bar" style="background:rgba(255,59,107,.08)"><div style="height:100%;background:rgba(255,59,107,.35);width:${pct}%;float:right"></div></div><div class="ob-row"><span class="ob-ask">${parseFloat(q).toFixed(2)}</span><span class="ob-mid">${parseFloat(p).toFixed(4)}</span><span></span></div>`;});
-  h+=`<div style="height:1px;background:rgba(0,229,255,.2);margin:4px 0;"></div>`;
-  bids.forEach(([p,q])=>{const pct=(parseFloat(q)/maxQ*100).toFixed(0);h+=`<div class="ob-row"><span></span><span class="ob-mid">${parseFloat(p).toFixed(4)}</span><span class="ob-bid">${parseFloat(q).toFixed(2)}</span></div><div class="ob-bar" style="background:rgba(0,255,148,.05)"><div style="height:100%;background:rgba(0,255,148,.3);width:${pct}%"></div></div>`;});
-  document.getElementById('obContent').innerHTML=h;
-}
-
-// ─── LIQUIDACIONES ─────────────────────────────────────────
-function renderLiqs(liqs){
-  const el=document.getElementById('liqContent');
-  if(!liqs||liqs.length===0){el.innerHTML='<div class="empty-msg">Sin liquidaciones recientes</div>';return;}
-  el.innerHTML=liqs.slice(0,6).map(l=>`<div class="liq-item"><span class="${l.side==='buy'?'liq-l':'liq-s'}">${l.side==='buy'?'▲ LONG':'▼ SHORT'}</span><span class="liq-amt">${fmtNum(parseFloat(l.fillNotionalUsd||l.usdValue||l.amount||0))}</span><span style="color:var(--text3);font-family:'JetBrains Mono';font-size:9px;">${fmtPrc(l.fillPx||l.price||0)}</span></div>`).join('');
-}
-
-// ─── TICKER BAR ────────────────────────────────────────────
 function updateTickerFromSignals(data){
-  // Combinar señales de todos los TF para el ticker
-  const all=[];
-  for(const tf of ['5m','15m','1h']){
-    const d=data.signals[tf];
-    if(d){[...d.high,...d.low].forEach(s=>all.push(s));}
-  }
-  if(all.length===0)return;
-  const items=[...all,...all];
-  document.getElementById('tickerInner').innerHTML=items.map(s=>{
-    const c=parseFloat(s.change||0);
-    const col=c>=0?'var(--green)':'var(--red)';
-    return`<div class="tick-item"><span class="tick-sym">${s.sym.replace('USDT','')}</span><span class="tick-prc">${s.price}</span><span class="tick-chg" style="color:${col}">${fmtChg(c)}</span></div>`;
-  }).join('');
+  const all=[]; ['5m','15m','1h'].forEach(tf=>{const d=data.signals[tf]; if(d){[...d.high,...d.low].forEach(s=>all.push(s));}});
+  if(!all.length)return;
+  document.getElementById('tickerInner').innerHTML=[...all,...all].map(s=>`<div class="tick-item"><span class="tick-sym">${s.sym.replace('USDT','')}</span><span class="tick-prc">${s.price}</span><span class="tick-chg ${s.change>=0?'pos':'neg'}">${fmtChg(s.change)}</span></div>`).join('');
 }
 
-// ─── TOAST ─────────────────────────────────────────────────
-function showToast(symbol,rsi,type){
-  const c=document.getElementById('toastContainer');
-  const t=document.createElement('div');t.className='toast '+type;
-  const icon=type==='buy'?'🟢':'🔴',action=type==='buy'?'COMPRA':'VENTA',sym=symbol.replace('USDT','')+'/USDT';
-  t.innerHTML=`<span style="font-size:16px">${icon}</span><div><div style="font-size:12px;font-weight:700">${sym}</div><div style="font-size:9px;opacity:.8">RSI ${rsi} · SEÑAL ${action}</div></div>`;
-  c.appendChild(t);setTimeout(()=>t.remove(),4000);
-}
-
-// ─── COUNTDOWN ─────────────────────────────────────────────
 function startCountdown(){
-  cdVal=RELOAD_INTERVAL;clearInterval(cdTimer);
   cdTimer=setInterval(()=>{
     cdVal--;
     const m=Math.floor(cdVal/60),s=cdVal%60;
@@ -654,10 +496,8 @@ function startCountdown(){
     if(cdVal<=0){cdVal=RELOAD_INTERVAL;loadSignals();}
   },1000);
 }
-
 function manualLoad(){cdVal=RELOAD_INTERVAL;loadSignals();}
 
-// ─── INIT ──────────────────────────────────────────────────
 loadSignals().then(()=>startCountdown());
 </script>
 </body>

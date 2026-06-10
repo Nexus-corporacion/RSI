@@ -8,8 +8,8 @@ const API = 'https://api.bitget.com';
 const RSI_H = 75;
 const RSI_L = 30;
 const RSI_P = 14;
-const TIMEFRAMES = ['5m', '15m', '1h'];
-const DELAY_MS = 120; // delay entre calls para no saturar API
+const TIMEFRAMES = ['5m', '15m', '1h']; // '1h' en minúscula para concordar con HTML
+const DELAY_MS = 60; // Pausa entre cada par para evitar bloqueos de IP (429 Error)
 
 // ─── RSI CALCULATION ───────────────────────────────────────
 function calcRSI(closes, period = 14) {
@@ -29,24 +29,11 @@ function calcRSI(closes, period = 14) {
   return 100 - (100 / (1 + ag / al));
 }
 
-function rsiLabel(rsi, type) {
-  if (type === 'high') {
-    if (rsi >= 95) return 'EXTREMO';
-    if (rsi >= 92) return 'MUY ALTO';
-    return 'ALTO';
-  } else {
-    if (rsi <= 5)  return 'EXTREMO';
-    if (rsi <= 10) return 'MUY BAJO';
-    return 'BAJO';
-  }
-}
-
 function fmtPrice(p) {
   const f = parseFloat(p);
   if (f >= 1000) return f.toFixed(2);
   if (f >= 1)    return f.toFixed(4);
-  if (f >= 0.01) return f.toFixed(5);
-  return f.toFixed(8);
+  return f.toFixed(6);
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -67,22 +54,14 @@ async function fetchJSON(url) {
 async function main() {
   console.log(`[${new Date().toISOString()}] Iniciando scan Bitget Futures...`);
 
-  // 1. Traer todos los tickers de una sola llamada
   const tickers = await fetchJSON(`${API}/api/v2/mix/market/tickers?productType=USDT-FUTURES`);
   if (!tickers || tickers.length === 0) {
     console.error('Error: no se obtuvieron tickers');
     process.exit(1);
   }
 
-  console.log(`Total pares: ${tickers.length}`);
+  console.log(`Pares encontrados: ${tickers.length}`);
 
-  // Mapa de tickers para acceso rápido
-  const tickerMap = {};
-  for (const t of tickers) {
-    tickerMap[t.symbol] = t;
-  }
-
-  // Estructura de resultado
   const result = {
     updated: new Date().toISOString(),
     updated_ts: Date.now(),
@@ -94,12 +73,11 @@ async function main() {
     }
   };
 
-  // 2. Para cada timeframe, calcular RSI de todos los pares
   for (const tf of TIMEFRAMES) {
-    console.log(`\nEscaneando TF: ${tf}`);
-    let scanned = 0;
+    console.log(`\nEscaneando Timeframe: ${tf}`);
     let highArr = [];
     let lowArr  = [];
+    let scanned = 0;
 
     for (let i = 0; i < tickers.length; i++) {
       const t = tickers[i];
@@ -110,64 +88,48 @@ async function main() {
           `${API}/api/v2/mix/market/candles?symbol=${sym}&productType=USDT-FUTURES&granularity=${tf}&limit=50`
         );
 
-        if (!kl || kl.length < 20) continue;
+        if (!kl || kl.length < 25) continue;
 
-        // Bitget devuelve velas en orden desc [0] = más reciente
         const closes = kl.map(k => parseFloat(k[4])).reverse();
         const rsi = calcRSI(closes, RSI_P);
-        if (rsi === null) continue;
+        
+        if (rsi !== null) {
+          const rv = Math.round(rsi * 10) / 10;
+          const entry = {
+            sym: sym,
+            rsi: rv,
+            price: fmtPrice(t.lastPr || closes[closes.length - 1]),
+            change: parseFloat(parseFloat(t.change24h || 0).toFixed(2))
+          };
 
-        const rv = Math.round(rsi * 10) / 10;
-        const price = parseFloat(t.lastPr || t.last || closes[closes.length - 1]);
-        const change = parseFloat(t.change24h || t.priceChangePercent || 0);
-        const vol = parseFloat(t.usdtVolume || t.quoteVol || 0);
-
-        const entry = {
-          sym,
-          rsi: rv,
-          price: fmtPrice(price),
-          change: parseFloat(change.toFixed(2)),
-          vol: vol,
-          label: rsiLabel(rv, rv >= RSI_H ? 'high' : 'low')
-        };
-
-        if (rsi >= RSI_H) {
-          highArr.push(entry);
-          console.log(`  🔴 ${sym} RSI ${rv} [${tf}]`);
-        } else if (rsi <= RSI_L) {
-          lowArr.push(entry);
-          console.log(`  🟢 ${sym} RSI ${rv} [${tf}]`);
+          if (rv >= RSI_H) highArr.push(entry);
+          else if (rv <= RSI_L) lowArr.push(entry);
+          scanned++;
         }
-
-        scanned++;
-
       } catch (e) {
-        // silencioso
+        // Error individual de par, continuar con el siguiente
       }
 
-      // Delay cada 10 pares para no saturar
-      if (i % 10 === 9) await sleep(DELAY_MS);
+      // Pausa obligatoria por cada par para no ser bloqueado por la API
+      await sleep(DELAY_MS);
+      
+      if (i % 50 === 0 && i > 0) console.log(`... procesados ${i}/${tickers.length} pares`);
     }
-
-    // Ordenar: altos de mayor a menor, bajos de menor a mayor
-    highArr.sort((a, b) => b.rsi - a.rsi);
-    lowArr.sort((a, b) => a.rsi - b.rsi);
 
     result.signals[tf] = {
       scanned,
-      high: highArr,
-      low:  lowArr
+      high: highArr.sort((a, b) => b.rsi - a.rsi),
+      low:  lowArr.sort((a, b) => a.rsi - b.rsi)
     };
-
-    console.log(`  → ${tf}: ${scanned} escaneados | ${highArr.length} altos | ${lowArr.length} bajos`);
+    
+    console.log(`Terminado ${tf}: ${highArr.length} Altos, ${lowArr.length} Bajos`);
   }
 
-  // 3. Guardar signals.json
   fs.writeFileSync('signals.json', JSON.stringify(result, null, 2));
-  console.log(`\n✅ signals.json guardado — ${result.signals['5m'].high.length + result.signals['5m'].low.length} señales en 5m`);
+  console.log(`\n✅ Proceso finalizado. signals.json actualizado.`);
 }
 
 main().catch(err => {
-  console.error('Error fatal:', err);
+  console.error('Error fatal en el script:', err);
   process.exit(1);
 });

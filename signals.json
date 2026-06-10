@@ -1,0 +1,31 @@
+{
+  "updated": "2026-06-10T03:24:55.054Z",
+  "updated_ts": 1781061895054,
+  "total_pairs": 618,
+  "signals": {
+    "5m": {
+      "scanned": 618,
+      "high": [
+        {
+          "sym": "QUBTUSDT",
+          "rsi": 94.1,
+          "price": "9.4720",
+          "change": -0.09,
+          "vol": 243112.29599,
+          "label": "MUY ALTO"
+        }
+      ],
+      "low": []
+    },
+    "15m": {
+      "scanned": 618,
+      "high": [],
+      "low": []
+    },
+    "1H": {
+      "scanned": 618,
+      "high": [],
+      "low": []
+    }
+  }
+}

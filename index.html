@@ -149,7 +149,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
     <span style="font-size:9px;color:var(--text3);letter-spacing:1px;margin-right:3px;">SCAN TF</span>
     <button class="tf-btn active" onclick="setTF('5m',this)">5M</button>
     <button class="tf-btn" onclick="setTF('15m',this)">15M</button>
-    <button class="tf-btn" onclick="setTF('1H',this)">1H</button>
+    <button class="tf-btn" onclick="setTF('1h',this)">1h</button>
   </div>
   <div class="topbar-right">
     <div class="countdown-box">
@@ -199,7 +199,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
     <div id="rsiMultiRow" class="rsi-multi-row" style="display:none;">
       <div class="rsi-tf-badge"><div class="tf">5M</div><div class="val" id="rsiVal5m" style="color:var(--text3)">—</div></div>
       <div class="rsi-tf-badge"><div class="tf">15M</div><div class="val" id="rsiVal15m" style="color:var(--text3)">—</div></div>
-      <div class="rsi-tf-badge"><div class="tf">1H</div><div class="val" id="rsiVal1H" style="color:var(--text3)">—</div></div>
+      <div class="rsi-tf-badge"><div class="tf">1H</div><div class="val" id="rsiVal1h" style="color:var(--text3)">—</div></div>
     </div>
     <div id="chartGrid" class="chart-grid" style="display:none;">
       <div class="chart-cell">
@@ -219,7 +219,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
         </div>
       </div>
       <div class="chart-cell">
-        <div class="chart-cell-header"><span class="tf-label">1H</span><span class="rsi-live" id="rsi1HLive" style="color:var(--text3)">RSI —</span></div>
+        <div class="chart-cell-header"><span class="tf-label">1h</span><span class="rsi-live" id="rsi1HLive" style="color:var(--text3)">RSI —</span></div>
         <div class="chart-canvas-wrap"><canvas id="chart1H"></canvas></div>
         <div class="rsi-bar-wrap">
           <div class="rsi-track"><div class="rsi-fill" id="rsiFill1H"></div><div class="rsi-thumb" id="rsiThumb1H"></div></div>
@@ -491,7 +491,7 @@ async function selectSym(symbol, price, change){
   const [kl5,kl15,kl1H,funding,oi,ls,depth,liqs,ticker]=await Promise.all([
     bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=5m&limit=100`),
     bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=15m&limit=100`),
-    bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=1H&limit=100`),
+    bgFetch(`/api/v2/mix/market/candles?symbol=${symbol}&productType=USDT-FUTURES&granularity=1h&limit=100`),
     bgFetch(`/api/v2/mix/market/current-fund-rate?symbol=${symbol}&productType=USDT-FUTURES`),
     bgFetch(`/api/v2/mix/market/open-interest?symbol=${symbol}&productType=USDT-FUTURES`),
     bgFetch(`/api/v2/mix/market/account-long-short-ratio?symbol=${symbol}&productType=USDT-FUTURES&period=5m&limit=1`),
@@ -549,10 +549,10 @@ async function selectSym(symbol, price, change){
   // Charts RSI
   drawRSIChart('chart5m',kl5,'5m');
   drawRSIChart('chart15m',kl15,'15m');
-  drawRSIChart('chart1H',kl1H,'1H');
+  drawRSIChart('chart1H',kl1H,'1h');
   updateBadge('5m',kl5);
   updateBadge('15m',kl15);
-  updateBadge('1H',kl1H);
+  updateBadge('1h',kl1H);
 }
 
 async function bgFetch(path){
@@ -622,7 +622,7 @@ function renderLiqs(liqs){
 function updateTickerFromSignals(data){
   // Combinar señales de todos los TF para el ticker
   const all=[];
-  for(const tf of ['5m','15m','1H']){
+  for(const tf of ['5m','15m','1h']){
     const d=data.signals[tf];
     if(d){[...d.high,...d.low].forEach(s=>all.push(s));}
   }

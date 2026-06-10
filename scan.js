@@ -5,8 +5,8 @@ const fetch = (...args) => import('node-fetch').then(({default: f}) => f(...args
 const fs = require('fs');
 
 const API = 'https://api.bitget.com';
-const RSI_H = 90;
-const RSI_L = 15;
+const RSI_H = 75;
+const RSI_L = 30;
 const RSI_P = 14;
 const TIMEFRAMES = ['5m', '15m', '1H'];
 const DELAY_MS = 120; // delay entre calls para no saturar API

@@ -167,7 +167,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
   <div class="left-panel">
     <div class="half-panel">
       <div class="panel-header" style="background:rgba(255,59,107,0.04);">
-        <div class="panel-title" style="color:var(--red);">🔴 RSI ALTO ≥ 90</div>
+        <div class="panel-title" style="color:var(--red);">🔴 RSI ALTO ≥ 75</div>
         <div class="signal-count count-high" id="highCount">0</div>
       </div>
       <div class="signal-list" id="highList"><div class="empty-msg">Cargando señales...</div></div>
@@ -175,7 +175,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
     <div class="divider-h"></div>
     <div class="half-panel">
       <div class="panel-header" style="background:rgba(0,255,148,0.03);">
-        <div class="panel-title" style="color:var(--green);">🟢 RSI BAJO ≤ 15</div>
+        <div class="panel-title" style="color:var(--green);">🟢 RSI BAJO ≤ 30</div>
         <div class="signal-count count-low" id="lowCount">0</div>
       </div>
       <div class="signal-list" id="lowList"><div class="empty-msg">Cargando señales...</div></div>
@@ -207,7 +207,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
         <div class="chart-canvas-wrap"><canvas id="chart5m"></canvas></div>
         <div class="rsi-bar-wrap">
           <div class="rsi-track"><div class="rsi-fill" id="rsiFill5m"></div><div class="rsi-thumb" id="rsiThumb5m"></div></div>
-          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">15</span><span>50</span><span style="color:var(--red)">90</span><span>100</span></div>
+          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">30</span><span>50</span><span style="color:var(--red)">75</span><span>100</span></div>
         </div>
       </div>
       <div class="chart-cell">
@@ -215,7 +215,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
         <div class="chart-canvas-wrap"><canvas id="chart15m"></canvas></div>
         <div class="rsi-bar-wrap">
           <div class="rsi-track"><div class="rsi-fill" id="rsiFill15m"></div><div class="rsi-thumb" id="rsiThumb15m"></div></div>
-          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">15</span><span>50</span><span style="color:var(--red)">90</span><span>100</span></div>
+          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">30</span><span>50</span><span style="color:var(--red)">75</span><span>100</span></div>
         </div>
       </div>
       <div class="chart-cell">
@@ -223,14 +223,14 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
         <div class="chart-canvas-wrap"><canvas id="chart1H"></canvas></div>
         <div class="rsi-bar-wrap">
           <div class="rsi-track"><div class="rsi-fill" id="rsiFill1H"></div><div class="rsi-thumb" id="rsiThumb1H"></div></div>
-          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">15</span><span>50</span><span style="color:var(--red)">90</span><span>100</span></div>
+          <div class="rsi-limits"><span>0</span><span style="color:var(--green)">30</span><span>50</span><span style="color:var(--red)">75</span><span>100</span></div>
         </div>
       </div>
     </div>
     <div class="no-select" id="noSelect">
       <div class="no-select-icon">◎</div>
       <div style="font-size:13px;color:var(--text3);">Selecciona un par de la lista</div>
-      <div style="font-size:10px;color:var(--text3);opacity:.6;">RSI ≥ 90 · RSI ≤ 15 · GitHub Actions · 3 Timeframes</div>
+      <div style="font-size:10px;color:var(--text3);opacity:.6;">RSI ≥ 75 · RSI ≤ 30 · GitHub Actions · 3 Timeframes</div>
     </div>
   </div>
 
@@ -293,7 +293,7 @@ body{color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;display:f
 // ─── CONFIG ────────────────────────────────────────────────
 const SIGNALS_URL = 'https://nexus-corporacion.github.io/RSI/signals.json';
 const BITGET_API  = 'https://api.bitget.com';
-const RSI_H = 90, RSI_L = 15, RSI_P = 14;
+const RSI_H = 75, RSI_L = 30, RSI_P = 14;
 const RELOAD_INTERVAL = 300; // 5 minutos en segundos (sincronizado con Actions)
 
 // ─── STATE ─────────────────────────────────────────────────

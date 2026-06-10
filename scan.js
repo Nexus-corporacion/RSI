@@ -8,7 +8,7 @@ const API = 'https://api.bitget.com';
 const RSI_H = 75;
 const RSI_L = 30;
 const RSI_P = 14;
-const TIMEFRAMES = ['5m', '15m', '1H'];
+const TIMEFRAMES = ['5m', '15m', '1h'];
 const DELAY_MS = 120; // delay entre calls para no saturar API
 
 // ─── RSI CALCULATION ───────────────────────────────────────
@@ -90,7 +90,7 @@ async function main() {
     signals: {
       '5m':  { scanned: 0, high: [], low: [] },
       '15m': { scanned: 0, high: [], low: [] },
-      '1H':  { scanned: 0, high: [], low: [] }
+      '1h':  { scanned: 0, high: [], low: [] }
     }
   };
 

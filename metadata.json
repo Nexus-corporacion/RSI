@@ -1,0 +1,10 @@
+{
+  "name": "Futures Quant Scanner",
+  "description": "Escáner institucional en tiempo real de contratos USDT-M Futures de Bybit y Binance con alertas sonoras, indicadores avanzados, análisis multiframe y gráficos dinámicos.",
+  "requestFramePermissions": [
+    "notifications"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -227,7 +227,7 @@
     function Vh(symbol, timeframe, limit = 85) {
       const candles = [];
       const now = Date.now();
-      let price = symbol === "BTCUSDT" ? 68000 : symbol === "ETHUSDT" ? 3804 : 1.5;
+      let price = symbol === "BTCUSDT" ? 68000 : symbol === "ETHUSDT" ? 3800 : 1.5;
       const periodMs = timeframe === "5m" ? 300000 : timeframe === "15m" ? 900000 : timeframe === "1h" ? 3600000 : 14400000;
       
       for (let i = 0; i < limit; i++) {
@@ -565,7 +565,7 @@
       "SUIUSDT": 2510000000,
       "PEPEUSDT": 5200000000,
       "LTCUSDT": 5910000000,
-      "SHIBUSDT": 11200500000,
+      "SHIBUSDT": 11200000000,
       "WIFUSDT": 2530000000,
       "BONKUSDT": 1540000000,
       "FLOKIUSDT": 1210000000,
@@ -737,7 +737,7 @@
             </div>
           </div>
 
-          <div className="flex-1 w-full bg-slate-955 min-h-[300px] relative">
+          <div className="flex-1 w-full bg-slate-950 min-h-[300px] relative">
             <iframe
               id="tv-widget-iframe"
               title={`TradingView Chart for ${symbol}`}
@@ -752,7 +752,7 @@
                 className="absolute left-0 right-0 border-t-2 border-dashed border-rose-500/80 z-10 pointer-events-none flex items-center justify-end"
                 style={{ top: `${(100 - resistancePct).toFixed(2)}%` }}
               >
-                <div className="bg-rose-955/95 text-rose-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-l border border-rose-800 mr-2 -mt-3.5 select-none shadow-[0_0_10px_rgba(244,63,94,0.35)]">
+                <div className="bg-rose-950/95 text-rose-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-l border border-rose-800 mr-2 -mt-3.5 select-none shadow-[0_0_10px_rgba(244,63,94,0.35)]">
                   RESISTENCIA PRINCIPAL: ${resistanceValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </div>
               </div>
@@ -763,7 +763,7 @@
                 className="absolute left-0 right-0 border-t-2 border-dashed border-emerald-500/80 z-10 pointer-events-none flex items-center justify-end"
                 style={{ top: `${(100 - supportPct).toFixed(2)}%` }}
               >
-                <div className="bg-emerald-955/95 text-emerald-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-l border border-emerald-800 mr-2 -mt-3.5 select-none shadow-[0_0_10px_rgba(16,185,129,0.35)]">
+                <div className="bg-emerald-950/95 text-emerald-400 text-[10px] font-mono font-bold px-2 py-0.5 rounded-l border border-emerald-800 mr-2 -mt-3.5 select-none shadow-[0_0_10px_rgba(16,185,129,0.35)]">
                   SOPORTE PRINCIPAL: ${supportValue.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                 </div>
               </div>
@@ -984,7 +984,7 @@
                   <button
                     id="btn-clear-alerts"
                     onClick={onClear}
-                    className="p-1 px-2.5 bg-rose-955 border border-rose-900/65 text-[9px] text-rose-400 rounded-lg hover:bg-rose-900/30 transition-all font-mono flex items-center gap-1 cursor-pointer font-bold"
+                    className="p-1 px-2.5 bg-rose-950 border border-rose-900/65 text-[9px] text-rose-400 rounded-lg hover:bg-rose-900/30 transition-all font-mono flex items-center gap-1 cursor-pointer font-bold"
                     type="button"
                   >
                     <Trash2 size={10} />
@@ -1069,7 +1069,7 @@
                                   onClick={() => {
                                     navigator.clipboard.writeText(al.symbol);
                                   }}
-                                  className="bg-emerald-955 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.5 px-2 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold"
+                                  className="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.5 px-2 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold"
                                   title="Copiar ticker"
                                   type="button"
                                 >
@@ -1690,12 +1690,12 @@
         } else if (downs >= 3) {
           return {
             label: "FUERTE BAJISTA",
-            color: "text-rose-400 border-rose-800/60 bg-rose-955/20 shadow-[0_0_15px_rgba(244,63,94,0.15)] animate-pulse",
+            color: "text-rose-400 border-rose-800/60 bg-rose-950/20 shadow-[0_0_15px_rgba(244,63,94,0.15)] animate-pulse",
           };
         } else {
           return {
             label: "VÓRTICE NEUTRAL",
-            color: "text-amber-400 border-amber-805/40 bg-amber-955/10",
+            color: "text-amber-400 border-amber-805/40 bg-amber-950/10",
           };
         }
       })();
@@ -1832,7 +1832,7 @@
                 </span>
               </div>
 
-              <div className="bg-slate-905/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md">
+              <div className="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md">
                 <span className="text-[10px] uppercase font-mono text-slate-400 font-bold tracking-wider">
                   CONSENSO EXTREMO
                 </span>
@@ -1917,7 +1917,7 @@
                     <div className="text-xs font-black text-slate-300 uppercase tracking-wider">
                       Sin extremos en este momento
                     </div>
-                    <p className="text-[10.5px] font-mono leading-relaxed text-slate-500 max-w-[220px] mt-2 text-center">
+                    <p className="text-[10.5px] font-mono leading-relaxed text-slate-550 max-w-[220px] mt-2 text-center">
                       Monitoreando {scannedCount}/{contractsList.length} monedas... Buscando RSI extremos (≤ {rsiOS} o ≥ {rsiOB}) en tempo de {timeframe}...
                     </p>
                     <p className="text-[9px] font-mono text-cyan-500/70 mt-3 uppercase tracking-widest font-bold">

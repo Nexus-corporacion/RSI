@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0069)https://ais-dev-fu6qzkbxq6crnkh6ohgeph-381057689086.us-west1.run.app/ -->
+<!-- saved from url=(0069)https://ais-dev-3cik4sunq7xze6tzs3fpnx-381057689086.us-west1.run.app/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="module" src="./PRUEBA_files/client"></script>
+    <script type="module" src="./prueba 1_files/client"></script>
 
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futures Quant Scanner v.0</title>
-  <script src="./PRUEBA_files/_aistudio-iframe.js.descarga"></script><style type="text/css" data-vite-dev-id="/app/applet/src/index.css">/*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
+    <title>My Google AI Studio App</title>
+  <script src="./prueba 1_files/_aistudio-iframe.js.descarga"></script><style type="text/css" data-vite-dev-id="/app/applet/src/index.css">/*! tailwindcss v4.3.1 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -15,13 +15,10 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-800: oklch(47.3% 0.137 46.201);
-    --color-amber-900: oklch(41.4% 0.112 45.904);
     --color-amber-950: oklch(27.9% 0.077 45.635);
     --color-yellow-400: oklch(85.2% 0.199 91.936);
-    --color-yellow-500: oklch(79.5% 0.184 86.047);
     --color-yellow-800: oklch(47.6% 0.114 61.907);
     --color-yellow-950: oklch(28.6% 0.066 53.813);
     --color-emerald-300: oklch(84.5% 0.143 164.978);
@@ -39,14 +36,9 @@
     --color-cyan-900: oklch(39.8% 0.07 227.392);
     --color-cyan-950: oklch(30.2% 0.056 229.695);
     --color-blue-500: oklch(62.3% 0.214 259.815);
-    --color-purple-300: oklch(82.7% 0.119 306.383);
     --color-purple-400: oklch(71.4% 0.203 305.504);
     --color-purple-500: oklch(62.7% 0.265 303.9);
     --color-purple-600: oklch(55.8% 0.288 302.321);
-    --color-purple-800: oklch(43.8% 0.218 303.724);
-    --color-purple-900: oklch(38.1% 0.176 304.987);
-    --color-purple-950: oklch(29.1% 0.149 302.717);
-    --color-rose-300: oklch(81% 0.117 11.638);
     --color-rose-400: oklch(71.2% 0.194 13.428);
     --color-rose-500: oklch(64.5% 0.246 16.439);
     --color-rose-800: oklch(45.5% 0.188 13.697);
@@ -68,16 +60,10 @@
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
-    --text-base: 1rem;
-    --text-base--line-height: calc(1.5 / 1);
-    --text-lg: 1.125rem;
-    --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
     --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
-    --text-3xl: 1.875rem;
-    --text-3xl--line-height: calc(2.25 / 1.875);
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
@@ -98,6 +84,7 @@
     --animate-spin: spin 1s linear infinite;
     --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    --animate-bounce: bounce 1s infinite;
     --blur-xs: 4px;
     --blur-sm: 8px;
     --blur-md: 12px;
@@ -259,9 +246,6 @@
   .pointer-events-none {
     pointer-events: none;
   }
-  .visible {
-    visibility: visible;
-  }
   .absolute {
     position: absolute;
   }
@@ -280,26 +264,17 @@
   .inset-0 {
     inset: 0;
   }
-  .inset-x-0 {
-    inset-inline: 0;
-  }
   .inset-y-0 {
     inset-block: 0;
   }
   .top-0 {
     top: 0;
   }
-  .top-2 {
-    top: calc(var(--spacing) * 2);
-  }
   .top-2\.5 {
     top: calc(var(--spacing) * 2.5);
   }
-  .right-0 {
-    right: 0;
-  }
-  .right-1 {
-    right: var(--spacing);
+  .top-5 {
+    top: calc(var(--spacing) * 5);
   }
   .right-1\/4 {
     right: calc(1 / 4 * 100%);
@@ -307,56 +282,29 @@
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
-  .bottom-0 {
-    bottom: 0;
-  }
   .left-0 {
     left: 0;
   }
-  .left-1 {
-    left: var(--spacing);
+  .left-1\/2 {
+    left: calc(1 / 2 * 100%);
   }
   .left-1\/4 {
     left: calc(1 / 4 * 100%);
   }
-  .z-0 {
-    z-index: 0;
-  }
   .z-30 {
     z-index: 30;
   }
+  .z-50 {
+    z-index: 50;
+  }
   .col-span-2 {
     grid-column: span 2 / span 2;
-  }
-  .container {
-    width: 100%;
-    @media (width >= 40rem) {
-      max-width: 40rem;
-    }
-    @media (width >= 48rem) {
-      max-width: 48rem;
-    }
-    @media (width >= 64rem) {
-      max-width: 64rem;
-    }
-    @media (width >= 80rem) {
-      max-width: 80rem;
-    }
-    @media (width >= 96rem) {
-      max-width: 96rem;
-    }
   }
   .mx-auto {
     margin-inline: auto;
   }
   .my-1 {
     margin-block: var(--spacing);
-  }
-  .my-2 {
-    margin-block: calc(var(--spacing) * 2);
-  }
-  .mt-0 {
-    margin-top: 0;
   }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
@@ -394,20 +342,8 @@
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
   }
-  .mb-5 {
-    margin-bottom: calc(var(--spacing) * 5);
-  }
-  .ml-1 {
-    margin-left: var(--spacing);
-  }
-  .ml-2 {
-    margin-left: calc(var(--spacing) * 2);
-  }
   .block {
     display: block;
-  }
-  .contents {
-    display: contents;
   }
   .flex {
     display: flex;
@@ -415,17 +351,8 @@
   .grid {
     display: grid;
   }
-  .hidden {
-    display: none;
-  }
   .inline {
     display: inline;
-  }
-  .table {
-    display: table;
-  }
-  .h-1 {
-    height: var(--spacing);
   }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
@@ -433,23 +360,11 @@
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
-  .h-5 {
-    height: calc(var(--spacing) * 5);
-  }
-  .h-7 {
-    height: calc(var(--spacing) * 7);
-  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
-  .h-12 {
-    height: calc(var(--spacing) * 12);
-  }
   .h-24 {
     height: calc(var(--spacing) * 24);
-  }
-  .h-28 {
-    height: calc(var(--spacing) * 28);
   }
   .h-\[18px\] {
     height: 18px;
@@ -462,9 +377,6 @@
   }
   .h-\[500px\] {
     height: 500px;
-  }
-  .h-auto {
-    height: auto;
   }
   .h-full {
     height: 100%;
@@ -481,32 +393,17 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-1 {
-    width: var(--spacing);
-  }
   .w-1\.5 {
     width: calc(var(--spacing) * 1.5);
   }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
-  .w-5 {
-    width: calc(var(--spacing) * 5);
-  }
-  .w-7 {
-    width: calc(var(--spacing) * 7);
-  }
-  .w-8 {
-    width: calc(var(--spacing) * 8);
-  }
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
-  }
-  .w-14 {
-    width: calc(var(--spacing) * 14);
   }
   .w-\[1px\] {
     width: 1px;
@@ -538,6 +435,16 @@
   .flex-grow {
     flex-grow: 1;
   }
+  .-translate-x-1\/2 {
+    --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .animate-bounce {
+    animation: var(--animate-bounce);
+  }
   .animate-ping {
     animation: var(--animate-ping);
   }
@@ -549,9 +456,6 @@
   }
   .cursor-pointer {
     cursor: pointer;
-  }
-  .resize {
-    resize: both;
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -580,9 +484,6 @@
   .items-end {
     align-items: flex-end;
   }
-  .justify-around {
-    justify-content: space-around;
-  }
   .justify-between {
     justify-content: space-between;
   }
@@ -594,9 +495,6 @@
   }
   .justify-start {
     justify-content: flex-start;
-  }
-  .gap-0 {
-    gap: 0;
   }
   .gap-0\.5 {
     gap: calc(var(--spacing) * 0.5);
@@ -619,16 +517,6 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
-  .gap-6 {
-    gap: calc(var(--spacing) * 6);
-  }
-  .space-y-1 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(var(--spacing) * var(--tw-space-y-reverse));
-      margin-block-end: calc(var(--spacing) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
   .space-y-1\.5 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
@@ -650,23 +538,8 @@
       margin-block-end: calc(calc(var(--spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
-  .gap-x-2 {
-    column-gap: calc(var(--spacing) * 2);
-  }
-  .gap-x-3 {
-    column-gap: calc(var(--spacing) * 3);
-  }
-  .gap-y-1 {
-    row-gap: var(--spacing);
-  }
-  .gap-y-2 {
-    row-gap: calc(var(--spacing) * 2);
-  }
   .gap-y-3 {
     row-gap: calc(var(--spacing) * 3);
-  }
-  .gap-y-4 {
-    row-gap: calc(var(--spacing) * 4);
   }
   .divide-y {
     :where(& > :not(:last-child)) {
@@ -675,11 +548,6 @@
       border-top-style: var(--tw-border-style);
       border-top-width: calc(1px * var(--tw-divide-y-reverse));
       border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-    }
-  }
-  .divide-slate-900 {
-    :where(& > :not(:last-child)) {
-      border-color: var(--color-slate-900);
     }
   }
   .divide-slate-900\/40 {
@@ -697,9 +565,6 @@
   }
   .overflow-hidden {
     overflow: hidden;
-  }
-  .overflow-x-auto {
-    overflow-x: auto;
   }
   .overflow-x-hidden {
     overflow-x: hidden;
@@ -725,9 +590,6 @@
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
-  .rounded-bl-lg {
-    border-bottom-left-radius: var(--radius-lg);
-  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -735,10 +597,6 @@
   .border-0 {
     border-style: var(--tw-border-style);
     border-width: 0px;
-  }
-  .border-2 {
-    border-style: var(--tw-border-style);
-    border-width: 2px;
   }
   .border-t {
     border-top-style: var(--tw-border-style);
@@ -748,16 +606,9 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
-  .border-l {
-    border-left-style: var(--tw-border-style);
-    border-left-width: 1px;
-  }
   .border-dashed {
     --tw-border-style: dashed;
     border-style: dashed;
-  }
-  .border-amber-800 {
-    border-color: var(--color-amber-800);
   }
   .border-amber-800\/40 {
     border-color: color-mix(in srgb, oklch(47.3% 0.137 46.201) 40%, transparent);
@@ -780,9 +631,6 @@
   .border-cyan-800 {
     border-color: var(--color-cyan-800);
   }
-  .border-cyan-900 {
-    border-color: var(--color-cyan-900);
-  }
   .border-cyan-900\/50 {
     border-color: color-mix(in srgb, oklch(39.8% 0.07 227.392) 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -791,6 +639,12 @@
   }
   .border-emerald-500 {
     border-color: var(--color-emerald-500);
+  }
+  .border-emerald-500\/80 {
+    border-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-emerald-500) 80%, transparent);
+    }
   }
   .border-emerald-800 {
     border-color: var(--color-emerald-800);
@@ -801,14 +655,11 @@
       border-color: color-mix(in oklab, var(--color-emerald-800) 60%, transparent);
     }
   }
-  .border-emerald-800\/85 {
-    border-color: color-mix(in srgb, oklch(43.2% 0.095 166.913) 85%, transparent);
+  .border-emerald-800\/80 {
+    border-color: color-mix(in srgb, oklch(43.2% 0.095 166.913) 80%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-emerald-800) 85%, transparent);
+      border-color: color-mix(in oklab, var(--color-emerald-800) 80%, transparent);
     }
-  }
-  .border-emerald-950 {
-    border-color: var(--color-emerald-950);
   }
   .border-emerald-950\/80 {
     border-color: color-mix(in srgb, oklch(26.2% 0.051 172.552) 80%, transparent);
@@ -816,11 +667,14 @@
       border-color: color-mix(in oklab, var(--color-emerald-950) 80%, transparent);
     }
   }
-  .border-purple-800 {
-    border-color: var(--color-purple-800);
-  }
   .border-rose-500 {
     border-color: var(--color-rose-500);
+  }
+  .border-rose-500\/80 {
+    border-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-rose-500) 80%, transparent);
+    }
   }
   .border-rose-800 {
     border-color: var(--color-rose-800);
@@ -837,17 +691,11 @@
       border-color: color-mix(in oklab, var(--color-rose-800) 80%, transparent);
     }
   }
-  .border-rose-900 {
-    border-color: var(--color-rose-900);
-  }
   .border-rose-900\/60 {
     border-color: color-mix(in srgb, oklch(41% 0.159 10.272) 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-rose-900) 60%, transparent);
     }
-  }
-  .border-rose-950 {
-    border-color: var(--color-rose-950);
   }
   .border-rose-950\/80 {
     border-color: color-mix(in srgb, oklch(27.1% 0.105 12.094) 80%, transparent);
@@ -873,12 +721,6 @@
       border-color: color-mix(in oklab, var(--color-slate-900) 60%, transparent);
     }
   }
-  .border-slate-900\/80 {
-    border-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-slate-900) 80%, transparent);
-    }
-  }
   .border-slate-950 {
     border-color: var(--color-slate-950);
   }
@@ -888,23 +730,14 @@
       border-color: color-mix(in oklab, var(--color-slate-950) 60%, transparent);
     }
   }
-  .border-yellow-800 {
-    border-color: var(--color-yellow-800);
-  }
   .border-yellow-800\/80 {
     border-color: color-mix(in srgb, oklch(47.6% 0.114 61.907) 80%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-yellow-800) 80%, transparent);
     }
   }
-  .border-t-cyan-400 {
-    border-top-color: var(--color-cyan-400);
-  }
   .bg-amber-400 {
     background-color: var(--color-amber-400);
-  }
-  .bg-amber-950 {
-    background-color: var(--color-amber-950);
   }
   .bg-amber-950\/10 {
     background-color: color-mix(in srgb, oklch(27.9% 0.077 45.635) 10%, transparent);
@@ -912,22 +745,13 @@
       background-color: color-mix(in oklab, var(--color-amber-950) 10%, transparent);
     }
   }
-  .bg-cyan-400 {
-    background-color: var(--color-cyan-400);
-  }
   .bg-cyan-500 {
     background-color: var(--color-cyan-500);
   }
-  .bg-cyan-900 {
-    background-color: var(--color-cyan-900);
-  }
-  .bg-cyan-950 {
-    background-color: var(--color-cyan-950);
-  }
-  .bg-cyan-950\/20 {
-    background-color: color-mix(in srgb, oklch(30.2% 0.056 229.695) 20%, transparent);
+  .bg-cyan-950\/15 {
+    background-color: color-mix(in srgb, oklch(30.2% 0.056 229.695) 15%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-cyan-950) 20%, transparent);
+      background-color: color-mix(in oklab, var(--color-cyan-950) 15%, transparent);
     }
   }
   .bg-cyan-950\/40 {
@@ -936,19 +760,22 @@
       background-color: color-mix(in oklab, var(--color-cyan-950) 40%, transparent);
     }
   }
+  .bg-cyan-950\/90 {
+    background-color: color-mix(in srgb, oklch(30.2% 0.056 229.695) 90%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-cyan-950) 90%, transparent);
+    }
+  }
   .bg-emerald-400 {
     background-color: var(--color-emerald-400);
   }
   .bg-emerald-500 {
     background-color: var(--color-emerald-500);
   }
-  .bg-emerald-900 {
-    background-color: var(--color-emerald-900);
-  }
-  .bg-emerald-900\/60 {
-    background-color: color-mix(in srgb, oklch(37.8% 0.077 168.94) 60%, transparent);
+  .bg-emerald-900\/30 {
+    background-color: color-mix(in srgb, oklch(37.8% 0.077 168.94) 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-emerald-900) 60%, transparent);
+      background-color: color-mix(in oklab, var(--color-emerald-900) 30%, transparent);
     }
   }
   .bg-emerald-950 {
@@ -978,18 +805,6 @@
       background-color: color-mix(in oklab, var(--color-emerald-950) 45%, transparent);
     }
   }
-  .bg-emerald-950\/70 {
-    background-color: color-mix(in srgb, oklch(26.2% 0.051 172.552) 70%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-emerald-950) 70%, transparent);
-    }
-  }
-  .bg-purple-900 {
-    background-color: var(--color-purple-900);
-  }
-  .bg-rose-400 {
-    background-color: var(--color-rose-400);
-  }
   .bg-rose-500 {
     background-color: var(--color-rose-500);
   }
@@ -1008,14 +823,17 @@
       background-color: color-mix(in oklab, var(--color-rose-950) 20%, transparent);
     }
   }
-  .bg-rose-950\/70 {
-    background-color: color-mix(in srgb, oklch(27.1% 0.105 12.094) 70%, transparent);
+  .bg-rose-950\/30 {
+    background-color: color-mix(in srgb, oklch(27.1% 0.105 12.094) 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rose-950) 70%, transparent);
+      background-color: color-mix(in oklab, var(--color-rose-950) 30%, transparent);
     }
   }
-  .bg-slate-600 {
-    background-color: var(--color-slate-600);
+  .bg-rose-950\/45 {
+    background-color: color-mix(in srgb, oklch(27.1% 0.105 12.094) 45%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rose-950) 45%, transparent);
+    }
   }
   .bg-slate-800 {
     background-color: var(--color-slate-800);
@@ -1074,12 +892,6 @@
       background-color: color-mix(in oklab, var(--color-slate-950) 95%, transparent);
     }
   }
-  .bg-yellow-500 {
-    background-color: var(--color-yellow-500);
-  }
-  .bg-yellow-950 {
-    background-color: var(--color-yellow-950);
-  }
   .bg-yellow-950\/20 {
     background-color: color-mix(in srgb, oklch(28.6% 0.066 53.813) 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1094,10 +906,6 @@
     --tw-gradient-position: to right in oklab;
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
-  .from-blue-500 {
-    --tw-gradient-from: var(--color-blue-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
   .from-blue-500\/10 {
     --tw-gradient-from: color-mix(in srgb, oklch(62.3% 0.214 259.815) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1107,14 +915,6 @@
   }
   .from-cyan-400 {
     --tw-gradient-from: var(--color-cyan-400);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-cyan-500 {
-    --tw-gradient-from: var(--color-cyan-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
-  .from-purple-500 {
-    --tw-gradient-from: var(--color-purple-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .from-purple-500\/10 {
@@ -1141,10 +941,6 @@
     --tw-gradient-to: var(--color-cyan-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
-  .to-purple-500 {
-    --tw-gradient-to: var(--color-purple-500);
-    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-  }
   .to-purple-600 {
     --tw-gradient-to: var(--color-purple-600);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
@@ -1155,9 +951,6 @@
   }
   .bg-clip-text {
     background-clip: text;
-  }
-  .p-0 {
-    padding: 0;
   }
   .p-0\.5 {
     padding: calc(var(--spacing) * 0.5);
@@ -1183,12 +976,6 @@
   .p-4 {
     padding: calc(var(--spacing) * 4);
   }
-  .p-5 {
-    padding: calc(var(--spacing) * 5);
-  }
-  .p-6 {
-    padding: calc(var(--spacing) * 6);
-  }
   .px-1 {
     padding-inline: var(--spacing);
   }
@@ -1210,17 +997,11 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
-  .py-0 {
-    padding-block: 0;
-  }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
   .py-1 {
     padding-block: var(--spacing);
-  }
-  .py-1\.5 {
-    padding-block: calc(var(--spacing) * 1.5);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
@@ -1233,12 +1014,6 @@
   }
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
-  }
-  .py-6 {
-    padding-block: calc(var(--spacing) * 6);
-  }
-  .pt-1 {
-    padding-top: var(--spacing);
   }
   .pt-1\.5 {
     padding-top: calc(var(--spacing) * 1.5);
@@ -1255,23 +1030,14 @@
   .pr-1 {
     padding-right: var(--spacing);
   }
-  .pb-1 {
-    padding-bottom: var(--spacing);
-  }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
   }
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
   }
-  .pb-4 {
-    padding-bottom: calc(var(--spacing) * 4);
-  }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
-  }
-  .pl-3 {
-    padding-left: calc(var(--spacing) * 3);
   }
   .text-center {
     text-align: center;
@@ -1291,18 +1057,6 @@
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
-  }
-  .text-3xl {
-    font-size: var(--text-3xl);
-    line-height: var(--tw-leading, var(--text-3xl--line-height));
-  }
-  .text-base {
-    font-size: var(--text-base);
-    line-height: var(--tw-leading, var(--text-base--line-height));
-  }
-  .text-lg {
-    font-size: var(--text-lg);
-    line-height: var(--tw-leading, var(--text-lg--line-height));
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -1394,9 +1148,6 @@
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
   }
-  .text-amber-300 {
-    color: var(--color-amber-300);
-  }
   .text-amber-400 {
     color: var(--color-amber-400);
   }
@@ -1409,17 +1160,11 @@
   .text-cyan-500 {
     color: var(--color-cyan-500);
   }
-  .text-cyan-600 {
-    color: var(--color-cyan-600);
-  }
   .text-cyan-600\/70 {
     color: color-mix(in srgb, oklch(60.9% 0.126 221.723) 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-cyan-600) 70%, transparent);
     }
-  }
-  .text-cyan-700 {
-    color: var(--color-cyan-700);
   }
   .text-cyan-700\/80 {
     color: color-mix(in srgb, oklch(52% 0.105 223.128) 80%, transparent);
@@ -1433,20 +1178,11 @@
   .text-cyan-900 {
     color: var(--color-cyan-900);
   }
-  .text-emerald-300 {
-    color: var(--color-emerald-300);
-  }
   .text-emerald-400 {
     color: var(--color-emerald-400);
   }
-  .text-purple-300 {
-    color: var(--color-purple-300);
-  }
   .text-purple-400 {
     color: var(--color-purple-400);
-  }
-  .text-rose-300 {
-    color: var(--color-rose-300);
   }
   .text-rose-400 {
     color: var(--color-rose-400);
@@ -1487,9 +1223,6 @@
   .uppercase {
     text-transform: uppercase;
   }
-  .italic {
-    font-style: italic;
-  }
   .placeholder-slate-600 {
     &::placeholder {
       color: var(--color-slate-600);
@@ -1497,13 +1230,6 @@
   }
   .opacity-60 {
     opacity: 60%;
-  }
-  .opacity-80 {
-    opacity: 80%;
-  }
-  .shadow {
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-2xl {
     --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
@@ -1517,36 +1243,40 @@
     --tw-shadow: 0 0 8px var(--tw-shadow-color, rgba(6,182,212,0.5));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .shadow-\[0_0_12px_rgba\(6\,182\,212\,0\.25\)\] {
-    --tw-shadow: 0 0 12px var(--tw-shadow-color, rgba(6,182,212,0.25));
+  .shadow-\[0_0_12px_rgba\(6\,182\,212\,0\.15\)\] {
+    --tw-shadow: 0 0 12px var(--tw-shadow-color, rgba(6,182,212,0.15));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-\[0_0_12px_rgba\(244\,63\,94\,0\.2\)\] {
+    --tw-shadow: 0 0 12px var(--tw-shadow-color, rgba(244,63,94,0.2));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-\[0_0_15px_rgba\(6\,182\,212\,0\.4\)\] {
+    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(6,182,212,0.4));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[0_0_15px_rgba\(6\,182\,212\,0\.6\)\] {
     --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(6,182,212,0.6));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .shadow-\[0_0_15px_rgba\(16\,185\,129\,0\.2\)\] {
+    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(16,185,129,0.2));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .shadow-\[0_0_15px_rgba\(16\,185\,129\,0\.15\)\] {
     --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(16,185,129,0.15));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .shadow-\[0_0_15px_rgba\(16\,185\,129\,0\.25\)\] {
-    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(16,185,129,0.25));
+  .shadow-\[0_0_15px_rgba\(244\,63\,94\,0\.2\)\] {
+    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(244,63,94,0.2));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[0_0_15px_rgba\(244\,63\,94\,0\.15\)\] {
     --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(244,63,94,0.15));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .shadow-\[0_0_15px_rgba\(244\,63\,94\,0\.25\)\] {
-    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(244,63,94,0.25));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .shadow-inner {
     --tw-shadow: inset 0 2px 4px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .shadow-lg {
-    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-md {
@@ -1557,26 +1287,12 @@
     --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .ring {
-    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .ring-2 {
-    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .ring-cyan-400 {
-    --tw-ring-color: var(--color-cyan-400);
-  }
   .blur {
     --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .blur-\[0\.5px\] {
     --tw-blur: blur(0.5px);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .backdrop-blur-md {
@@ -1594,11 +1310,6 @@
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
     backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
-  .transition {
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
   .transition-all {
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -1608,10 +1319,6 @@
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
-  .duration-200 {
-    --tw-duration: 200ms;
-    transition-duration: 200ms;
   }
   .duration-300 {
     --tw-duration: 300ms;
@@ -1636,10 +1343,6 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
-  }
-  .select-none {
-    -webkit-user-select: none;
-    user-select: none;
   }
   .selection\:bg-cyan-500 {
     & *::selection {
@@ -1769,10 +1472,10 @@
       }
     }
   }
-  .hover\:text-cyan-400 {
+  .hover\:text-cyan-300 {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-cyan-400);
+        color: var(--color-cyan-300);
       }
     }
   }
@@ -1780,6 +1483,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-emerald-300);
+      }
+    }
+  }
+  .hover\:text-slate-200 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-slate-200);
       }
     }
   }
@@ -1815,6 +1525,12 @@
   .sm\:px-6 {
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 6);
+    }
+  }
+  .sm\:text-xs {
+    @media (width >= 40rem) {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
     }
   }
   .md\:col-span-1 {
@@ -1902,6 +1618,41 @@
       padding-inline: calc(var(--spacing) * 6);
     }
   }
+}
+@property --tw-translate-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-translate-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -2150,9 +1901,27 @@
     opacity: 0.5;
   }
 }
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
@@ -2211,8 +1980,8 @@
 }
 </style></head>
   <body>
-    <div id="root"><div id="scanner-cyberpunk-root" class="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-900 overflow-x-hidden relative"><span class="absolute top-0 left-1/4 w-[1px] h-[500px] bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none"></span><span class="absolute top-0 right-1/4 w-[1px] h-[500px] bg-gradient-to-b from-purple-500/10 to-transparent pointer-events-none"></span><header class="border-b border-slate-900 bg-slate-950/95 sticky top-0 z-30 backdrop-blur-md px-4 py-3 sm:px-6"><div class="max-w-full xl:px-4 mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-y-3"><div class="flex items-center gap-2.5"><div class="relative"><span class="absolute -inset-1 rounded-lg bg-gradient-to-r from-cyan-400 to-purple-600 blur opacity-60 animate-pulse"></span><div class="relative bg-slate-950 p-1.5 rounded-lg border border-cyan-500/85"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity text-cyan-400 animate-spin" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></div></div><div><div class="flex items-center gap-2"><h1 class="text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-400">FUTURES QUANT SCANNER v.0</h1></div></div></div><div class="flex flex-wrap items-center gap-3"><div class="flex items-center gap-1.5 bg-slate-900 border border-slate-850 px-2.5 py-1 rounded-xl"><span class="text-xs font-mono text-rose-400 uppercase tracking-tight font-bold">RSI Alto:</span><input id="input-ob-rsi" min="70" max="95" class="w-12 text-center bg-slate-950 border border-slate-800 text-rose-400 font-extrabold font-mono text-xs p-0.5 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500" type="number" value="85"></div><div class="flex items-center gap-1.5 bg-slate-900 border border-slate-850 px-2.5 py-1 rounded-xl"><span class="text-xs font-mono text-emerald-400 uppercase tracking-tight font-bold">RSI Bajo:</span><input id="input-os-rsi" min="5" max="30" class="w-12 text-center bg-slate-950 border border-slate-800 text-emerald-400 font-extrabold font-mono text-xs p-0.5 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500" type="number" value="15"></div><div class="flex bg-slate-900 border border-slate-850 rounded-xl p-0.5"><button id="btn-tf-5m" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">5m</button><button id="btn-tf-15m" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.6)]">15m</button><button id="btn-tf-1h" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">1h</button><button id="btn-tf-4h" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">4h</button></div><button id="btn-scan-loop-toggle" class="px-3 py-1 border rounded-xl flex items-center gap-2 transition-all cursor-pointer font-mono text-[11px] font-bold leading-none bg-emerald-950/45 border-emerald-800 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shadow-[0_0_8px_#34d399]"></span><span>SCANNER COMPILANDO</span></button></div></div></header><section class="bg-slate-950/80 px-4 py-2 border-b border-slate-900/60 backdrop-blur-sm"><div class="max-w-full xl:px-4 mx-auto grid grid-cols-2 md:grid-cols-5 gap-3"><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">CONTRATOS FILTRADOS</span><div class="flex items-baseline gap-1.5 mt-1"><span class="text-2xl font-black text-white">21</span><span class="text-[10px] font-mono text-emerald-400 font-bold">USDT</span></div><span class="text-[9px] font-mono text-slate-500 mt-0.5 uppercase">Bitget Futures USDT-M</span></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">SEÑALADOS EXTREMOS</span><div class="flex items-baseline gap-1.5 mt-1"><span class="text-2xl font-black text-cyan-400">0</span><span class="text-[10px] font-mono text-slate-400">en 15m</span></div><span class="text-[9px] font-mono text-cyan-500 mt-0.5 uppercase">RSI Extremo detectado</span></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">CONSENSO COMPRA/VENTA</span><div class="flex items-center gap-2 mt-1.5"><div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden flex border border-slate-900"><span class="bg-emerald-500 h-full" style="width: 85%;"></span><span class="bg-rose-500 h-full" style="width: 15%;"></span></div></div><div class="flex justify-between items-center text-[9px] font-mono text-slate-400 mt-1 font-bold uppercase"><span class="text-emerald-400">COMPRA: 85%</span><span class="text-rose-400">VENTA: 15%</span></div></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">TOP MONEDAS SCORING</span><div class="flex flex-col gap-0.5 mt-0.5 info-block font-mono text-[9.5px]"><div class="text-slate-500 italic text-center py-2">Ninguno</div></div></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md col-span-2 md:col-span-1"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider text-right md:text-left">ESTADO DE API</span><div class="flex items-baseline md:justify-start justify-end gap-1.5 mt-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><span class="text-xs font-black text-slate-100 uppercase tracking-wide">API DIRECTA</span></div><span class="text-[9px] font-mono text-slate-500 text-right md:text-left mt-0.5 uppercase">CONEXIÓN SSL MULTI-ORIGEN</span></div></div></section><main class="flex-1 max-w-full w-full mx-auto p-4 xl:px-6 grid grid-cols-1 xl:grid-cols-12 gap-4"><div class="xl:col-span-3 bg-slate-950/90 border border-slate-800 rounded-2xl p-3 backdrop-blur-md flex flex-col h-[490px] xl:h-[490px] shadow-2xl relative overflow-hidden"><div class="flex items-center justify-between border-b border-slate-950 pb-3 mb-3"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal text-cyan-405" aria-hidden="true"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg><span class="text-xs font-extrabold text-white uppercase tracking-wider">OPORTUNIDADES EXTREMAS</span></div><span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-bold">RSI SCAN</span></div><div class="relative mb-4"><input id="search-ranking-input" placeholder="Filtro de símbolo (e.g., BTC)..." class="w-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-500 placeholder-slate-600 block" type="text" value=""></div><div class="flex-grow overflow-y-auto pr-1 space-y-2 flex flex-col justify-start"><div class="flex-grow flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-800 rounded-2xl bg-slate-900/10 my-1 min-h-[300px]"><div class="p-2 bg-slate-900 rounded-full border border-slate-850 text-cyan-400 animate-pulse border-dashed mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal" aria-hidden="true"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg></div><div class="text-xs font-black text-slate-300 uppercase tracking-wider">Sin extremos en este momento</div><p class="text-[10px] font-mono leading-relaxed text-slate-500 max-w-[220px] mt-2 text-center">Monitoreando 21 monedas... Buscando RSI extremos (≤ 15 o ≥ 85) en tempo de 15m...</p><p class="text-[9px] font-mono text-cyan-600/70 mt-3 uppercase tracking-widest font-bold">Autoparlantes activos</p></div></div><div class="border-t border-slate-900 pt-3 mt-3 flex justify-between items-center text-[10px] font-mono text-slate-500 uppercase tracking-wide font-extrabold"><span>Frecuencia: ~252 calculos/min</span><span>Binance Live TLS</span></div></div><div class="xl:col-span-6 flex flex-col gap-4"><div class="flex-1 h-[490px] xl:h-[490px] bg-slate-950/80 border border-slate-800 rounded-2xl p-2 shadow-2xl overflow-hidden relative"><div class="flex flex-col h-full bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden relative shadow-inner"><div class="flex items-center justify-between p-3.5 bg-slate-900/60 border-b border-slate-800/80 font-mono"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="text-white font-extrabold text-sm tracking-wide hover:text-cyan-400 transition-all cursor-pointer select-none flex items-center gap-1.5" title="Copiar ticker al portapapeles">BTCUSDT </span><span class="text-[10px] text-slate-500 font-bold uppercase py-0.5 px-2 bg-slate-950 border border-slate-800 rounded-md">Temporalidad: 15m</span></div><div class="flex items-center gap-1"><span class="text-[10px] text-cyan-400 font-black tracking-wider uppercase border border-cyan-900/50 bg-cyan-950/40 px-2 py-0.5 rounded">PINE SCRIPT: SUPERTREND &amp; EMA</span></div></div><div class="flex items-center justify-around bg-slate-900/40 border-b border-slate-900/80 px-3.5 py-1.5 font-mono text-[11px] gap-2"><div class="flex items-center gap-1.5"><span class="text-rose-400 font-extrabold uppercase">Resistencia Principal:</span><span class="text-white font-black">$64.297,00</span></div><div class="flex items-center gap-1.5"><span class="text-emerald-400 font-extrabold uppercase">Soporte Principal:</span><span class="text-white font-black">$64.077,30</span></div></div><div class="flex-1 w-full bg-slate-950 min-h-[300px] relative"><iframe id="tv-widget-iframe" title="TradingView Chart for BTCUSDT" src="./PRUEBA_files/saved_resource.html" class="w-full h-full border-0 absolute inset-0 z-0" allowfullscreen=""></iframe></div><div class="flex justify-between items-center text-[10px] text-slate-500 font-mono bg-slate-900/40 border-t border-slate-900 px-3.5 py-2"><span>* Gráfico interactivo en vivo con Línea de Tendencia Estructural (Supertrend), EMA y RSI activo.</span><span class="text-[9px] text-cyan-700/80 font-bold uppercase tracking-widest">SOPORTE MULTI-INDICADORES</span></div></div></div></div><div class="xl:col-span-3 bg-slate-950/90 border border-slate-800 rounded-2xl p-3 backdrop-blur-md flex flex-col h-[490px] xl:h-[490px] shadow-2xl overflow-y-auto"><div><div class="flex items-center gap-2 border-b border-slate-950 pb-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert text-cyan-405" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg><span class="text-xs font-extrabold text-white uppercase tracking-widest">CONSENSO INSTITUCIONAL (BTC)</span></div><div class="p-2.5 bg-slate-900/55 border border-slate-850 rounded-xl mb-2 text-center shadow-inner"><span class="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest block font-bold">Consenso de Tendencia General</span><div class="mt-1.5 py-1 border rounded-lg text-xs font-black font-mono text-center tracking-widest text-amber-400 border-amber-800/40 bg-amber-950/10">VÓRTICE NEUTRAL</div><div class="grid grid-cols-4 gap-1.5 mt-2.5 border-t border-slate-950/60 pt-2"><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-550 uppercase font-black">5m</span><span class="text-[11px] font-black text-slate-200 font-mono">54.0</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-slate-550">NEUT</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-550 uppercase font-black">15m</span><span class="text-[11px] font-black text-slate-200 font-mono">49.0</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-slate-550">NEUT</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-550 uppercase font-black">1h</span><span class="text-[11px] font-black text-slate-200 font-mono">55.9</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-emerald-450">UP</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-550 uppercase font-black">4h</span><span class="text-[11px] font-black text-slate-200 font-mono">50.9</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-slate-550">NEUT</span></div></div></div><div class="mb-2"><div class="flex items-center justify-between mb-1.5"><span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Distribución Score</span><span class="text-[10px] font-mono text-amber-400 font-black">30/100 PTS</span></div><div class="space-y-1.5"><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">RSI Extremo</span><span class="text-slate-200 font-black">0/25</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 0%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Divergencia Activa</span><span class="text-slate-200 font-black">0/20</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 0%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Tendencia EMA</span><span class="text-slate-200 font-black">5/15</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 33.3333%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Open Interest</span><span class="text-slate-200 font-black">10/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 100%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Funding Rate</span><span class="text-slate-200 font-black">3/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 30%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Volumen Com.</span><span class="text-slate-200 font-black">2/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 20%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Soporte / Resist.</span><span class="text-slate-200 font-black">10/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 100%;"></div></div></div></div></div><div class="border-t border-slate-950 pt-3"><div class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-yellow-405 shrink-0" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg><span class="text-xs font-mono text-yellow-400 uppercase tracking-widest font-bold">SISTEMA SNIPER INTRAWAVE</span></div><div class="p-3 bg-slate-900/35 border border-slate-850 rounded-xl text-slate-500 text-center font-mono text-xs font-extrabold uppercase">Scanner Sniper en Standby • Evaluando RSI...</div></div></div><div class="border-t border-slate-900 pt-4 mt-4 text-[11px] font-mono space-y-2 uppercase tracking-wide font-extrabold"><div class="flex justify-between items-baseline"><span class="text-slate-500">TASA FINANCIERA (FUNDING):</span><span class="font-black text-emerald-450">0.0043%</span></div><div class="flex justify-between items-baseline"><span class="text-slate-500">OPEN INTEREST ESTIMADO:</span><span class="text-slate-200 font-extrabold">$1.261.883.628 USDT</span></div><div class="flex justify-between items-baseline"><span class="text-slate-500">SOPORTES DETECTADOS:</span><span class="text-emerald-450 font-black truncate max-w-[140px] tracking-tighter" title="63661.90 | 64077.30">63661.90 | 64077.30</span></div><div class="flex justify-between items-baseline"><span class="text-slate-500">RESISTENCIAS DETECTADAS:</span><span class="text-rose-455 font-black truncate max-w-[140px] tracking-tighter" title="63945.00 | 64297.00">63945.00 | 64297.00</span></div></div></div></main><section class="max-w-[1550px] w-full mx-auto px-4 pb-8"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4"><div class="md:col-span-1 lg:col-span-3 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between shadow-xl"><div><div class="flex items-center gap-2 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell text-cyan-405" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><span class="text-xs font-extrabold text-white tracking-wider">ENTORNO DE ALERTAS</span></div><p class="text-slate-400 text-[10.5px] font-sans leading-relaxed mb-3">Configure alertas auditivas sintéticas e integre notificaciones nativas del sistema para operar en segundo plano.</p><div class="space-y-2.5"><div class="flex items-center justify-between p-2.5 bg-slate-900/60 border border-slate-800 rounded-xl"><span class="text-[11px] text-slate-300 font-medium">Bocinas Sintética</span><button id="btn-toggle-sound" class="p-1.5 rounded-lg border transition-all bg-emerald-950/30 border-emerald-800/85 text-emerald-400" title="Habilitar/Deshabilitar Alertas de Sonido"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume2 lucide-volume-2" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg></button></div><div class="flex flex-col gap-1.5 p-2.5 bg-slate-900/60 border border-slate-800 rounded-xl"><div class="flex items-center justify-between"><span class="text-[11px] text-slate-300 font-medium">Notificación Push</span><span class="text-[8.5px] font-mono px-1.5 py-0.2 rounded font-extrabold bg-slate-800 text-slate-400">INACTIVA</span></div><button id="btn-notif-grant" class="w-full py-0.5 text-[9px] bg-cyan-950/40 hover:bg-cyan-900/40 border border-cyan-800 hover:border-cyan-600 text-cyan-300 transition-all rounded-md font-mono">CONCEDER PERMISOS</button></div></div></div><div class="border-t border-slate-900/60 pt-3 mt-3"><span class="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest block mb-1.5">PROBAR SINTETIZADOR</span><div class="grid grid-cols-3 gap-1 animate-pulse"><button class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-emerald-400 rounded transition-all font-mono text-center hover:bg-emerald-950/10">Suave</button><button class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-rose-400 rounded transition-all font-mono text-center hover:bg-rose-955/10">Fuerte</button><button class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-purple-400 rounded transition-all font-mono text-center hover:bg-purple-955/10">Crítica</button></div></div></div><div class="md:col-span-1 lg:col-span-6 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between min-h-[220px] shadow-xl"><div><div class="flex items-center justify-between border-b border-slate-900 pb-2 mb-2"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert text-cyan-405" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg><span class="text-xs font-extrabold text-white tracking-wider uppercase">REGISTRO HISTÓRICO DE AUDITORÍA</span></div></div><div class="max-h-[145px] overflow-y-auto pr-1"><div class="h-24 flex flex-col items-center justify-center text-slate-500 font-mono gap-0.5 text-xs text-center py-4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big text-cyan-900 animate-pulse" aria-hidden="true"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg><span class="text-[10.5px]">Escaneando el mercado... Sin alertas en la sesión actual.</span><span class="text-[9px] text-slate-600 mt-0.5">(Las alertas se disparan y suenan cuando el RSI rompe &lt;= 15 o &gt;= 85)</span></div></div></div><div class="flex justify-between items-center text-[9px] text-slate-600 font-mono mt-2 border-t border-slate-950/60 pt-1.5"><span>* Almacenamiento local temporal en RAM por pestaña abierta.</span><span class="flex items-center gap-1 text-cyan-900"><svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg> INSTITUTIONAL DETECTOR GATE v1.29</span></div></div><div class="md:col-span-1 lg:col-span-3 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between min-h-[220px] shadow-xl relative overflow-hidden"><div class="text-[10px] text-center text-slate-400 font-black font-mono tracking-widest uppercase mb-1">DOMINANCIA DEL MERCADO (BTC)</div><div class="w-full h-[65px] my-1 overflow-hidden flex items-center justify-center relative"><svg viewBox="0 0 320 65" class="w-full h-full"><path d="M0,60 L0,44.6 Q0.0,44.6 22.9,43.6 Q45.7,42.7 68.6,43.6 Q91.4,44.4 114.3,43.9 Q137.1,43.4 160.0,45.3 Q182.9,47.2 205.7,46.3 Q228.6,45.5 251.4,43.2 Q274.3,40.9 297.1,41.8 Q320.0,42.8 320,48 L320,60 Z" fill="rgba(255, 170, 0, 0.22)" class="transition-all duration-[1200ms] ease-in-out blur-[0.5px]"></path></svg></div><div class="w-full h-[18px] bg-slate-900 border border-slate-850 rounded-full relative overflow-hidden mt-1 shadow-inner"><div class="h-full rounded-full transition-all duration-[800ms] ease-out" style="width: 49%; background-color: rgb(255, 170, 0); box-shadow: rgb(255, 170, 0) 0px 0px 15px;"></div></div><div class="flex justify-between text-xs font-mono font-extrabold text-slate-300 mt-3 px-1 uppercase tracking-wide"><span>49% Compra</span><span style="color: rgb(255, 170, 0);">51% Venta</span></div><div class="text-sm font-black font-mono tracking-widest text-center mt-2.5 transition-all duration-300" style="color: rgb(255, 170, 0);">MERCADO NEUTRAL</div></div></div></section><footer class="border-t border-slate-900 bg-slate-950 py-5 text-center text-xs font-mono text-slate-500 font-bold uppercase tracking-widest"><div class="max-w-[1550px] mx-auto flex flex-col sm:flex-row justify-between items-center px-4 gap-2"><span>© CALCULADORA CLIENTE 100% EXCLUSIVE • CONTROLES QUANT ACTIVADOS</span><span class="text-cyan-800">CONSTRUCCIÓN COMPLETA DE ALINEACIONES MULTI-TIMEFRAME</span></div></footer></div></div>
-    <script type="module" src="./PRUEBA_files/main.tsx"></script>
+    <div id="root"><div id="scanner-cyberpunk-root" class="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-slate-900 overflow-x-hidden relative"><span class="absolute top-0 left-1/4 w-[1px] h-[500px] bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none"></span><span class="absolute top-0 right-1/4 w-[1px] h-[500px] bg-gradient-to-b from-purple-500/10 to-transparent pointer-events-none"></span><header class="border-b border-slate-900 bg-slate-950/95 sticky top-0 z-30 backdrop-blur-md px-4 py-3 sm:px-6"><div class="max-w-full xl:px-4 mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-y-3"><div class="flex items-center gap-2.5"><div class="relative"><span class="absolute -inset-1 rounded-lg bg-gradient-to-r from-cyan-400 to-purple-600 blur opacity-60 animate-pulse"></span><div class="relative bg-slate-950 p-1.5 rounded-lg border border-cyan-500/85"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity text-cyan-400 animate-spin" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></div></div><div><div class="flex items-center gap-2"><h1 class="text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-400">FUTURES QUANT SCANNER v.0</h1></div></div></div><div class="flex flex-wrap items-center gap-3"><div class="flex items-center gap-1.5 bg-slate-900 border border-slate-850 px-2.5 py-1 rounded-xl"><span class="text-xs font-mono text-rose-400 uppercase tracking-tight font-bold">RSI Alto:</span><input id="input-ob-rsi" min="70" max="95" class="w-12 text-center bg-slate-950 border border-slate-800 text-rose-400 font-extrabold font-mono text-xs p-0.5 rounded-md" type="number" value="85"></div><div class="flex items-center gap-1.5 bg-slate-900 border border-slate-850 px-2.5 py-1 rounded-xl"><span class="text-xs font-mono text-emerald-400 uppercase tracking-tight font-bold">RSI Bajo:</span><input id="input-os-rsi" min="5" max="30" class="w-12 text-center bg-slate-950 border border-slate-800 text-emerald-400 font-extrabold font-mono text-xs p-0.5 rounded-md" type="number" value="15"></div><div class="flex bg-slate-900 border border-slate-850 rounded-xl p-0.5"><button id="btn-tf-5m" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">5m</button><button id="btn-tf-15m" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all bg-cyan-500 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.6)]">15m</button><button id="btn-tf-1h" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">1h</button><button id="btn-tf-4h" class="px-3 py-1 font-mono text-[11px] font-extrabold rounded-lg transition-all text-slate-400 hover:text-white hover:bg-slate-800/50">4h</button></div><button id="btn-scan-loop-toggle" class="px-3 py-1 border rounded-xl flex items-center gap-2 transition-all cursor-pointer font-mono text-[11px] font-bold leading-none bg-emerald-950/45 border-emerald-800 text-emerald-400"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shadow-[0_0_8px_#34d399]"></span><span>SCANNER COMPILANDO</span></button></div></div></header><section class="bg-slate-950/80 px-4 py-2 border-b border-slate-900/60 backdrop-blur-sm"><div class="max-w-full xl:px-4 mx-auto grid grid-cols-2 md:grid-cols-5 gap-3"><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">CONTRATOS FILTRADOS</span><div class="flex items-baseline gap-1.5 mt-1"><span class="text-2xl font-black text-white">12</span><span class="text-[10px] font-mono text-emerald-400 font-bold">USDT</span></div><span class="text-[9px] font-mono text-slate-500 mt-0.5 uppercase">Binance + Bybit Futures</span></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">SEÑALADOS EXTREMOS</span><div class="flex items-baseline gap-1.5 mt-1"><span class="text-2xl font-black text-cyan-400">8</span><span class="text-[10px] font-mono text-slate-400">en 15m</span></div><span class="text-[9px] font-mono text-cyan-500 mt-0.5 uppercase">RSI Extremo detectado</span></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">CONSENSO COMPRA/VENTA</span><div class="flex items-center gap-2 mt-1.5"><div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden flex border border-slate-900"><span class="bg-emerald-500 h-full" style="width: 50%;"></span><span class="bg-rose-500 h-full" style="width: 50%;"></span></div></div><div class="flex justify-between items-center text-[9px] font-mono text-slate-350 mt-1 font-bold uppercase"><span class="text-emerald-450">COMPRA: 50%</span><span class="text-rose-455">VENTA: 50%</span></div></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider">TOP MONEDAS SCORING</span><div class="flex flex-col gap-0.5 mt-0.5 info-block font-mono text-[9.5px]"><div class="flex justify-between items-center"><span class="text-slate-200 font-extrabold">PEPE</span><span class="text-amber-400 font-black">66 PTS</span></div><div class="flex justify-between items-center"><span class="text-slate-200 font-extrabold">ADA</span><span class="text-amber-400 font-black">61 PTS</span></div><div class="flex justify-between items-center"><span class="text-slate-200 font-extrabold">AVAX</span><span class="text-amber-400 font-black">59 PTS</span></div></div></div><div class="bg-slate-900/35 border border-slate-900 p-2.5 rounded-xl flex flex-col justify-between shadow-md col-span-2 md:col-span-1"><span class="text-[10px] uppercase font-mono text-slate-500 font-bold tracking-wider text-right md:text-left">ESTADO DE API</span><div class="flex items-baseline md:justify-start justify-end gap-1.5 mt-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><span class="text-xs font-black text-slate-100 uppercase tracking-wide">API DIRECTA</span></div><span class="text-[9px] font-mono text-slate-500 text-right md:text-left mt-0.5 uppercase">CONEXIÓN SSL MULTI-ORIGEN</span></div></div></section><main class="flex-1 max-w-full w-full mx-auto p-4 xl:px-6 grid grid-cols-1 xl:grid-cols-12 gap-4"><div class="xl:col-span-3 bg-slate-950/90 border border-slate-800 rounded-2xl p-3 backdrop-blur-md flex flex-col h-[490px] xl:h-[490px] shadow-2xl relative overflow-hidden"><div class="flex items-center justify-between border-b border-slate-900 pb-3 mb-3"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sliders-horizontal text-cyan-400" aria-hidden="true"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg><span class="text-xs font-extrabold text-white uppercase tracking-wider">OPORTUNIDADES EXTREMAS</span></div><span class="text-[10px] font-mono text-slate-550 uppercase tracking-wider font-bold">RSI SCAN</span></div><div class="relative mb-4"><input id="search-ranking-input" placeholder="Filtro de símbolo (e.g., BTC)..." class="w-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-1 focus:ring-cyan-500 placeholder-slate-600 block" type="text" value=""></div><div class="flex-grow overflow-y-auto pr-1 space-y-2 flex flex-col justify-start"><button id="ranking-card-AVAXUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-rose-950/80 bg-rose-950/5 hover:border-rose-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">AVAX</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-rose-950 border border-rose-850 text-rose-400">SNIPER SHORT</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$31,85</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-rose-400 font-black">96.4</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-rose-400">-2.3%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">59</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button><button id="ranking-card-SUIUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-rose-950/80 bg-rose-950/5 hover:border-rose-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">SUI</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-rose-950 border border-rose-850 text-rose-400">SNIPER SHORT</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$0,8840</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-rose-400 font-black">96.1</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-rose-400">-3.1%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">59</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button><button id="ranking-card-SOLUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-emerald-950/80 bg-emerald-950/5 hover:border-emerald-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">SOL</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-emerald-950 border border-emerald-850 text-emerald-400">SNIPER LONG</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$172,40</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-emerald-400 font-black">4.3</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-emerald-400">+5.6%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">58</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button><button id="ranking-card-ETHUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-emerald-950/80 bg-emerald-950/5 hover:border-emerald-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">ETH</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-emerald-950 border border-emerald-850 text-emerald-400">SNIPER LONG</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$3820,00</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-emerald-400 font-black">6.2</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-rose-400">-1.2%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">57</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button><button id="ranking-card-NEARUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-emerald-950/80 bg-emerald-950/5 hover:border-emerald-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">NEAR</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-emerald-950 border border-emerald-850 text-emerald-400">SNIPER LONG</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$5,88</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-emerald-400 font-black">6.7</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-emerald-400">+12.4%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">48</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button><button id="ranking-card-XRPUSDT" class="w-full flex items-center justify-between p-2.5 rounded-xl border text-left transition-all duration-300 relative overflow-hidden backdrop-blur-xs cursor-pointer border-emerald-950/80 bg-emerald-950/5 hover:border-emerald-800"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 flex-wrap"><span class="font-extrabold text-xs sm:text-xs text-white tracking-wide">XRP</span><span class="text-[8px] font-mono px-1 py-0.2 rounded font-black tracking-tight uppercase bg-emerald-950 border border-emerald-850 text-emerald-400">SNIPER LONG</span></div><span class="text-[10px] font-mono text-slate-500 font-medium">$0,5240</span></div><div class="flex items-center gap-2"><div class="flex flex-col items-end gap-0.5"><div class="text-[10px] font-mono font-medium">RSI <span class="text-emerald-400 font-black">7.5</span></div><span class="text-[10px] font-mono font-bold flex items-center gap-0.5 text-rose-400">-0.4%</span></div><div class="flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-lg w-10 h-10 shrink-0"><span class="text-[14px] font-black text-amber-400 font-mono">45</span><span class="text-[7px] text-slate-400 font-mono tracking-tighter font-extrabold leading-none">SCORE</span></div></div></button></div><div class="border-t border-slate-900 pt-3 mt-3 flex justify-between items-center text-[10px] font-mono text-slate-500 uppercase tracking-wide font-extrabold"><span>Frecuencia: ~144 calculos/min</span><span>Binance Live TLS</span></div></div><div class="xl:col-span-6 flex flex-col gap-4"><div class="flex-1 h-[490px] xl:h-[490px] bg-slate-950/80 border border-slate-800 rounded-2xl p-2 shadow-2xl overflow-hidden relative"><div class="flex flex-col h-full bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden relative shadow-inner"><div class="flex items-center justify-between p-3.5 bg-slate-900/60 border-b border-slate-800/80 font-mono"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="text-white font-extrabold text-sm tracking-wide">BTCUSDT</span><span class="text-[10px] text-slate-500 font-bold uppercase py-0.5 px-2 bg-slate-950 border border-slate-800 rounded-md">Temporalidad: 15m</span></div><div class="flex items-center gap-1"><span class="text-[10px] text-cyan-400 font-black tracking-wider uppercase border border-cyan-900/50 bg-cyan-950/40 px-2 py-0.5 rounded">PINE SCRIPT: SUPERTREND &amp; EMA</span></div></div><div class="flex-1 w-full bg-slate-950 min-h-[300px] relative"><iframe id="tv-widget-iframe" title="TradingView Chart for BTCUSDT" src="./prueba 1_files/saved_resource.html" class="w-full h-full border-0 absolute inset-0" allowfullscreen=""></iframe></div><div class="flex justify-between items-center text-[10px] text-slate-500 font-mono bg-slate-900/40 border-t border-slate-900 px-3.5 py-2"><span>* Gráfico interactivo en vivo con Línea de Tendencia Estructural (Supertrend), EMA y RSI activo.</span><span class="text-[9px] text-cyan-700/80 font-bold uppercase tracking-widest">SOPORTE MULTI-INDICADORES</span></div></div></div></div><div class="xl:col-span-3 bg-slate-950/90 border border-slate-800 rounded-2xl p-3 backdrop-blur-md flex flex-col h-[490px] xl:h-[490px] shadow-2xl overflow-y-auto"><div><div class="flex items-center gap-2 border-b border-slate-950 pb-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layers text-cyan-400" aria-hidden="true"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg><span class="text-xs font-extrabold text-white uppercase tracking-widest">CONSENSO INSTITUCIONAL (BTC)</span></div><div class="p-2.5 bg-slate-900/55 border border-slate-850 rounded-xl mb-2 text-center shadow-inner"><span class="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest block font-bold">Consenso de Tendencia General</span><div class="mt-1.5 py-1 border rounded-lg text-xs font-black font-mono text-center tracking-widest text-rose-400 border-rose-800/60 bg-rose-950/20 shadow-[0_0_15px_rgba(244,63,94,0.15)] animate-pulse">FUERTE BAJISTA</div><div class="grid grid-cols-4 gap-1.5 mt-2.5 border-t border-slate-950/60 pt-2"><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-500 uppercase font-black">5m</span><span class="text-[11px] font-black text-slate-200 font-mono">23.3</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-rose-400">DOWN</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-500 uppercase font-black">15m</span><span class="text-[11px] font-black text-slate-200 font-mono">21.7</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-rose-400">DOWN</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-500 uppercase font-black">1h</span><span class="text-[11px] font-black text-slate-200 font-mono">21.7</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-rose-400">DOWN</span></div><div class="flex flex-col gap-0.5 p-1 bg-slate-950/80 border border-slate-900 rounded-md"><span class="text-[9px] text-slate-500 uppercase font-black">4h</span><span class="text-[11px] font-black text-slate-200 font-mono">23.1</span><span class="text-[7.5px] font-black py-0.2 px-0.1 rounded uppercase text-rose-400">DOWN</span></div></div></div><div class="mb-2"><div class="flex items-center justify-between mb-1.5"><span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Distribución Score</span><span class="text-[10px] font-mono text-amber-400 font-black">38/100 PTS</span></div><div class="space-y-1.5"><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">RSI Extremo</span><span class="text-slate-200 font-black">5/25</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 20%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Divergencia Activa</span><span class="text-slate-200 font-black">0/20</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 0%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Tendencia EMA</span><span class="text-slate-200 font-black">15/15</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 100%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Open Interest</span><span class="text-slate-200 font-black">10/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 100%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Funding Rate</span><span class="text-slate-200 font-black">6/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 60%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Volumen Com.</span><span class="text-slate-200 font-black">2/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 20%;"></div></div></div><div class="text-[9.5px] font-mono flex flex-col gap-0.5"><div class="flex justify-between items-baseline font-bold"><span class="text-slate-400 uppercase tracking-wide">Soporte / Resist.</span><span class="text-slate-200 font-black">0/10</span></div><div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-850"><div class="bg-gradient-to-r from-cyan-400 to-cyan-500 h-full transition-all duration-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]" style="width: 0%;"></div></div></div></div></div><div class="border-t border-slate-950 pt-3"><div class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap text-yellow-405 shrink-0" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg><span class="text-xs font-mono text-yellow-400 uppercase tracking-widest font-bold">SISTEMA SNIPER INTRAWAVE</span></div><div class="p-3 bg-slate-900/35 border border-slate-850 rounded-xl text-slate-500 text-center font-mono text-xs font-extrabold uppercase">Scanner Sniper en Standby • Evaluando RSI...</div></div></div><div class="border-t border-slate-900 pt-4 mt-4 text-[11px] font-mono space-y-2 uppercase tracking-wide font-extrabold"><div class="flex justify-between items-baseline"><span class="text-slate-550">TASA FINANCIERA (FUNDING):</span><span class="font-black text-emerald-400">0.0120%</span></div><div class="flex justify-between items-baseline"><span class="text-slate-550">OPEN INTEREST ESTIMADO:</span><span class="text-slate-200 font-extrabold">$375.000.000 USDT</span></div><div class="flex justify-between items-baseline"><span class="text-slate-550">SOPORTE PRINCIPAL:</span><span class="text-emerald-450 font-black truncate max-w-[140px] tracking-tighter">58062.40</span></div><div class="flex justify-between items-baseline"><span class="text-slate-550">RESISTENCIA PRINCIPAL:</span><span class="text-rose-455 font-black truncate max-w-[140px] tracking-tighter">77907.26</span></div></div></div></main><section class="max-w-[1550px] w-full mx-auto px-4 pb-8"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4"><div class="md:col-span-1 lg:col-span-3 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between shadow-xl"><div><div class="flex items-center gap-2 mb-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell text-cyan-400" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg><span class="text-xs font-extrabold text-white tracking-wider">ENTORNO DE ALERTAS</span></div><p class="text-slate-400 text-[10.5px] font-sans leading-relaxed mb-3">Configure alertas auditivas sintéticas e integre notificaciones nativas del sistema para operar en segundo plano.</p><div class="space-y-2.5"><div class="flex items-center justify-between p-2.5 bg-slate-900/60 border border-slate-800 rounded-xl"><span class="text-[11px] text-slate-300 font-medium">Bocinas Sintética</span><button id="btn-toggle-sound" class="p-1.5 rounded-lg border transition-all bg-emerald-950/30 border-emerald-800/80 text-emerald-400" title="Habilitar/Deshabilitar Alertas de Sonido"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume2 lucide-volume-2" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg></button></div><div class="flex flex-col gap-1.5 p-2.5 bg-slate-900/60 border border-slate-800 rounded-xl"><div class="flex items-center justify-between"><span class="text-[11px] text-slate-300 font-medium">Notificación Push</span><span class="text-[8.5px] font-mono px-1.5 py-0.2 rounded bg-emerald-900/30 text-emerald-400">ACTIVA</span></div></div></div></div><div class="border-t border-slate-900/60 pt-3 mt-3"><span class="text-[9.5px] font-mono text-slate-500 uppercase tracking-widest block mb-1.5">PROBAR SINTETIZADOR</span><div class="grid grid-cols-3 gap-1"><button id="btn-test-sound-suave" class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-emerald-400 rounded transition-all font-mono text-center hover:bg-emerald-950/10">Suave</button><button id="btn-test-sound-fuerte" class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-rose-400 rounded transition-all font-mono text-center hover:bg-rose-955/10">Fuerte</button><button id="btn-test-sound-critica" class="py-0.5 px-1 text-[9px] bg-slate-900 border border-slate-800 hover:border-slate-700 text-purple-400 rounded transition-all font-mono text-center hover:bg-purple-955/10">Crítica</button></div></div></div><div class="md:col-span-1 lg:col-span-6 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between min-h-[220px] shadow-xl"><div><div class="flex items-center justify-between border-b border-slate-900 pb-2 mb-2"><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-alert text-cyan-400" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg><span class="text-xs font-extrabold text-white tracking-wider uppercase">REGISTRO HISTÓRICO DE AUDITORÍA</span></div><button id="btn-clear-alerts" class="p-0.5 px-1.5 bg-rose-955 border border-rose-900/60 text-[9px] text-rose-400 rounded hover:bg-rose-900/30 transition-all font-mono flex items-center gap-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2" aria-hidden="true"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>LIMPIAR LOG</span></button></div><div class="max-h-[145px] overflow-y-auto pr-1"><table class="w-full text-left text-[10.5px] text-slate-300 font-mono"><thead><tr class="border-b border-slate-900 text-slate-500 text-[9.5px]"><th class="py-1">HORA</th><th>PAR</th><th>VALOR RSI</th><th>PUNTAJE (SCORE)</th><th>ALERTA</th><th>ACCIONES</th></tr></thead><tbody class="divide-y divide-slate-900/40"><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:18</td><td class="font-bold text-white tracking-wide text-[10px]">PEPEUSDT</td><td><span class="text-[10px] text-rose-400 font-bold">90.2</span></td><td class="text-amber-400 font-bold text-center text-[10px]">66/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-rose-950/45 border-rose-800 text-rose-400">Resistencia Short Confirmada</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-PEPEUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:17</td><td class="font-bold text-white tracking-wide text-[10px]">SUIUSDT</td><td><span class="text-[10px] text-rose-400 font-bold">96.1</span></td><td class="text-amber-400 font-bold text-center text-[10px]">59/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-rose-950/45 border-rose-800 text-rose-400">Resistencia Short Confirmada</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-SUIUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:16</td><td class="font-bold text-white tracking-wide text-[10px]">NEARUSDT</td><td><span class="text-[10px] text-emerald-400 font-bold">6.7</span></td><td class="text-amber-400 font-bold text-center text-[10px]">48/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-emerald-950/45 border-emerald-800 text-emerald-400">Soporte Long Confirmado</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-NEARUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:15</td><td class="font-bold text-white tracking-wide text-[10px]">AVAXUSDT</td><td><span class="text-[10px] text-rose-400 font-bold">96.4</span></td><td class="text-amber-400 font-bold text-center text-[10px]">59/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-rose-950/45 border-rose-800 text-rose-400">Resistencia Short Confirmada</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-AVAXUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:13</td><td class="font-bold text-white tracking-wide text-[10px]">ADAUSDT</td><td><span class="text-[10px] text-rose-400 font-bold">87.3</span></td><td class="text-amber-400 font-bold text-center text-[10px]">61/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-rose-950/45 border-rose-800 text-rose-400">Resistencia Short Confirmada</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-ADAUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:12</td><td class="font-bold text-white tracking-wide text-[10px]">XRPUSDT</td><td><span class="text-[10px] text-emerald-400 font-bold">7.5</span></td><td class="text-amber-400 font-bold text-center text-[10px]">45/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-emerald-950/45 border-emerald-800 text-emerald-400">Soporte Long Confirmado</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-XRPUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:12</td><td class="font-bold text-white tracking-wide text-[10px]">SOLUSDT</td><td><span class="text-[10px] text-emerald-400 font-bold">4.3</span></td><td class="text-amber-400 font-bold text-center text-[10px]">58/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-emerald-950/45 border-emerald-800 text-emerald-400">Soporte Long Confirmado</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-SOLUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr><tr class="hover:bg-slate-900/35 transition-colors"><td class="py-1 text-slate-400 text-[10px]">08:47:11</td><td class="font-bold text-white tracking-wide text-[10px]">ETHUSDT</td><td><span class="text-[10px] text-emerald-400 font-bold">6.2</span></td><td class="text-amber-400 font-bold text-center text-[10px]">57/100</td><td><span class="px-1.5 py-0.2 rounded border text-[8px] bg-emerald-950/45 border-emerald-800 text-emerald-400">Soporte Long Confirmado</span></td><td><div class="flex items-center gap-1 py-0.5"><button id="btn-jump-alert-ETHUSDT" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 text-cyan-400 hover:text-cyan-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono" title="Inspeccionar en Gráfico de Scanner">Ver</button><button class="bg-emerald-950/45 hover:bg-emerald-900/40 border border-emerald-850 text-emerald-400 hover:text-emerald-300 py-0.2 px-1 rounded text-[9.5px] transition-all cursor-pointer font-mono font-bold" title="Copiar ticker al portapapeles">Copiar</button></div></td></tr></tbody></table></div></div><div class="flex justify-between items-center text-[9px] text-slate-600 font-mono mt-2 border-t border-slate-950/60 pt-1.5"><span>* Almacenamiento local temporal en RAM por pestaña abierta.</span><span class="flex items-center gap-1 text-cyan-900"><svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg> INSTITUTIONAL DETECTOR GATE v1.29</span></div></div><div class="md:col-span-1 lg:col-span-3 bg-slate-950/80 border border-slate-800/80 rounded-2xl p-4 backdrop-blur-md flex flex-col justify-between min-h-[220px] shadow-xl relative overflow-hidden"><div class="text-[10px] text-center text-slate-400 font-black font-mono tracking-widest uppercase mb-1">DOMINANCIA DEL MERCADO (BTC)</div><div class="w-full h-[65px] my-1 overflow-hidden flex items-center justify-center relative"><svg viewBox="0 0 320 65" class="w-full h-full"><path d="M0,60 L0,44.9 Q0.0,44.9 22.9,43.5 Q45.7,42.1 68.6,38.7 Q91.4,35.2 114.3,40.9 Q137.1,46.6 160.0,44.3 Q182.9,42.0 205.7,44.3 Q228.6,46.6 251.4,41.1 Q274.3,35.6 297.1,37.7 Q320.0,39.8 320,48 L320,60 Z" fill="rgba(0, 255, 136, 0.22)" class="transition-all duration-[1200ms] ease-in-out blur-[0.5px]"></path></svg></div><div class="w-full h-[18px] bg-slate-900 border border-slate-850 rounded-full relative overflow-hidden mt-1 shadow-inner"><div class="h-full rounded-full transition-all duration-[800ms] ease-out" style="width: 77%; background-color: rgb(0, 255, 136); box-shadow: rgb(0, 255, 136) 0px 0px 15px;"></div></div><div class="flex justify-between text-xs font-mono font-bold text-slate-350 mt-3 px-1 uppercase tracking-wide"><span style="color: rgb(0, 255, 136);">77% Compradores</span><span>23% Vendedores</span></div><div class="text-sm font-black font-mono tracking-widest text-center mt-2.5 transition-all duration-300" style="color: rgb(0, 255, 136);">COMPRADORES DOMINAN</div></div></div></section><footer class="border-t border-slate-900 bg-slate-950 py-5 text-center text-xs font-mono text-slate-550 font-bold uppercase tracking-widest"><div class="max-w-[1550px] mx-auto flex flex-col sm:flex-row justify-between items-center px-4 gap-2"><span>© CALCULADORA CLIENTE 100% EXCLUSIVE • CONTROLES QUANT ACTIVADOS</span><span class="text-cyan-800">CONSTRUCCIÓN COMPLETA DE ALINEACIONES MULTI-TIMEFRAME</span></div></footer></div></div>
+    <script type="module" src="./prueba 1_files/main.tsx"></script>
   
 
 

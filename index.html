@@ -2143,6 +2143,93 @@
       lastSymbol: ""
     };
 
+    // HIGH-PERFORMANCE WORKER FOR BACKGROUND MATHEMATICAL COMPUTATIONS (RSI, EMA)
+    const OdinMath = {
+      worker: null,
+      callbacks: new Map(),
+      nextId: 1,
+
+      init() {
+        try {
+          const code = `
+            self.onmessage = function(e) {
+              const { id, closes, period } = e.data;
+              
+              function calcRSIArray(closes, period = 14) {
+                if (closes.length <= period) return Array(closes.length).fill(50);
+                let rsi = [];
+                for (let i = 0; i < period; i++) {
+                  rsi.push(50);
+                }
+                let gains = 0, losses = 0;
+                for (let i = 1; i <= period; i++) {
+                  const change = closes[i] - closes[i-1];
+                  if (change > 0) gains += change;
+                  else losses -= change;
+                }
+                let avgGain = gains / period;
+                let avgLoss = losses / period;
+                if (avgLoss === 0) rsi.push(100);
+                else rsi.push(100 - 100 / (1 + avgGain / avgLoss));
+
+                for (let i = period + 1; i < closes.length; i++) {
+                  const change = closes[i] - closes[i-1];
+                  avgGain = (avgGain * (period - 1) + (change > 0 ? change : 0)) / period;
+                  avgLoss = (avgLoss * (period - 1) + (change < 0 ? -change : 0)) / period;
+                  if (avgLoss === 0) rsi.push(100);
+                  else rsi.push(100 - 100 / (1 + avgGain / avgLoss));
+                }
+                return rsi;
+              }
+
+              function calculateEMA(prices, period = 9) {
+                if (prices.length === 0) return [];
+                let k = 2 / (period + 1);
+                let ema = [prices[0]];
+                for (let i = 1; i < prices.length; i++) {
+                  ema.push(prices[i] * k + ema[i - 1] * (1 - k));
+                }
+                return ema;
+              }
+
+              const rsiArray = calcRSIArray(closes, period);
+              const emaArray = calculateEMA(closes, 9);
+              self.postMessage({ id, rsiArray, emaArray });
+            };
+          `;
+          const blob = new Blob([code], { type: 'application/javascript' });
+          this.worker = new Worker(URL.createObjectURL(blob));
+          this.worker.onmessage = (e) => {
+            const { id, rsiArray, emaArray } = e.data;
+            const cb = this.callbacks.get(id);
+            if (cb) {
+              this.callbacks.delete(id);
+              cb({ rsiArray, emaArray });
+            }
+          };
+        } catch (err) {
+          console.warn("Web Worker creation failed. Falling back to main-thread calculations.", err);
+          this.worker = null;
+        }
+      },
+
+      calculate(closes, period = 14) {
+        return new Promise((resolve) => {
+          if (!this.worker) {
+            // Synchronous fallback
+            const rsiArray = calcRSIArray(closes, period);
+            const emaArray = calculateEMA(closes, 9);
+            resolve({ rsiArray, emaArray });
+            return;
+          }
+          const id = this.nextId++;
+          this.callbacks.set(id, resolve);
+          this.worker.postMessage({ id, closes, period });
+        });
+      }
+    };
+    OdinMath.init();
+
     /* VIEW CONFIGURATION TOGGLE */
     function toggleConfigVista() {
       const panel = document.getElementById("rsi-config-panel");
@@ -3201,9 +3288,14 @@
       });
     });
 
+    // Race-condition and overlapping fetches preventer
+    let currentLoadId = 0;
+
     // Load active asset using purely centralized ODN_ENGINE JSON payload
     async function loadActiveAssetChart() {
+      const loadId = ++currentLoadId;
       const engineData = await ODN_ENGINE(selectedSymbol, activeInterval);
+      if (loadId !== currentLoadId) return;
       
       const pairLabel = engineData.symbol.replace("USDT", "/USDT");
       const pairTitleEl = document.getElementById("grafico-pair-title");
@@ -3223,8 +3315,12 @@
       // Assign candles and values from central engine
       activeCandles = engineData.candles;
       const closes = activeCandles.map(c => c.close);
-      rsiValues = calcRSIArray(closes, 14);
-      emaValues = calculateEMA(closes, 9);
+      
+      // Calculate RSI and EMA off-thread using Web Worker
+      const calcData = await OdinMath.calculate(closes, 14);
+      if (loadId !== currentLoadId) return;
+      rsiValues = calcData.rsiArray;
+      emaValues = calcData.emaArray;
 
       const latestCandle = activeCandles[activeCandles.length - 1];
       const prevCandle = activeCandles[activeCandles.length - 2] || latestCandle;
@@ -3274,13 +3370,16 @@
       let depthAsks = [];
       try {
         const dRes = await fetch(`https://api.bitget.com/api/v2/mix/market/depth?symbol=${engineData.symbol}&productType=USDT-FUTURES&limit=100`);
+        if (loadId !== currentLoadId) return;
         const dJson = await dRes.json();
+        if (loadId !== currentLoadId) return;
         if (dJson && dJson.code === "00000" && dJson.data && Array.isArray(dJson.data.asks)) {
           depthAsks = dJson.data.asks;
         }
       } catch (err) {
         console.warn("Could not fetch real depth from Bitget, using fallback model", err);
       }
+      if (loadId !== currentLoadId) return;
 
       // Fallback depth generator if API fails or returns no data
       if (depthAsks.length === 0) {
@@ -3674,7 +3773,17 @@
 
       runOdinAI(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
 
-      drawCharts();
+      requestChartsRedraw();
+    }
+
+    let isDrawingPending = false;
+    function requestChartsRedraw() {
+      if (isDrawingPending) return;
+      isDrawingPending = true;
+      requestAnimationFrame(() => {
+        drawCharts();
+        isDrawingPending = false;
+      });
     }
 
     // Main Canvas Draw Handler
@@ -4060,7 +4169,7 @@
       }
     }
 
-    window.addEventListener('resize', drawCharts);
+    window.addEventListener('resize', requestChartsRedraw);
 
     // Initial load & Watch Mode loop
     let watchInterval = null;
@@ -4390,16 +4499,30 @@
     /* 6. COMPRADORES VS VENDEDORES WAVES ANIMATION */
     (function(){
       const canvas = document.getElementById('waves-canvas');
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
       let phase = 0;
 
-      function animate() {
+      let W = canvas.width;
+      let H = canvas.height;
+
+      function updateSize() {
+        if (!canvas) return;
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
-        const W = canvas.width;
-        const H = canvas.height;
+        W = canvas.width;
+        H = canvas.height;
+      }
+      updateSize();
 
+      let resizeFrame = null;
+      window.addEventListener('resize', () => {
+        if (resizeFrame) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(updateSize);
+      });
+
+      function animate() {
         ctx.clearRect(0,0,W,H);
 
         // Fetch current live buyer percentage

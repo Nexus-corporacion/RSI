@@ -73,11 +73,196 @@
       overflow: hidden;
     }
 
-    .logo-container img {
+    .logo-container > img {
       height: 95px;
       width: 318px;
       object-fit: contain;
       mix-blend-mode: screen;
+    }
+
+    /* Logo Paleta 1 Styles */
+    .logo-wrap {
+      width: 316px;
+      height: 95px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Left Side: Dynamic Vector Cyber Eye Panel */
+    .logo-wrap .eye-canvas {
+      width: 95px;
+      height: 95px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Target/HUD rings centered exactly on the eye-canvas center (X: 48px, Y: 48px) */
+    .logo-wrap .hud-ring {
+      position: absolute;
+      left: 48px;
+      top: 48px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .logo-wrap .hud-inner {
+      width: 68px;
+      height: 68px;
+      border: 1px dashed rgba(0, 240, 255, 0.3);
+      animation: rotate-clockwise 15s linear infinite;
+    }
+
+    .logo-wrap .hud-outer {
+      width: 82px;
+      height: 82px;
+      border: 1px dotted rgba(0, 240, 255, 0.15);
+      border-left-color: rgba(0, 240, 255, 0.5);
+      border-right-color: rgba(0, 240, 255, 0.5);
+      animation: rotate-counter 20s linear infinite;
+    }
+
+    /* Cyber eyeball animations */
+    .logo-wrap .cyber-eye-svg {
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .logo-wrap .iris-glowing-circle {
+      animation: eye-pulsate 2.5s ease-in-out infinite alternate;
+    }
+
+    .logo-wrap .pupil-ring {
+      transform-origin: 50px 50px;
+      animation: rotate-clockwise 8s linear infinite;
+    }
+
+    /* Right Side: Illuminated ODIN Typography */
+    .logo-wrap .logo-text-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 8px;
+      z-index: 3;
+      user-select: none;
+    }
+
+    .logo-wrap .cyber-logo-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      color: #9db2c2;
+      line-height: 1.0;
+      margin-bottom: 3px;
+      animation: text-neon-pulse 3s ease-in-out infinite alternate;
+    }
+
+    .logo-wrap .cyber-logo-subtitle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+      display: flex;
+      gap: 3px;
+    }
+
+    .logo-wrap .cyber-logo-subtitle .grey {
+      color: #8fa0af;
+      text-shadow: 0 0 2px rgba(143, 160, 175, 0.3);
+    }
+
+    .logo-wrap .cyber-logo-subtitle .cyan {
+      color: #00f0ff;
+      text-shadow: 0 0 6px rgba(0, 240, 255, 0.7);
+    }
+
+    /* Real-time horizontal diagnostic scanline */
+    .logo-wrap .logo-scan-line {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(0,240,255,0) 0%, rgba(0,240,255,0.45) 30%, rgba(0,240,255,0.45) 70%, rgba(0,240,255,0) 100%);
+      box-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+      animation: logo-sweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* Micro-cybernetic corner crosshairs */
+    .logo-wrap .cyber-cross {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .logo-wrap .cyber-cross::before,
+    .logo-wrap .cyber-cross::after {
+      content: '';
+      position: absolute;
+      background: #00f0ff;
+    }
+    .logo-wrap .cyber-cross::before {
+      left: 2px; top: 0; width: 2px; height: 6px;
+    }
+    .logo-wrap .cyber-cross::after {
+      left: 0; top: 2px; width: 6px; height: 2px;
+    }
+
+    /* Animations */
+    @keyframes rotate-clockwise {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes rotate-counter {
+      from { transform: translate(-50%, -50%) rotate(360deg); }
+      to { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+
+    @keyframes eye-pulsate {
+      0% {
+        stroke: rgba(0, 240, 255, 0.6);
+        filter: drop-shadow(0 0 2px rgba(0, 240, 255, 0.3));
+      }
+      100% {
+        stroke: rgba(0, 240, 255, 1);
+        filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.7));
+      }
+    }
+
+    @keyframes text-neon-pulse {
+      0% {
+        color: #435461;
+        text-shadow: 
+          0 0 1px rgba(0, 240, 255, 0.1);
+        filter: brightness(0.65);
+      }
+      100% {
+        color: #9db2c2;
+        text-shadow: 
+          0 0 6px rgba(0, 240, 255, 0.7),
+          0 0 15px rgba(0, 240, 255, 0.45),
+          0 0 30px rgba(0, 100, 255, 0.25);
+        filter: brightness(1.02);
+      }
+    }
+
+    @keyframes logo-sweep {
+      0% { top: -5%; }
+      30%, 100% { top: 105%; }
     }
 
     /* Nexus Header Custom styled bar */
@@ -597,10 +782,10 @@
     .liq-card {
       width: 100%;
       background: #060e15;
-      border: 1px solid #FF9A2E;
+      border: 1px solid #142230;
       border-radius: 12px;
       padding: 10px 12px;
-      box-shadow: 0 0 20px rgba(255, 154, 46, 0.15);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -989,11 +1174,12 @@
     .trades-title {
       font-weight: 800;
       font-size: 12px;
-      color: #bfeccf;
+      color: #ffffff;
       letter-spacing: .6px;
       display: flex;
       align-items: center;
       gap: 6px;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .trades-center {
@@ -1005,7 +1191,7 @@
 
     .pct {
       font-weight: 900;
-      font-size: 20px;
+      font-size: 24px;
       font-family: 'Orbitron', sans-serif;
     }
 
@@ -1072,8 +1258,9 @@
     .flujo-title {
       font-weight: 800;
       font-size: 12px;
-      color: #bfeccf;
+      color: #ffffff;
       letter-spacing: .6px;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .flujo-body {
@@ -1085,8 +1272,8 @@
     .flujo-percent {
       font-size: 24px;
       font-weight: bold;
-      color: #00ff8c;
-      text-shadow: 0 0 10px rgba(0, 255, 140, 0.25);
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
       font-family: 'Orbitron', sans-serif;
     }
 
@@ -1287,43 +1474,109 @@
     <div class="banner-row">
       <!-- 1. LOGO ODIN -->
       <div class="logo-container" style="position: relative;">
-        <img src="./assets/odin-logo.png" alt="ODIN SNIPER" referrerPolicy="no-referrer" />
-        <span style="position: absolute; top: 4px; left: 8px; font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: bold; color: rgba(0, 255, 140, 0.45); letter-spacing: 0.5px; z-index: 10;">
-          <span style="position: relative; display: inline-block; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span>
-        </span>
+        <div class="logo-wrap">
+          <!-- Left Side: Dynamic Vector Cyber Eye Canvas -->
+          <div class="eye-canvas">
+            <!-- Targeting/HUD rings centered perfectly in eye-canvas -->
+            <div class="hud-ring hud-inner"></div>
+            <div class="hud-ring hud-outer"></div>
+
+            <!-- Vector Cyber Eye SVG -->
+            <svg class="cyber-eye-svg" viewBox="0 0 100 100" width="64" height="64" style="position: absolute; left: 48px; top: 48px; transform: translate(-50%, -50%);">
+              <!-- Outer glowing cybernetic eye shape -->
+              <path d="M 12 50 C 32 18, 68 18, 88 50 C 68 82, 32 82, 12 50 Z" 
+                    fill="none" 
+                    stroke="rgba(0, 240, 255, 0.45)" 
+                    stroke-width="3" 
+                    filter="drop-shadow(0 0 4px #00f0ff)"/>
+              
+              <!-- Outer decorative dashed ring details -->
+              <path d="M 22 50 A 28 28 0 0 1 78 50" fill="none" stroke="rgba(0, 240, 255, 0.25)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              
+              <!-- Iris circle container with pulsing stroke -->
+              <circle cx="50" cy="50" r="19" fill="rgba(6, 12, 18, 0.9)" stroke="#00f0ff" stroke-width="2" class="iris-glowing-circle" />
+              
+              <!-- Core cybernetic glowing pupil -->
+              <circle cx="50" cy="50" r="9" fill="#ffffff" filter="drop-shadow(0 0 5px #00f0ff)" />
+              <circle cx="50" cy="50" r="13.5" fill="none" stroke="rgba(0, 240, 255, 0.85)" stroke-width="1.5" stroke-dasharray="4 2" class="pupil-ring" />
+              
+              <!-- Precision target reticle marks -->
+              <line x1="50" y1="26" x2="50" y2="32" stroke="#00f0ff" stroke-width="1.5" />
+              <line x1="50" y1="68" x2="50" y2="74" stroke="#00f0ff" stroke-width="1.5" />
+              <line x1="26" y1="50" x2="32" y2="50" stroke="#00f0ff" stroke-width="1.5" />
+              <line x1="68" y1="50" x2="74" y2="50" stroke="#00f0ff" stroke-width="1.5" />
+            </svg>
+          </div>
+
+          <!-- Right Side: Illuminated Typography Panel -->
+          <div class="logo-text-container">
+            <div class="cyber-logo-title">ODIN</div>
+            <div class="cyber-logo-subtitle">
+              <span class="grey">EL OJO</span> <span class="cyan">CYBERCRYPTO</span>
+            </div>
+          </div>
+
+          <!-- Sweeping diagnostics scanline -->
+          <div class="logo-scan-line"></div>
+
+          <!-- Futuristic cyber anchor crosses -->
+          <div class="cyber-cross" style="top: 8px; left: 8px;"></div>
+          <div class="cyber-cross" style="bottom: 8px; right: 8px;"></div>
+        </div>
       </div>
 
       <!-- 4. BANNER SUPERIOR (Nexus Header) -->
       <div class="market-bar" style="position: relative;">
-        <span style="position: absolute; top: 4px; left: 8px; font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: bold; color: rgba(0, 255, 140, 0.45); letter-spacing: 0.5px; z-index: 10;">
-          <span style="position: relative; display: inline-block; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span>
-        </span>
-        <div class="market-card" style="margin-top: 10px;">
-          <div class="market-label">Modo Mercado</div>
-          <div class="market-value green" id="v-mode">LONG MODE</div>
-          <div class="market-status">
-            <div class="market-status-dot" id="dot-status"></div>
-            <div style="color: #cfeee6" id="st-mode">Operar Compras</div>
+        
+        <!-- MÓDULO 1: ODIN AI COMMANDER -->
+        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-1">
+          <div class="market-label" style="margin-bottom: 6px; text-align: center;">ODIN AI COMMANDER</div>
+          <div class="market-value" id="ai-decision" style="font-size: 20px; margin-top: 2px; text-align: center; width: 100%;">ANALIZANDO...</div>
+          <div class="ai-details" id="ai-mod-1-details" style="font-size: 9px; color: #8fa0af; margin-top: 5px; display: flex; gap: 8px; justify-content: center; font-family: 'JetBrains Mono', monospace; width: 100%;">
+            <span>Conf: <span id="ai-confidence" style="color: #00f0ff;">--</span></span>
+            <span>|</span>
+            <span>Esc: <span id="ai-scenario" style="color: #ffd93d;">--</span></span>
+            <span>|</span>
+            <span>ETA: <span id="ai-eta" style="color: #fff;">--</span></span>
           </div>
         </div>
-        <div class="market-card" style="margin-top: 10px;">
-          <div class="market-label">Volatilidad</div>
-          <div class="market-value yellow" id="v-vol">ALTA</div>
+
+        <!-- MÓDULO 2: RAZONAMIENTO IA -->
+        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-2">
+          <div class="market-label" style="margin-bottom: 6px; text-align: center;">RAZONAMIENTO IA</div>
+          <div id="ai-reasons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; width: 100%; font-size: 9.5px; font-family: 'Inter', sans-serif;">
+            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 9px; margin-top: 8px; font-family: 'JetBrains Mono', monospace;">Cargando...</div>
+          </div>
         </div>
-        <div class="market-card" style="margin-top: 10px;">
-          <div class="market-label">Flujo Ballenas</div>
-          <div class="market-value blue" id="v-flow">ACUMULANDO</div>
+
+        <!-- MÓDULO 3: PLAN DE OPERACIÓN -->
+        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-3">
+          <div class="market-label" style="margin-bottom: 6px; text-align: center;">PLAN DE OPERACIÓN</div>
+          <div id="ai-plan-layout" style="display: flex; flex-direction: column; gap: 3px; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 9.5px;">
+            <div style="color: #8fa0af; text-align: center; font-size: 9px; margin-top: 8px;">Cargando...</div>
+          </div>
         </div>
-        <div class="market-card" style="margin-top: 10px;">
-          <div class="market-label">Acción</div>
-          <div class="market-value green" id="v-action">BUSCAR LONGS</div>
+
+        <!-- MÓDULO 4: MOTOR AI -->
+        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-4">
+          <div class="market-label" style="margin-bottom: 6px; text-align: center;">MOTOR AI</div>
+          <div style="display: flex; flex-direction: column; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; line-height: 1.35;">
+            <div style="display: flex; justify-content: space-between; color: #8fa0af;">
+              <span>Motor: <span id="ai-motor-status" style="color: #ffd93d; font-weight: bold;">ANALIZANDO</span></span>
+              <span id="ai-motor-timer">0.0s</span>
+            </div>
+            <div id="ai-motor-log" style="color: #00f0ff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 2px;">Iniciando análisis...</div>
+            <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 4px; overflow: hidden; position: relative;">
+              <div id="ai-motor-progress" style="height: 100%; width: 10%; background: linear-gradient(90deg, #00f0ff, #00ff88); transition: width 0.3s ease; position: absolute; left: 0; top: 0;"></div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- 11. ALARMA ON/OFF PANEL (Clean side-by-side styled perfectly like the image, no text) -->
       <div class="alarm-card" style="position: relative;">
         <span style="position: absolute; top: 4px; left: 8px; font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: bold; color: rgba(0, 255, 140, 0.45); letter-spacing: 0.5px; z-index: 10;">
-          <span style="position: relative; display: inline-block; margin-right: 4px; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span> 03 ALARMA
+          ALARMA
         </span>
         <div class="status-dot" id="dot" title="TOCAR PARA ON / OFF" style="margin-top: 10px;"></div>
         <div class="volume-container" style="flex: 1; display: flex; align-items: center; margin-top: 10px;">
@@ -1340,7 +1593,7 @@
 
         <!-- 2. BUSCADOR DE ACTIVOS -->
         <div class="panel-card" style="position: relative;">
-          <div class="search-title"><span style="position: relative; display: inline-block; margin-right: 4px; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span> 04 BUSCADOR</div>
+          <div class="search-title">BUSCADOR</div>
           <div class="search-box">
             <input id="search-input" class="search-input" type="search" autocomplete="off" placeholder="Buscar activo, par o contrato...">
             <div style="width: 18px; height: 18px; opacity: 0.95;">
@@ -1359,7 +1612,7 @@
 
         <!-- 3. OPORTUNIDADES EXTREMAS -->
         <div class="panel-card">
-          <div class="opp-title"><span style="position: relative; display: inline-block; margin-right: 4px; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span> 05 OPORTUNIDADES EXTREMAS</div>
+          <div class="opp-title">OPORTUNIDADES EXTREMAS</div>
           <div class="opp-sub" id="opp-sub-range">RSI ≤ 15 o RSI ≥ 85</div>
           <div class="opp-filters">
             <div class="pill active" id="filter-all">TODOS 12</div>
@@ -1530,7 +1783,7 @@
                 </defs>
               </svg>
             </div>
-            <div class="liq-title"><span style="position: relative; display: inline-block; margin-right: 4px; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span> 11 MAPA DE LIQUIDEZ</div>
+            <div class="liq-title">MAPA DE LIQUIDEZ</div>
           </div>
           <div class="liq-body">
             <div class="liq-row">
@@ -1572,7 +1825,7 @@
         <div class="grafico-card">
           <div class="grafico-top">
             <div class="asset-title-block">
-              <small><span style="position: relative; display: inline-block; margin-right: 4px; vertical-align: middle;">🔒<span style="position: absolute; top: -3px; right: -3px; font-size: 8px; color: #ff3333; font-weight: 900; text-shadow: 0 0 2px #000; line-height: 1;">✔</span></span> 06 GRÁFICO PRINCIPAL</small>
+              <small>GRÁFICO PRINCIPAL</small>
               <h1>ETHFI <span style="font-size: 16px; color: #9ca3af; font-family: 'Inter'; font-weight: normal;">/ USDT ★</span></h1>
             </div>
             <div class="asset-stats">
@@ -1720,7 +1973,7 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bfeccf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
               </svg>
-              🔒 07 COMPRADORES VS VENDEDORES
+              COMPRADORES VS VENDEDORES
             </div>
             <div style="opacity: .7; font-size: 11px">Últimos 30 min</div>
           </div>
@@ -1735,13 +1988,13 @@
             
             <!-- Left Overlay: 50% COMPRADORES -->
             <div style="position: absolute; bottom: 8px; left: 12px; text-align: left; z-index: 10;">
-              <div class="pct buy" id="pct-buy" style="font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.35); line-height: 1;">50%</div>
+              <div class="pct buy" id="pct-buy" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.35); line-height: 1;">50%</div>
               <div style="font-size: 9px; font-weight: bold; color: #00ff88; letter-spacing: 0.5px; margin-top: 2px;">COMPRADORES</div>
             </div>
 
             <!-- Right Overlay: 50% VENDEDORES -->
             <div style="position: absolute; bottom: 8px; right: 12px; text-align: right; z-index: 10;">
-              <div class="pct sell" id="pct-sell" style="font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; color: #ff4c5b; text-shadow: 0 0 8px rgba(255,76,91,0.3); line-height: 1;">50%</div>
+              <div class="pct sell" id="pct-sell" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.3); line-height: 1;">50%</div>
               <div style="font-size: 9px; font-weight: bold; color: #ff4c5b; letter-spacing: 0.5px; margin-top: 2px;">VENDEDORES</div>
             </div>
           </div>
@@ -1761,10 +2014,12 @@
         <!-- 7. FLUJO NETO 24H -->
         <div class="flujo-neto-card">
           <div class="flujo-header">
-            <div class="flujo-title">🔒 08 FLUJO NETO</div>
+            <div class="flujo-title">
+              FLUJO NETO
+            </div>
           </div>
           <div class="flujo-body">
-            <div class="flujo-percent">+0.23%</div>
+            <div class="flujo-percent" id="flujo-percent" style="color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);">+0.00%</div>
             <div class="flujo-chart">
               <svg viewBox="0 0 140 30" width="140" height="30">
                 <rect x="0" y="10" width="4" height="10" fill="#00ff8c" rx="1" />
@@ -1797,7 +2052,7 @@
         <div class="ballena-card">
           <div class="ballena-header">
             <div class="icon"></div>
-            🔒 09 DETECTOR DE BALLENAS
+            DETECTOR DE BALLENAS
           </div>
           <div class="ballena-content">
             <div class="ballena-left">
@@ -1805,84 +2060,72 @@
             </div>
             <div class="ballena-right" style="padding-left: 6px;">
               <div class="ballena-label">CAPITAL ENTRANDO</div>
-              <div class="ballena-valueMoney" id="capital" style="font-size: 24px;">$31M</div>
+              <div class="ballena-valueMoney" id="capital" style="font-size: 24px;">$0M</div>
               <div class="ballena-usdt" style="margin-bottom: 4px;">(USDT)</div>
               <div class="ballena-label">ÚLTIMOS</div>
               <div class="ballena-value" style="margin-bottom: 4px; font-size: 13px; color: #fff;">30 MIN</div>
               <div class="ballena-label">BALLENAS</div>
               <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 2px;">
-                <span style="font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; color: #00f6ff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.45); line-height: 1;">7</span>
+                <span style="font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; color: #00f6ff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.45); line-height: 1;" id="whale-count">0</span>
                 <span style="font-size: 10px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; font-family: 'Orbitron', sans-serif;">BALLENAS</span>
               </div>
             </div>
           </div>
           <div class="ballena-footer" style="padding-top: 6px;">
-            <div class="ballena-legend"><div class="ballena-dot green"></div>ACUMULANDO</div>
-            <div class="ballena-legend"><div class="ballena-dot red"></div>DISTRIBUYENDO</div>
-            <div class="ballena-legend"><div class="ballena-dot yellow"></div>NEUTRAL</div>
+            <div class="ballena-legend" id="legend-acumulando" style="transition: all 0.3s ease;"><div class="ballena-dot green"></div>ACUMULANDO</div>
+            <div class="ballena-legend" id="legend-distribuyendo" style="transition: all 0.3s ease;"><div class="ballena-dot red"></div>DISTRIBUYENDO</div>
+            <div class="ballena-legend" id="legend-neutral" style="transition: all 0.3s ease;"><div class="ballena-dot yellow"></div>NEUTRAL</div>
           </div>
         </div>
 
-        <!-- 9. VALIDACIÓN SHORT -->
-        <div class="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 12px; flex: 1; display: flex; flex-direction: column;">
-          <div class="vs-header" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0;">
-            <svg class="vs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none">
+        <!-- 9. VALIDACIÓN SHORT/LONG -->
+        <div class="vs-card" id="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 290px; transition: all 0.3s ease;">
+          <div class="vs-header" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0;">
+            <svg class="vs-icon" id="vs-main-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" style="transition: all 0.3s ease;">
               <circle cx="12" cy="12" r="10" stroke="#00F58C" stroke-width="2"/>
               <path d="M12 7 L14.8 11 H9.2 L12 7 Z" fill="#00F58C"/>
             </svg>
-            <span style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: #fff; letter-spacing: 0.5px;">🔒 10 VALIDACIÓN SHORT/LONG</span>
+            <span style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: #fff; letter-spacing: 0.5px;">VALIDACIÓN SHORT/LONG</span>
           </div>
-          <div class="vs-content" style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: space-around;">
+          
+          <div class="vs-content" style="display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: space-around;">
+            
             <!-- Group 1: NO OPERAR -->
-            <div class="vs-group">
-              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #00ff88; margin-bottom: 4px;">
-                <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #00ff88; display: inline-block; box-shadow: 0 0 6px #00ff88;"></span>
-                NO OPERAR
+            <div class="vs-group" id="vs-group-no-operar" style="transition: all 0.4s ease; transform-origin: left center;">
+              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #7c8ba1; margin-bottom: 6px;">
+                <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #7c8ba1; display: inline-block; box-shadow: 0 0 6px #7c8ba1;"></span>
+                NO OPERAR (CONSOLIDACIÓN)
               </div>
               <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Precio cerca de EMA 9</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Compradores dominando</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Balance equilibrado</span>
+                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #7c8ba1; background: rgba(124, 139, 161, 0.05); border: 1px solid rgba(124, 139, 161, 0.12); font-family: 'Inter', sans-serif;">Precio cerca de EMA 9 (Rango)</span>
+                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #7c8ba1; background: rgba(124, 139, 161, 0.05); border: 1px solid rgba(124, 139, 161, 0.12); font-family: 'Inter', sans-serif;">Sin tendencia clara</span>
               </div>
             </div>
 
             <!-- Group 2: VIGILAR -->
-            <div class="vs-group">
-              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd24a; margin-bottom: 4px;">
+            <div class="vs-group" id="vs-group-vigilar" style="transition: all 0.4s ease; transform-origin: left center;">
+              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd24a; margin-bottom: 6px;">
                 <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ffd24a; display: inline-block; box-shadow: 0 0 6px #ffd24a;"></span>
-                VIGILAR
+                VIGILAR (TRANSICIÓN / ALERTA)
               </div>
               <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12);">RSI cercano a confirmado</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12);">Flujo normal</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12);">Esperar retroceso</span>
+                <span class="vs-badge-tag" id="vs-badge-rsi-val" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12); font-family: 'Inter', sans-serif;">RSI cercano a zonas extremas</span>
+                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12); font-family: 'Inter', sans-serif;">Cruces de medias o volumen neutro</span>
               </div>
             </div>
 
-            <!-- Group 3: SHORT FAVORABLE -->
-            <div class="vs-group">
-              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ff4c5b; margin-bottom: 4px;">
-                <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ff4c5b; display: inline-block; box-shadow: 0 0 6px #ff4c5b;"></span>
-                SHORT FAVORABLE
+            <!-- Group 3: OPERACIÓN RECOMENDADA -->
+            <div class="vs-group" id="vs-group-operar" style="transition: all 0.4s ease; transform-origin: left center;">
+              <div class="vs-group-header" id="vs-operar-title-row" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #00ff88; margin-bottom: 6px;">
+                <span class="vs-group-dot" id="vs-operar-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #00ff88; display: inline-block; box-shadow: 0 0 6px #00ff88;"></span>
+                <span id="vs-operar-title-text">LONG FAVORABLE</span>
               </div>
-              <div class="vs-group-items" style="display: flex; flex-wrap: wrap; gap: 4px;">
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">RSI >= 85</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Rechazo en resistencia</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Distribución débil</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Fuerza compradora ↓</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Operar entrada</span>
+              <div class="vs-group-items" id="vs-operar-items" style="display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start;">
+                <!-- Filled dynamically with LONG or SHORT tags -->
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- LIVE ENGINE JSON DATA PANEL -->
-        <div class="panel-card" style="background: #03070a; border: 1px dashed rgba(0, 255, 140, 0.22); padding: 10px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 15px rgba(0,255,136,0.05); margin-bottom: 10px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 900; color: #00ff8c; display: flex; align-items: center; justify-content: space-between;">
-            <span>🟢 ENGINE LIVE JSON</span>
-            <span style="font-size: 8px; color: rgba(255,255,255,0.4); font-family: 'JetBrains Mono', monospace;">ODN_ENGINE()</span>
           </div>
-          <pre id="engine-raw-json" style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #a3ffd6; background: rgba(0, 0, 0, 0.5); padding: 6px; border-radius: 6px; overflow: auto; max-height: 155px; border: 1px solid rgba(0, 255, 140, 0.08); line-height: 1.45; text-align: left;"></pre>
         </div>
 
       </div>
@@ -1893,6 +2136,13 @@
 </div>
 
   <script>
+    // GLOBALS FOR REAL-TIME WHALE RADAR AND EMA VALIDATION
+    const radarDots = [];
+    const whaleTracker = {
+      whales: [], // contains { id, time, side, price, qty, volume }
+      lastSymbol: ""
+    };
+
     /* VIEW CONFIGURATION TOGGLE */
     function toggleConfigVista() {
       const panel = document.getElementById("rsi-config-panel");
@@ -2087,6 +2337,24 @@
     let scannedSymbolsData = []; // Array of scanned coin objects with real values
     let allBitgetContracts = []; // All available Bitget contracts for the search panel
 
+    // --- ODIN AI COMMAND CENTER STATE ---
+    let lastAnalyzedSymbol = null;
+    let aiIsLoading = false;
+    let aiMotorProgressVal = 10;
+    let aiMotorTimerVal = 0.0;
+    let aiCurrentProcessIndex = 0;
+
+    const aiProcesses = [
+      "Analizando estructura de mercado...",
+      "Comparando volumen transaccional...",
+      "Detectando actividad de ballenas...",
+      "Calculando probabilidades matemáticas...",
+      "Actualizando escenario de cotización...",
+      "Recalculando nivel de riesgo (SL/TP)...",
+      "Monitoreando operaciones abiertas...",
+      "Esperando confirmaciones cruzadas..."
+    ];
+
     // Live Liquidity targets & current values
     let liqTargetW1 = 50;
     let liqTargetW2 = 40;
@@ -2119,6 +2387,466 @@
         return `0.000...${nonZeroPart}`;
       }
       return num.toFixed(6);
+    }
+
+    // ==================== COGNITIVE AI EXPERT CORE ====================
+    function calculateAICommandCenter(rsi, price, change24h, buyPct, netCapitalFlow, numWhales, ema, levels) {
+      let score = 0;
+      let reasons = [];
+
+      // - RSI rule
+      if (rsi <= 30) {
+        score += 3.5;
+        reasons.push({ text: "RSI sobreventa extrema", type: "bullish", val: rsi });
+      } else if (rsi <= 45) {
+        score += 1.5;
+        reasons.push({ text: "RSI en zona de soporte", type: "bullish", val: rsi });
+      } else if (rsi >= 70) {
+        score -= 3.5;
+        reasons.push({ text: "RSI sobrecompra extrema", type: "bearish", val: rsi });
+      } else if (rsi >= 55) {
+        score -= 1.5;
+        reasons.push({ text: "RSI en zona de resistencia", type: "bearish", val: rsi });
+      } else {
+        reasons.push({ text: "RSI en rango neutral", type: "neutral", val: rsi });
+      }
+
+      // - Price vs EMA 9 rule
+      if (ema) {
+        const diff = (price - ema) / ema;
+        if (diff > 0.001) {
+          score += 2.0;
+          reasons.push({ text: "EMA 9 alcista", type: "bullish" });
+        } else if (diff < -0.001) {
+          score -= 2.0;
+          reasons.push({ text: "EMA 9 bajista", type: "bearish" });
+        } else {
+          reasons.push({ text: "Precio comprimiendo EMA 9", type: "neutral" });
+        }
+      }
+
+      // - Whale accumulation rule
+      if (netCapitalFlow > 5000) {
+        score += 2.0;
+        reasons.push({ text: "Ballenas acumulando", type: "bullish" });
+      } else if (netCapitalFlow < -5000) {
+        score -= 2.0;
+        reasons.push({ text: "Ballenas distribuyendo", type: "bearish" });
+      } else {
+        reasons.push({ text: "Flujo ballenas neutro", type: "neutral" });
+      }
+
+      // - Buyers vs Sellers (Delta pressure) rule
+      if (buyPct >= 53) {
+        score += 1.5;
+        reasons.push({ text: "Delta comprador", type: "bullish" });
+      } else if (buyPct <= 47) {
+        score -= 1.5;
+        reasons.push({ text: "Delta vendedor", type: "bearish" });
+      } else {
+        reasons.push({ text: "Ratio compradores estable", type: "neutral" });
+      }
+
+      // - 24h variation trend rule
+      if (change24h > 2.0) {
+        score += 1.0;
+        reasons.push({ text: "Variación 24H alcista", type: "bullish" });
+      } else if (change24h < -2.0) {
+        score -= 1.0;
+        reasons.push({ text: "Variación 24H bajista", type: "bearish" });
+      }
+
+      // - Proximity to supports / resistances (Validation matrix)
+      if (levels) {
+        const distToS1 = Math.abs(price - levels.s1) / price;
+        const distToS2 = Math.abs(price - levels.s2) / price;
+        const distToR1 = Math.abs(price - levels.r1) / price;
+        const distToR2 = Math.abs(price - levels.r2) / price;
+
+        if (distToS1 < 0.005 || distToS2 < 0.005) {
+          score += 2.0;
+          reasons.push({ text: "Test de soporte clave", type: "bullish" });
+        } else if (distToR1 < 0.005 || distToR2 < 0.005) {
+          score -= 2.0;
+          reasons.push({ text: "Test de resistencia clave", type: "bearish" });
+        }
+      }
+
+      let isLongBias = score >= 0.5;
+      let isShortBias = score <= -0.5;
+
+      reasons.sort((a, b) => {
+        if (isLongBias) {
+          if (a.type === "bullish" && b.type !== "bullish") return -1;
+          if (b.type === "bullish" && a.type !== "bullish") return 1;
+        } else if (isShortBias) {
+          if (a.type === "bearish" && b.type !== "bearish") return -1;
+          if (b.type === "bearish" && a.type !== "bearish") return 1;
+        }
+        return 0;
+      });
+
+      let finalReasons = reasons.slice(0, 6);
+      if (finalReasons.length < 3) {
+        finalReasons.push({ text: "Volumen creciente", type: "neutral" });
+        if (finalReasons.length < 3) {
+          finalReasons.push({ text: "Liquidez superior activa", type: "neutral" });
+        }
+      }
+
+      // Determine Main Action (Module 1)
+      let decision = "ESPERAR";
+      let confidence = 55 + Math.round(Math.abs(score) * 4.5);
+      if (confidence > 98) confidence = 98;
+      if (confidence < 60) confidence = 65;
+
+      let scenario = "Rango de Compresión";
+      let eta = "~45-90m";
+
+      if (score >= 3.0) {
+        decision = "BUSCAR LONG";
+        scenario = rsi <= 35 ? "Rebote en Soporte" : "Ruptura Alcista";
+        eta = "~15-30m";
+      } else if (score >= 0.8) {
+        decision = "ESPERAR";
+        scenario = "Consolidación Alcista";
+        eta = "~30-60m";
+      } else if (score <= -3.0) {
+        decision = "BUSCAR SHORT";
+        scenario = rsi >= 65 ? "Rechazo de Resistencia" : "Ruptura Bajista";
+        eta = "~15-30m";
+      } else if (score <= -0.8) {
+        decision = "ESPERAR";
+        scenario = "Consolidación Bajista";
+        eta = "~30-60m";
+      } else {
+        decision = "NO OPERAR";
+        scenario = "Rango de Compresión";
+        eta = "--";
+      }
+
+      // Cross-validation corrections:
+      if (rsi >= 78 && decision === "BUSCAR LONG") {
+        decision = "PROTEGER GANANCIAS";
+        scenario = "Saturación de Compras";
+        confidence = 90;
+        eta = "~5-15m";
+      }
+      if (rsi <= 22 && decision === "BUSCAR SHORT") {
+        decision = "SALIR";
+        scenario = "Clímax de Ventas";
+        confidence = 92;
+        eta = "~5-10m";
+      }
+
+      // 3. Operation Plan (Module 3)
+      let plan = {
+        entrada: price,
+        sl: price,
+        tp1: price,
+        tp2: price,
+        status: "Esperar"
+      };
+
+      if (levels) {
+        if (decision === "BUSCAR LONG") {
+          plan.entrada = price;
+          plan.sl = levels.s1 * 0.996;
+          if (price <= levels.s1) {
+            plan.sl = levels.s2 * 0.994;
+          }
+          plan.tp1 = levels.r1;
+          plan.tp2 = levels.r2;
+          plan.status = "Esperar ruptura";
+        } else if (decision === "BUSCAR SHORT") {
+          plan.entrada = price;
+          plan.sl = levels.r1 * 1.004;
+          if (price >= levels.r1) {
+            plan.sl = levels.r2 * 1.006;
+          }
+          plan.tp1 = levels.s1;
+          plan.tp2 = levels.s2;
+          plan.status = "Esperar ruptura";
+        } else if (decision === "PROTEGER GANANCIAS") {
+          plan.entrada = price * 0.985;
+          plan.sl = price * 0.995;
+          plan.tp1 = price * 1.015;
+          plan.tp2 = price * 1.03;
+          plan.status = "Mover Stop a BE";
+        } else if (decision === "SALIR") {
+          plan.entrada = price * 1.015;
+          plan.sl = price * 1.005;
+          plan.tp1 = price * 0.985;
+          plan.tp2 = price * 0.97;
+          plan.status = "Cerrar operación";
+        } else {
+          plan.entrada = price;
+          plan.sl = price * 0.985;
+          plan.tp1 = price * 1.02;
+          plan.tp2 = price * 1.04;
+          plan.status = "No operar";
+        }
+      } else {
+        if (decision === "BUSCAR LONG") {
+          plan.sl = price * 0.985;
+          plan.tp1 = price * 1.02;
+          plan.tp2 = price * 1.04;
+          plan.status = "Esperar ruptura";
+        } else if (decision === "BUSCAR SHORT") {
+          plan.sl = price * 1.015;
+          plan.tp1 = price * 0.98;
+          plan.tp2 = price * 0.96;
+          plan.status = "Esperar ruptura";
+        } else {
+          plan.entrada = price;
+          plan.sl = price * 0.99;
+          plan.tp1 = price * 1.01;
+          plan.tp2 = price * 1.02;
+          plan.status = "No operar";
+        }
+      }
+
+      return {
+        decision,
+        confidence,
+        scenario,
+        eta,
+        reasons: finalReasons,
+        plan
+      };
+    }
+
+    function runOdinAI(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels) {
+      if (!engineData) return;
+
+      // Handle token change event
+      if (engineData.symbol !== lastAnalyzedSymbol) {
+        lastAnalyzedSymbol = engineData.symbol;
+        aiIsLoading = true;
+        aiMotorTimerVal = 0.0;
+        aiMotorProgressVal = 10;
+
+        // Reset DOM elements to analyzing state
+        const decisionEl = document.getElementById("ai-decision");
+        if (decisionEl) {
+          decisionEl.textContent = "ANALIZANDO...";
+          decisionEl.className = "market-value yellow";
+          decisionEl.style.color = "#ffd93d";
+          decisionEl.style.textShadow = "0 0 10px rgba(255, 217, 61, 0.4)";
+        }
+
+        const detailsEl = document.getElementById("ai-mod-1-details");
+        if (detailsEl) {
+          detailsEl.innerHTML = `
+            <span>Conf: <span style="color: #00f0ff;">--</span></span>
+            <span>|</span>
+            <span>Esc: <span style="color: #ffd93d;">--</span></span>
+            <span>|</span>
+            <span>ETA: <span style="color: #fff;">--</span></span>
+          `;
+        }
+
+        const reasonsEl = document.getElementById("ai-reasons-grid");
+        if (reasonsEl) {
+          reasonsEl.innerHTML = `
+            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 9px; margin-top: 8px; font-family: 'JetBrains Mono', monospace;">Leyendo indicadores de mercado...</div>
+          `;
+        }
+
+        const planEl = document.getElementById("ai-plan-layout");
+        if (planEl) {
+          planEl.innerHTML = `
+            <div style="color: #8fa0af; text-align: center; font-size: 9px; margin-top: 8px;">Estableciendo parámetros óptimos...</div>
+          `;
+        }
+
+        const motorStatusEl = document.getElementById("ai-motor-status");
+        if (motorStatusEl) {
+          motorStatusEl.textContent = "ANALIZANDO";
+          motorStatusEl.style.color = "#ffd93d";
+        }
+
+        const motorLogEl = document.getElementById("ai-motor-log");
+        if (motorLogEl) {
+          motorLogEl.textContent = "Iniciando análisis estructural...";
+        }
+
+        const progressEl = document.getElementById("ai-motor-progress");
+        if (progressEl) {
+          progressEl.style.width = "10%";
+        }
+
+        // Animate progression simulation for a highly responsive, high-tech experience
+        let step = 0;
+        const steps = [
+          { log: "Analizando estructura...", prog: "30%" },
+          { log: "Comparando volumen...", prog: "55%" },
+          { log: "Detectando ballenas...", prog: "75%" },
+          { log: "Calculando probabilidad...", prog: "90%" },
+          { log: "Actualizando escenario...", prog: "100%" }
+        ];
+
+        const intervalId = setInterval(() => {
+          if (step < steps.length) {
+            const motorLogEl = document.getElementById("ai-motor-log");
+            if (motorLogEl) motorLogEl.textContent = steps[step].log;
+            const progressEl = document.getElementById("ai-motor-progress");
+            if (progressEl) progressEl.style.width = steps[step].prog;
+            step++;
+          } else {
+            clearInterval(intervalId);
+            aiIsLoading = false;
+            renderAICommandCenter(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
+          }
+        }, 220);
+
+        return; // wait for timer to finish loading
+      }
+
+      // If we are already loaded, just update values live!
+      if (!aiIsLoading) {
+        renderAICommandCenter(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
+      }
+    }
+
+    function renderAICommandCenter(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels) {
+      const rsi = engineData.rsi;
+      const price = engineData.price;
+      const change24h = engineData.change24h;
+
+      // 1. Calculate Core Expert Decision metrics
+      const analysis = calculateAICommandCenter(rsi, price, change24h, buyPct, netCapitalFlow, numWhales, latestEMA, levels);
+
+      // 2. Render Module 1: ODIN AI COMMANDER
+      const decisionEl = document.getElementById("ai-decision");
+      if (decisionEl) {
+        decisionEl.textContent = analysis.decision;
+        
+        let dClass = "green";
+        let dColor = "#00ff88";
+        if (analysis.decision === "BUSCAR SHORT" || analysis.decision === "SALIR") {
+          dClass = "red";
+          dColor = "#ff3d57";
+        } else if (analysis.decision === "ESPERAR" || analysis.decision === "NO OPERAR") {
+          dClass = "yellow";
+          dColor = "#ffd93d";
+        } else if (analysis.decision === "PROTEGER GANANCIAS") {
+          dClass = "blue";
+          dColor = "#53d6ff";
+        }
+        decisionEl.className = `market-value ${dClass}`;
+        decisionEl.style.color = dColor;
+        decisionEl.style.textShadow = `0 0 12px ${dColor}`;
+      }
+
+      const detailsEl = document.getElementById("ai-mod-1-details");
+      if (detailsEl) {
+        detailsEl.innerHTML = `
+          <span>Conf: <span style="color: #00f0ff;">${analysis.confidence}%</span></span>
+          <span>|</span>
+          <span>Esc: <span style="color: #ffd93d;">${analysis.scenario}</span></span>
+          <span>|</span>
+          <span>ETA: <span style="color: #fff;">${analysis.eta}</span></span>
+        `;
+      }
+
+      // 3. Render Module 2: RAZONAMIENTO IA
+      const reasonsEl = document.getElementById("ai-reasons-grid");
+      if (reasonsEl) {
+        reasonsEl.innerHTML = "";
+        analysis.reasons.forEach(r => {
+          let mark = "✓";
+          let mColor = "#00ff88";
+          if (r.type === "bearish") {
+            mark = "✓";
+            mColor = "#ff4c5b";
+          } else if (r.type === "neutral") {
+            mark = "•";
+            mColor = "#8fa0af";
+          }
+          const item = document.createElement("div");
+          item.style.whiteSpace = "nowrap";
+          item.style.overflow = "hidden";
+          item.style.textOverflow = "ellipsis";
+          item.innerHTML = `<span style="color: ${mColor}; font-weight: bold; margin-right: 2px;">${mark}</span> <span style="color: #eafef5;">${r.text}</span>`;
+          reasonsEl.appendChild(item);
+        });
+      }
+
+      // 4. Render Module 3: PLAN DE OPERACIÓN
+      const planEl = document.getElementById("ai-plan-layout");
+      if (planEl) {
+        const formatP = (v) => {
+          return v > 100 ? Number(v).toFixed(2) : (v >= 0.01 ? Number(v).toFixed(4) : formatLiquidityPrice(v));
+        };
+        
+        let stateTagBg = "rgba(0, 255, 136, 0.08)";
+        let stateTagBorder = "rgba(0, 255, 136, 0.15)";
+        let stateTagColor = "#a3ffd6";
+        if (analysis.decision === "BUSCAR SHORT" || analysis.plan.status.includes("ganancias") || analysis.plan.status.includes("Cerrar")) {
+          stateTagBg = "rgba(255, 76, 91, 0.08)";
+          stateTagBorder = "rgba(255, 76, 91, 0.15)";
+          stateTagColor = "#ff9ea5";
+        } else if (analysis.decision === "ESPERAR" || analysis.decision === "NO OPERAR") {
+          stateTagBg = "rgba(255, 210, 74, 0.08)";
+          stateTagBorder = "rgba(255, 210, 74, 0.15)";
+          stateTagColor = "#ffeb99";
+        }
+
+        planEl.innerHTML = `
+          <div style="display: flex; justify-content: space-between;">
+            <span>ENTRADA: <span style="color: #00ff88;">$${formatP(analysis.plan.entrada)}</span></span>
+            <span>STOP LOSS: <span style="color: #ff4c5b;">$${formatP(analysis.plan.sl)}</span></span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>TP1: <span style="color: #00f0ff;">$${formatP(analysis.plan.tp1)}</span></span>
+            <span>TP2: <span style="color: #8f42ff;">$${formatP(analysis.plan.tp2)}</span></span>
+          </div>
+          <div style="text-align: center; margin-top: 3px;">
+            <span style="display: inline-block; font-size: 8.5px; font-weight: 600; padding: 1px 6px; border-radius: 4px; background: ${stateTagBg}; border: 1px solid ${stateTagBorder}; color: ${stateTagColor}; text-transform: uppercase; letter-spacing: 0.5px;">
+              ${analysis.plan.status}
+            </span>
+          </div>
+        `;
+      }
+
+      // 5. Render Module 4: MOTOR AI Status updates
+      const motorStatusEl = document.getElementById("ai-motor-status");
+      if (motorStatusEl) {
+        motorStatusEl.textContent = "VIGILANDO";
+        motorStatusEl.style.color = "#00ff88";
+      }
+    }
+
+    // AI Motor continuous thread initialization
+    if (!window.aiMotorInitialized) {
+      window.aiMotorInitialized = true;
+      setInterval(() => {
+        aiMotorTimerVal += 0.3;
+        const timerEl = document.getElementById("ai-motor-timer");
+        if (timerEl) {
+          timerEl.textContent = aiMotorTimerVal.toFixed(1) + "s";
+        }
+        
+        const progressEl = document.getElementById("ai-motor-progress");
+        if (progressEl && !aiIsLoading) {
+          let currentW = parseFloat(progressEl.style.width) || 45;
+          currentW += (Math.random() - 0.5) * 8;
+          if (currentW < 30) currentW = 35;
+          if (currentW > 95) currentW = 90;
+          progressEl.style.width = currentW.toFixed(0) + "%";
+        }
+      }, 300);
+
+      setInterval(() => {
+        if (!aiIsLoading) {
+          const logEl = document.getElementById("ai-motor-log");
+          if (logEl) {
+            aiCurrentProcessIndex = (aiCurrentProcessIndex + 1) % aiProcesses.length;
+            logEl.textContent = aiProcesses[aiCurrentProcessIndex];
+          }
+        }
+      }, 2500);
     }
 
     // Elements
@@ -2265,6 +2993,18 @@
         return sortedData;
       }
       throw new Error(json ? json.msg : "Invalid Bitget response format");
+    }
+
+    async function getBitgetFills(symbol) {
+      const cleanSym = symbol.replace("/", "").toUpperCase();
+      const url = `https://api.bitget.com/api/v2/mix/market/fills?symbol=${cleanSym}&productType=USDT-FUTURES&limit=100`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Bitget Futures fills API request failed");
+      const json = await res.json();
+      if (json && json.code === "00000" && Array.isArray(json.data)) {
+        return json.data;
+      }
+      throw new Error(json ? json.msg : "Invalid Bitget fills response format");
     }
 
     // Binance Multi-Endpoint failover system
@@ -2620,209 +3360,319 @@
       liqTargetW2 = Math.max(15, Math.min(95, (l2_vol / maxVol) * 95));
       liqTargetW3 = Math.max(15, Math.min(95, (l3_vol / maxVol) * 95));
 
-      // Update Module 07: Compradores vs Vendedores waves based on central RSI value
-      const buyPct = Math.max(12, Math.min(88, Math.round(100 - rsiValues[rsiValues.length - 1])));
-      const sellPct = 100 - buyPct;
+      // Fetch live buyers & sellers exact data from Bitget Futures trades flow
+      let buyPct = 50;
+      let sellPct = 50;
+      try {
+        const fills = await getBitgetFills(engineData.symbol);
+        if (fills && fills.length > 0) {
+          let buyVol = 0;
+          let sellVol = 0;
+          fills.forEach(f => {
+            const side = (f.side || "").toLowerCase();
+            const p = parseFloat(f.price || 0);
+            const sz = parseFloat(f.size || f.qty || 0);
+            const v = p * sz;
+            if (side === "buy") {
+              buyVol += v;
+            } else if (side === "sell") {
+              sellVol += v;
+            }
+          });
+          const totalVol = buyVol + sellVol;
+          if (totalVol > 0) {
+            buyPct = Math.round((buyVol / totalVol) * 100);
+            buyPct = Math.max(12, Math.min(88, buyPct)); // Bound to protect wave visuals
+            sellPct = 100 - buyPct;
+          }
+        }
+      } catch (err) {
+        console.warn("Fills API failed, using RSI fallback for live waves", err);
+        buyPct = Math.max(12, Math.min(88, Math.round(100 - rsiValues[rsiValues.length - 1])));
+        sellPct = 100 - buyPct;
+      }
+
       document.getElementById("pct-buy").textContent = `${buyPct}%`;
       document.getElementById("pct-sell").textContent = `${sellPct}%`;
 
-      // Update Module 09: Detector de Ballenas capital proportional to current volume
-      const scaleCapital = Math.max(5, Math.min(95, Math.round((engineData.volume / 10000000) * (buyPct / 50))));
-      document.getElementById("capital").textContent = `$${scaleCapital}M`;
+      // Update Module 08: Flujo Neto 24H dynamically from the real-time buyers and sellers
+      const flujoPercentEl = document.getElementById("flujo-percent");
+      if (flujoPercentEl) {
+        const netFlow = buyPct - sellPct;
+        const sign = netFlow >= 0 ? "+" : "";
+        flujoPercentEl.textContent = `${sign}${netFlow}%`;
+        flujoPercentEl.style.color = "#ffffff";
+        flujoPercentEl.style.textShadow = "0 0 10px rgba(255, 255, 255, 0.35)";
+      }
 
-      // Update Module 10: Validation Short/Long dynamically based on trend
-      const vsCard = document.querySelector(".vs-card");
-      if (vsCard) {
-        if (engineData.rsi >= 50) {
-          // Display short parameters
-          vsCard.innerHTML = `
-            <div class="vs-header" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0;">
-              <svg class="vs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="#FF4C5B" stroke-width="2"/>
-                <path d="M12 17 L14.8 13 H9.2 L12 17 Z" fill="#FF4C5B"/>
-              </svg>
-              <span style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: #fff; letter-spacing: 0.5px;">🔒 10 VALIDACIÓN SHORT/LONG</span>
-            </div>
-            <div class="vs-content" style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: space-around;">
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #00ff88; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #00ff88; display: inline-block; box-shadow: 0 0 6px #00ff88;"></span>
-                  NO OPERAR
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Precio cerca de EMA 9</span>
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Compradores dominando</span>
-                </div>
-              </div>
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd24a; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ffd24a; display: inline-block; box-shadow: 0 0 6px #ffd24a;"></span>
-                  VIGILAR
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12);">RSI cercano a confirmado (${latestRSI})</span>
-                </div>
-              </div>
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ff4c5b; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ff4c5b; display: inline-block; box-shadow: 0 0 6px #ff4c5b;"></span>
-                  SHORT FAVORABLE
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-wrap: wrap; gap: 4px;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">RSI >= ${rsiUpperLimit}</span>
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Tendencia bajista</span>
-                </div>
-              </div>
-            </div>
-          `;
+      // Update Module 09: Detector de Ballenas with real trades & dynamic radar mapping
+      if (selectedSymbol !== whaleTracker.lastSymbol) {
+        whaleTracker.whales = [];
+        whaleTracker.lastSymbol = selectedSymbol;
+        radarDots.length = 0; // Reset active radar dots
+      }
+
+      // Read real-time trades/fills to detect whales
+      try {
+        const fills = await getBitgetFills(selectedSymbol);
+        if (fills && fills.length > 0) {
+          // Dynamic whale threshold based on volume & price to adapt to different assets
+          const whaleThreshold = Math.max(8000, Math.min(80000, engineData.volume / 1500));
+          
+          fills.forEach(f => {
+            const p = parseFloat(f.price || f.lastPr || 0);
+            const sz = parseFloat(f.size || f.qty || f.volume || 0);
+            const vol = p * sz;
+            
+            if (vol >= whaleThreshold) {
+              const time = parseInt(f.cTime || Date.now());
+              const side = (f.side || "").toLowerCase();
+              const tradeId = f.tradeId || (time + "_" + p + "_" + sz + "_" + side);
+              
+              // Uniqueness check
+              const exists = whaleTracker.whales.some(w => w.id === tradeId);
+              if (!exists) {
+                whaleTracker.whales.push({
+                  id: tradeId,
+                  time: time,
+                  side: side,
+                  price: p,
+                  qty: sz,
+                  volume: vol
+                });
+                
+                // Render a radar dot (Radius between 15 and 70px)
+                const randomRadius = 15 + Math.random() * 55;
+                const randomAngle = Math.random() * Math.PI * 2;
+                radarDots.push({
+                  r: randomRadius,
+                  a: randomAngle,
+                  color: side === 'buy' ? '#00ff8c' : '#ff3b3b',
+                  createdAt: Date.now(),
+                  opacity: 1
+                });
+              }
+            }
+          });
+        }
+      } catch (err) {
+        console.warn("Whale real-time tracker trade scan skipped (Connection warning)", err);
+      }
+
+      // Filter out whales older than 30 minutes
+      const thirtyMinutesAgo = Date.now() - 30 * 60 * 1000;
+      whaleTracker.whales = whaleTracker.whales.filter(w => w.time >= thirtyMinutesAgo);
+
+      // Compute stats
+      let netCapitalFlow = 0;
+      whaleTracker.whales.forEach(w => {
+        if (w.side === "buy") {
+          netCapitalFlow += w.volume;
         } else {
-          // Display long parameters
-          vsCard.innerHTML = `
-            <div class="vs-header" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0;">
-              <svg class="vs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="#00F58C" stroke-width="2"/>
-                <path d="M12 7 L14.8 11 H9.2 L12 7 Z" fill="#00F58C"/>
-              </svg>
-              <span style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: #fff; letter-spacing: 0.5px;">🔒 10 VALIDACIÓN SHORT/LONG</span>
-            </div>
-            <div class="vs-content" style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: space-around;">
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ff4c5b; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ff4c5b; display: inline-block; box-shadow: 0 0 6px #ff4c5b;"></span>
-                  NO OPERAR
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Precio debajo de soporte</span>
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12);">Vendedores dominando</span>
-                </div>
-              </div>
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd24a; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ffd24a; display: inline-block; box-shadow: 0 0 6px #ffd24a;"></span>
-                  VIGILAR
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12);">RSI cercano a confirmado (${latestRSI})</span>
-                </div>
-              </div>
-              <div class="vs-group">
-                <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #00ff88; margin-bottom: 4px;">
-                  <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #00ff88; display: inline-block; box-shadow: 0 0 6px #00ff88;"></span>
-                  LONG FAVORABLE
-                </div>
-                <div class="vs-group-items" style="display: flex; flex-wrap: wrap; gap: 4px;">
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">RSI <= ${rsiLowerLimit}</span>
-                  <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12);">Tendencia alcista</span>
-                </div>
-              </div>
-            </div>
-          `;
+          netCapitalFlow -= w.volume;
+        }
+      });
+      const numWhales = whaleTracker.whales.length;
+
+      // Formatting net capital flow helper
+      const formatNetCapital = (val) => {
+        const sign = val >= 0 ? "+" : "";
+        const absVal = Math.abs(val);
+        if (absVal >= 1000000) {
+          return `${sign}$${(val / 1000000).toFixed(2)}M`;
+        } else if (absVal >= 1000) {
+          return `${sign}$${(val / 1000).toFixed(0)}K`;
+        } else {
+          return `${sign}$${val.toFixed(0)}`;
+        }
+      };
+
+      // Update Module 09 DOM Elements
+      const capitalEl = document.getElementById("capital");
+      if (capitalEl) {
+        capitalEl.textContent = formatNetCapital(netCapitalFlow);
+        if (netCapitalFlow > 0) {
+          capitalEl.style.color = "#00f6ff";
+          capitalEl.style.textShadow = "0 0 10px rgba(0, 246, 255, 0.45)";
+        } else if (netCapitalFlow < 0) {
+          capitalEl.style.color = "#ff4c5b";
+          capitalEl.style.textShadow = "0 0 10px rgba(255, 76, 91, 0.45)";
+        } else {
+          capitalEl.style.color = "#ffffff";
+          capitalEl.style.textShadow = "none";
         }
       }
 
-      // Update Module LIVE ENGINE JSON DATA PANEL with exact returned JSON
-      const rawJsonViewer = document.getElementById("engine-raw-json");
-      if (rawJsonViewer) {
-        const payloadToView = {
-          symbol: engineData.symbol,
-          price: engineData.price,
-          rsi: parseFloat(engineData.rsi.toFixed(4)),
-          signal: engineData.signal,
-          trend: engineData.trend,
-          strength: engineData.strength,
-          volume: parseFloat(engineData.volume.toFixed(2)),
-          change24h: parseFloat(engineData.change24h.toFixed(2))
-        };
-        rawJsonViewer.textContent = JSON.stringify(payloadToView, null, 2);
+      const whaleCountEl = document.getElementById("whale-count");
+      if (whaleCountEl) {
+        whaleCountEl.textContent = numWhales;
       }
 
-      // Update Paleta 02: Nexus Header Superior dynamically
-      const vMode = document.getElementById("v-mode");
-      const stMode = document.getElementById("st-mode");
-      const dotStatus = document.getElementById("dot-status");
-      const vVol = document.getElementById("v-vol");
-      const vFlow = document.getElementById("v-flow");
-      const vAction = document.getElementById("v-action");
-
-      if (vMode && stMode && dotStatus && vVol && vFlow && vAction) {
-        // 1. Modo Mercado
-        let modeText = "PULLBACK LONG";
-        let modeClass = "blue";
-        let statusText = "Vigilar Soporte";
-        let statusColor = "#ffd93d";
-
-        if (engineData.rsi >= rsiUpperLimit) {
-          modeText = "SHORT MODE";
-          modeClass = "red";
-          statusText = "Operar Ventas";
-          statusColor = "#ff3d57";
-        } else if (engineData.rsi <= rsiLowerLimit) {
-          modeText = "LONG MODE";
-          modeClass = "green";
-          statusText = "Operar Compras";
-          statusColor = "#00ff88";
-        } else if (engineData.rsi > 50) {
-          modeText = "REBOTANDO SHORT";
-          modeClass = "blue";
-          statusText = "Vigilar Resistencia";
-          statusColor = "#ffd93d";
+      // Highlight active legend based on net capital direction
+      const legAcumulando = document.getElementById("legend-acumulando");
+      const legDistribuyendo = document.getElementById("legend-distribuyendo");
+      const legNeutral = document.getElementById("legend-neutral");
+      if (legAcumulando && legDistribuyendo && legNeutral) {
+        const dimOpacity = "0.2";
+        const fullOpacity = "1";
+        
+        if (netCapitalFlow > 1000) {
+          legAcumulando.style.opacity = fullOpacity;
+          legAcumulando.style.filter = "none";
+          legAcumulando.style.fontWeight = "bold";
+          
+          legDistribuyendo.style.opacity = dimOpacity;
+          legDistribuyendo.style.filter = "grayscale(90%)";
+          legDistribuyendo.style.fontWeight = "normal";
+          
+          legNeutral.style.opacity = dimOpacity;
+          legNeutral.style.filter = "grayscale(90%)";
+          legNeutral.style.fontWeight = "normal";
+        } else if (netCapitalFlow < -1000) {
+          legAcumulando.style.opacity = dimOpacity;
+          legAcumulando.style.filter = "grayscale(90%)";
+          legAcumulando.style.fontWeight = "normal";
+          
+          legDistribuyendo.style.opacity = fullOpacity;
+          legDistribuyendo.style.filter = "none";
+          legDistribuyendo.style.fontWeight = "bold";
+          
+          legNeutral.style.opacity = dimOpacity;
+          legNeutral.style.filter = "grayscale(90%)";
+          legNeutral.style.fontWeight = "normal";
+        } else {
+          legAcumulando.style.opacity = dimOpacity;
+          legAcumulando.style.filter = "grayscale(90%)";
+          legAcumulando.style.fontWeight = "normal";
+          
+          legDistribuyendo.style.opacity = dimOpacity;
+          legDistribuyendo.style.filter = "grayscale(90%)";
+          legDistribuyendo.style.fontWeight = "normal";
+          
+          legNeutral.style.opacity = fullOpacity;
+          legNeutral.style.filter = "none";
+          legNeutral.style.fontWeight = "bold";
         }
-
-        vMode.textContent = modeText;
-        vMode.className = `market-value ${modeClass}`;
-        stMode.textContent = statusText;
-        dotStatus.style.background = statusColor;
-        dotStatus.style.boxShadow = `0 0 12px ${statusColor}`;
-
-        // 2. Volatilidad
-        const absChange = Math.abs(engineData.change24h);
-        let volText = "BAJA";
-        let volClass = "green";
-        if (absChange >= 12) {
-          volText = "EXTREMA";
-          volClass = "red";
-        } else if (absChange >= 5) {
-          volText = "ALTA";
-          volClass = "yellow";
-        } else if (absChange >= 2) {
-          volText = "MEDIA";
-          volClass = "blue";
-        }
-        vVol.textContent = volText;
-        vVol.className = `market-value ${volClass}`;
-
-        // 3. Flujo Ballenas
-        let flowText = "NEUTRO";
-        let flowClass = "yellow";
-        if (engineData.rsi <= 45) {
-          flowText = "ACUMULANDO";
-          flowClass = "green";
-        } else if (engineData.rsi >= 55) {
-          flowText = "DISTRIBUYENDO";
-          flowClass = "red";
-        }
-        vFlow.textContent = flowText;
-        vFlow.className = `market-value ${flowClass}`;
-
-        // 4. Acción
-        let actionText = "VIGILAR";
-        let actionClass = "yellow";
-        if (engineData.rsi <= rsiLowerLimit) {
-          actionText = "BUSCAR LONGS";
-          actionClass = "green";
-        } else if (engineData.rsi >= rsiUpperLimit) {
-          actionText = "BUSCAR SHORTS";
-          actionClass = "red";
-        } else if (engineData.rsi < 50) {
-          actionText = "BUSCAR LONGS";
-          actionClass = "green";
-        } else if (engineData.rsi >= 50) {
-          actionText = "BUSCAR SHORTS";
-          actionClass = "red";
-        }
-        vAction.textContent = actionText;
-        vAction.className = `market-value ${actionClass}`;
       }
+
+      // Update Module 10: Validation Short/Long dynamically based on EMA 9 & RSI
+      const gNoOperar = document.getElementById("vs-group-no-operar");
+      const gVigilar = document.getElementById("vs-group-vigilar");
+      const gOperar = document.getElementById("vs-group-operar");
+      const vsMainIcon = document.getElementById("vs-main-icon");
+      
+      if (gNoOperar && gVigilar && gOperar) {
+        const latestPrice = latestCandle.close;
+        const priceToEmaDiff = Math.abs(latestPrice - latestEMA) / latestEMA;
+        
+        let activeState = "neutral"; // "neutral", "vigilar", "operar"
+        let isLong = latestPrice > latestEMA; // default direction bias
+        
+        // Define ranges based on EMA and RSI
+        if (priceToEmaDiff < 0.0012) {
+          activeState = "neutral";
+        } else if (latestRSI >= rsiUpperLimit || latestRSI <= rsiLowerLimit) {
+          activeState = "operar";
+          isLong = latestRSI <= rsiLowerLimit;
+        } else {
+          activeState = "vigilar";
+        }
+
+        // Update Group 3 inner elements depending on bias (Long vs Short)
+        const vsOperarTitleText = document.getElementById("vs-operar-title-text");
+        const vsOperarDot = document.getElementById("vs-operar-dot");
+        const vsOperarTitleRow = document.getElementById("vs-operar-title-row");
+        const vsOperarItems = document.getElementById("vs-operar-items");
+        
+        if (vsOperarTitleText && vsOperarDot && vsOperarTitleRow && vsOperarItems) {
+          if (isLong) {
+            vsOperarTitleText.textContent = "LONG FAVORABLE (COMPRAS)";
+            vsOperarTitleRow.style.color = "#00ff88";
+            vsOperarDot.style.background = "#00ff88";
+            vsOperarDot.style.boxShadow = "0 0 6px #00ff88";
+            vsOperarItems.innerHTML = `
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12); font-family: 'Inter', sans-serif;">RSI <= ${rsiLowerLimit} (${latestRSI})</span>
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12); font-family: 'Inter', sans-serif;">Soporte Confirmado</span>
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #a3ffd6; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.12); font-family: 'Inter', sans-serif;">Rebote Alcista</span>
+            `;
+          } else {
+            vsOperarTitleText.textContent = "SHORT FAVORABLE (VENTAS)";
+            vsOperarTitleRow.style.color = "#ff4c5b";
+            vsOperarDot.style.background = "#ff4c5b";
+            vsOperarDot.style.boxShadow = "0 0 6px #ff4c5b";
+            vsOperarItems.innerHTML = `
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12); font-family: 'Inter', sans-serif;">RSI >= ${rsiUpperLimit} (${latestRSI})</span>
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12); font-family: 'Inter', sans-serif;">Resistencia de Ordenes</span>
+              <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ff9ea5; background: rgba(255, 76, 91, 0.05); border: 1px solid rgba(255, 76, 91, 0.12); font-family: 'Inter', sans-serif;">Rechazo Bajista</span>
+            `;
+          }
+        }
+
+        // Dynamically update RSI value inside the watch tag
+        const rsiBadgeVal = document.getElementById("vs-badge-rsi-val");
+        if (rsiBadgeVal) {
+          rsiBadgeVal.textContent = `RSI Actual: ${latestRSI}`;
+        }
+
+        // Apply visual states (Dimming/Highlighting/Slight scale effect)
+        const dimStyle = "opacity: 0.12; filter: grayscale(95%); transform: scale(0.97); transition: all 0.4s ease;";
+        const activeStyle = "opacity: 1; filter: none; transform: scale(1.02); transition: all 0.4s ease;";
+
+        if (activeState === "neutral") {
+          gNoOperar.style.cssText = activeStyle;
+          gVigilar.style.cssText = dimStyle;
+          gOperar.style.cssText = dimStyle;
+          if (vsMainIcon) {
+            vsMainIcon.querySelector("circle").setAttribute("stroke", "#7c8ba1");
+            vsMainIcon.querySelector("path").setAttribute("fill", "#7c8ba1");
+            vsMainIcon.querySelector("path").setAttribute("d", "M12 7 L14.8 11 H9.2 L12 7 Z"); // Up arrow
+          }
+        } else if (activeState === "vigilar") {
+          gNoOperar.style.cssText = dimStyle;
+          gVigilar.style.cssText = activeStyle;
+          gOperar.style.cssText = dimStyle;
+          if (vsMainIcon) {
+            vsMainIcon.querySelector("circle").setAttribute("stroke", "#ffd24a");
+            vsMainIcon.querySelector("path").setAttribute("fill", "#ffd24a");
+            vsMainIcon.querySelector("path").setAttribute("d", "M12 7 L14.8 11 H9.2 L12 7 Z"); // Up arrow
+          }
+        } else {
+          gNoOperar.style.cssText = dimStyle;
+          gVigilar.style.cssText = dimStyle;
+          gOperar.style.cssText = activeStyle;
+          if (vsMainIcon) {
+            const activeColor = isLong ? "#00ff88" : "#ff4c5b";
+            vsMainIcon.querySelector("circle").setAttribute("stroke", activeColor);
+            vsMainIcon.querySelector("path").setAttribute("fill", activeColor);
+            if (isLong) {
+              vsMainIcon.querySelector("path").setAttribute("d", "M12 7 L14.8 11 H9.2 L12 7 Z"); // Up arrow
+            } else {
+              vsMainIcon.querySelector("path").setAttribute("d", "M12 17 L14.8 13 H9.2 L12 17 Z"); // Down arrow
+            }
+          }
+        }
+      }
+
+      // Dynamic calculations for AI Command Center
+      let levels = null;
+      if (activeCandles && activeCandles.length > 0) {
+        const highs = activeCandles.map(c => c.high || c.close);
+        const lows = activeCandles.map(c => c.low || c.close);
+        const r2 = Math.max(...highs);
+        const s2 = Math.min(...lows);
+        const totalRange = r2 - s2 || 1;
+        
+        const sortedHighs = [...highs].sort((a,b)=>b-a);
+        const sortedLows = [...lows].sort((a,b)=>a-b);
+        let r1 = r2 - totalRange * 0.25;
+        let s1 = s2 + totalRange * 0.25;
+        if (sortedHighs.length > 10) r1 = sortedHighs[Math.floor(sortedHighs.length * 0.2)];
+        if (sortedLows.length > 10) s1 = sortedLows[Math.floor(sortedLows.length * 0.2)];
+
+        levels = { r1, r2, s1, s2 };
+      }
+
+      runOdinAI(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
 
       drawCharts();
     }
@@ -3552,17 +4402,31 @@
 
         ctx.clearRect(0,0,W,H);
 
+        // Fetch current live buyer percentage
+        const buyPctEl = document.getElementById("pct-buy");
+        const buyPctVal = buyPctEl ? parseFloat(buyPctEl.textContent) : 50;
+        const sellPctVal = 100 - buyPctVal;
+
+        // Dynamic parameters based on buyer/seller percentage
+        const buyHeightMultiplier = 0.15 + 0.65 * (buyPctVal / 100);
+        const buySpeed = 0.8 + 1.4 * (buyPctVal / 100);
+        const buyAmp = 2 + 8 * (buyPctVal / 100);
+
+        const sellHeightMultiplier = 0.15 + 0.65 * (sellPctVal / 100);
+        const sellSpeed = 0.8 + 1.4 * (sellPctVal / 100);
+        const sellAmp = 2 + 8 * (sellPctVal / 100);
+
         // Buyers wave
         ctx.beginPath();
         ctx.moveTo(0, H);
         for (let x = 0; x <= W; x++) {
           const factor = Math.max(0, Math.sin((x / W) * Math.PI * 0.8));
-          const y = H - (H * 0.48 * factor) - Math.sin(phase * 1.5 + x * 0.04) * 6 * factor;
+          const y = H - (H * buyHeightMultiplier * factor) - Math.sin(phase * buySpeed + x * 0.04) * buyAmp * factor;
           ctx.lineTo(x, y);
         }
         ctx.lineTo(W, H);
         ctx.closePath();
-        const greenGrad = ctx.createLinearGradient(0, H, 0, H * 0.3);
+        const greenGrad = ctx.createLinearGradient(0, H, 0, H * (1 - buyHeightMultiplier));
         greenGrad.addColorStop(0, 'rgba(0, 255, 136, 0.01)');
         greenGrad.addColorStop(1, 'rgba(0, 255, 136, 0.22)');
         ctx.fillStyle = greenGrad;
@@ -3576,12 +4440,12 @@
         ctx.moveTo(0, H);
         for (let x = 0; x <= W; x++) {
           const factor = Math.max(0, Math.sin(((W - x) / W) * Math.PI * 0.8));
-          const y = H - (H * 0.48 * factor) - Math.sin(phase * 1.2 + x * 0.04) * 6 * factor;
+          const y = H - (H * sellHeightMultiplier * factor) - Math.sin(phase * sellSpeed + x * 0.04) * sellAmp * factor;
           ctx.lineTo(x, y);
         }
         ctx.lineTo(W, H);
         ctx.closePath();
-        const redGrad = ctx.createLinearGradient(0, H, 0, H * 0.3);
+        const redGrad = ctx.createLinearGradient(0, H, 0, H * (1 - sellHeightMultiplier));
         redGrad.addColorStop(0, 'rgba(255, 76, 91, 0.01)');
         redGrad.addColorStop(1, 'rgba(255, 76, 91, 0.18)');
         ctx.fillStyle = redGrad;
@@ -3621,13 +4485,6 @@
       const canvas = document.getElementById('radar-canvas');
       const ctx = canvas.getContext('2d');
       let angle = 0;
-
-      const dots = [
-        { r: 40, a: 1.2, color: '#00ff8c' },
-        { r: 60, a: 2.8, color: '#ff3b3b' },
-        { r: 30, a: 4.5, color: '#ffd400' },
-        { r: 70, a: 5.6, color: '#00ff8c' }
-      ];
 
       function drawRadar() {
         const W = canvas.width, H = canvas.height;
@@ -3674,17 +4531,30 @@
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // draw detected whale dots
-        dots.forEach(d => {
+        // draw detected whale dots (real-time fading)
+        const now = Date.now();
+        // filter expired dots older than 15s
+        for (let i = radarDots.length - 1; i >= 0; i--) {
+          if (now - radarDots[i].createdAt >= 15000) {
+            radarDots.splice(i, 1);
+          }
+        }
+
+        radarDots.forEach(d => {
+          const age = now - d.createdAt;
+          const pct = Math.max(0, 1 - (age / 15000));
           const x = Math.cos(d.a) * d.r;
           const y = Math.sin(d.a) * d.r;
+          
+          ctx.save();
           ctx.beginPath();
-          ctx.arc(x, y, 5, 0, Math.PI * 2);
+          ctx.arc(x, y, 4.5, 0, Math.PI * 2);
           ctx.fillStyle = d.color;
           ctx.shadowColor = d.color;
-          ctx.shadowBlur = 8;
+          ctx.shadowBlur = 10 * pct;
+          ctx.globalAlpha = pct;
           ctx.fill();
-          ctx.shadowBlur = 0;
+          ctx.restore();
         });
 
         ctx.restore();

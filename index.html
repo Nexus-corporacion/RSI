@@ -1783,36 +1783,10 @@
                 </defs>
               </svg>
             </div>
-            <div class="liq-title">MAPA DE LIQUIDEZ</div>
+            <div class="liq-title">MAPA DE CALOR</div>
           </div>
-          <div class="liq-body">
-            <div class="liq-row">
-              <div class="liq-val" id="liq-val-1">3.85</div>
-              <div class="liq-bar-wrap">
-                <div class="liq-bar-container">
-                  <div class="liq-glow-bar" id="liq-glow-1"></div>
-                </div>
-              </div>
-              <div class="liq-pill pill-alta">ALTA</div>
-            </div>
-            <div class="liq-row">
-              <div class="liq-val" id="liq-val-2">3.95</div>
-              <div class="liq-bar-wrap">
-                <div class="liq-bar-container">
-                  <div class="liq-glow-bar" id="liq-glow-2"></div>
-                </div>
-              </div>
-              <div class="liq-pill pill-muy-alta">MUY ALTA</div>
-            </div>
-            <div class="liq-row">
-              <div class="liq-val" id="liq-val-3">4.02</div>
-              <div class="liq-bar-wrap">
-                <div class="liq-bar-container">
-                  <div class="liq-glow-bar" id="liq-glow-3"></div>
-                </div>
-              </div>
-              <div class="liq-pill pill-extrema">EXTREMA</div>
-            </div>
+          <div class="liq-body" style="position: relative; flex: 1; min-height: 190px; overflow: hidden; display: flex; flex-direction: column;">
+            <canvas id="heatmap-canvas" style="width: 100%; height: 100%; display: block; background: #060e15; border-radius: 8px;"></canvas>
           </div>
         </div>
 
@@ -2072,9 +2046,9 @@
             </div>
           </div>
           <div class="ballena-footer" style="padding-top: 6px;">
-            <div class="ballena-legend" id="legend-acumulando" style="transition: all 0.3s ease;"><div class="ballena-dot green"></div>ACUMULANDO</div>
-            <div class="ballena-legend" id="legend-distribuyendo" style="transition: all 0.3s ease;"><div class="ballena-dot red"></div>DISTRIBUYENDO</div>
-            <div class="ballena-legend" id="legend-neutral" style="transition: all 0.3s ease;"><div class="ballena-dot yellow"></div>NEUTRAL</div>
+            <div class="ballena-legend" id="legend-acumulando" style="transition: all 0.3s ease;"><div class="ballena-dot green"></div>BALLENAS COMPRANDO</div>
+            <div class="ballena-legend" id="legend-distribuyendo" style="transition: all 0.3s ease;"><div class="ballena-dot red"></div>BALLENAS VENDIENDO</div>
+            <div class="ballena-legend" id="legend-neutral" style="display: none; transition: all 0.3s ease;"><div class="ballena-dot yellow"></div>NEUTRAL</div>
           </div>
         </div>
 
@@ -2421,6 +2395,8 @@
     let activeCandles = [];
     let rsiValues = [];
     let emaValues = [];
+    let currentIsLong = true;
+    let smoothedMicroTarget = null;
     let scannedSymbolsData = []; // Array of scanned coin objects with real values
     let allBitgetContracts = []; // All available Bitget contracts for the search panel
 
@@ -3444,20 +3420,36 @@
       const pct3 = ((l3_price - p0) / p0 * 100).toFixed(2);
 
       // Render formatted prices and positive deviation tags
-      document.getElementById("liq-val-1").innerHTML = `${formatLiquidityPrice(l1_price)} <span style="font-size: 10px; color: #ff9a2e; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct1}%</span>`;
-      document.getElementById("liq-val-2").innerHTML = `${formatLiquidityPrice(l2_price)} <span style="font-size: 10px; color: #ff4c5b; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct2}%</span>`;
-      document.getElementById("liq-val-3").innerHTML = `${formatLiquidityPrice(l3_price)} <span style="font-size: 10px; color: #ff0055; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct3}%</span>`;
+      const l1_el = document.getElementById("liq-val-1");
+      const l2_el = document.getElementById("liq-val-2");
+      const l3_el = document.getElementById("liq-val-3");
+      if (l1_el) l1_el.innerHTML = `${formatLiquidityPrice(l1_price)} <span style="font-size: 10px; color: #ff9a2e; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct1}%</span>`;
+      if (l2_el) l2_el.innerHTML = `${formatLiquidityPrice(l2_price)} <span style="font-size: 10px; color: #ff4c5b; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct2}%</span>`;
+      if (l3_el) l3_el.innerHTML = `${formatLiquidityPrice(l3_price)} <span style="font-size: 10px; color: #ff0055; font-family: 'JetBrains Mono', monospace; font-weight: bold; margin-left: 2px;">+${pct3}%</span>`;
 
       // Update the pills dynamically to show the volume
-      document.querySelector(".pill-alta").textContent = `ALTA (${formatVol(l1_vol)})`;
-      document.querySelector(".pill-muy-alta").textContent = `MUY ALTA (${formatVol(l2_vol)})`;
-      document.querySelector(".pill-extrema").textContent = `EXTREMA (${formatVol(l3_vol)})`;
+      const pillAlta = document.querySelector(".pill-alta");
+      const pillMuyAlta = document.querySelector(".pill-muy-alta");
+      const pillExtrema = document.querySelector(".pill-extrema");
+      if (pillAlta) pillAlta.textContent = `ALTA (${formatVol(l1_vol)})`;
+      if (pillMuyAlta) pillMuyAlta.textContent = `MUY ALTA (${formatVol(l2_vol)})`;
+      if (pillExtrema) pillExtrema.textContent = `EXTREMA (${formatVol(l3_vol)})`;
 
       // Set the progress bar widths proportional to real accumulated volumes
       const maxVol = Math.max(l1_vol, l2_vol, l3_vol, 1);
       liqTargetW1 = Math.max(15, Math.min(95, (l1_vol / maxVol) * 95));
       liqTargetW2 = Math.max(15, Math.min(95, (l2_vol / maxVol) * 95));
       liqTargetW3 = Math.max(15, Math.min(95, (l3_vol / maxVol) * 95));
+
+      // Trigger Heatmap Update with latest order book depth
+      if (window.updateLiquidityHeatmapData) {
+        window.updateLiquidityHeatmapData({
+          symbol: engineData.symbol,
+          price: latestPrice,
+          l1_price, l2_price, l3_price,
+          l1_vol, l2_vol, l3_vol
+        });
+      }
 
       // Fetch live buyers & sellers exact data from Bitget Futures trades flow
       let buyPct = 50;
@@ -3615,7 +3607,7 @@
         const dimOpacity = "0.2";
         const fullOpacity = "1";
         
-        if (netCapitalFlow > 1000) {
+        if (numWhales > 0 && netCapitalFlow > 0) {
           legAcumulando.style.opacity = fullOpacity;
           legAcumulando.style.filter = "none";
           legAcumulando.style.fontWeight = "bold";
@@ -3627,7 +3619,7 @@
           legNeutral.style.opacity = dimOpacity;
           legNeutral.style.filter = "grayscale(90%)";
           legNeutral.style.fontWeight = "normal";
-        } else if (netCapitalFlow < -1000) {
+        } else if (numWhales > 0 && netCapitalFlow < 0) {
           legAcumulando.style.opacity = dimOpacity;
           legAcumulando.style.filter = "grayscale(90%)";
           legAcumulando.style.fontWeight = "normal";
@@ -3648,9 +3640,9 @@
           legDistribuyendo.style.filter = "grayscale(90%)";
           legDistribuyendo.style.fontWeight = "normal";
           
-          legNeutral.style.opacity = fullOpacity;
-          legNeutral.style.filter = "none";
-          legNeutral.style.fontWeight = "bold";
+          legNeutral.style.opacity = dimOpacity;
+          legNeutral.style.filter = "grayscale(90%)";
+          legNeutral.style.fontWeight = "normal";
         }
       }
 
@@ -3676,6 +3668,8 @@
         } else {
           activeState = "vigilar";
         }
+
+        currentIsLong = isLong; // Sync to global state
 
         // Update Group 3 inner elements depending on bias (Long vs Short)
         const vsOperarTitleText = document.getElementById("vs-operar-title-text");
@@ -3833,6 +3827,7 @@
       const r2 = Math.max(...highs);
       const s2 = Math.min(...lows);
       const totalRange = r2 - s2 || 1;
+      const f = (val) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
 
       // Find Swing Points (local pivot highs and lows)
       const findPivots = (arr, type, minRadius = 2, maxRadius = 8) => {
@@ -3964,13 +3959,115 @@
 
         pctx.fillStyle = lvl.color;
         pctx.fillText(labelText, 14, y - 2);
+
+        // --- DRAW CENTERED PRICE BADGE (GREEN BOXES LOCATION) ---
+        pctx.save();
+        pctx.font = 'bold 10px "Inter", sans-serif';
+        const priceValText = f(lvl.price);
+        const priceTextWidth = pctx.measureText(priceValText).width;
+        const centerX = p_w / 2;
+        
+        pctx.fillStyle = 'rgba(6, 14, 21, 0.9)';
+        pctx.fillRect(centerX - priceTextWidth / 2 - 6, y - 8, priceTextWidth + 12, 16);
+        pctx.strokeStyle = lvl.color;
+        pctx.lineWidth = 1.2;
+        pctx.strokeRect(centerX - priceTextWidth / 2 - 6, y - 8, priceTextWidth + 12, 16);
+
+        pctx.fillStyle = '#ffffff';
+        pctx.textAlign = 'center';
+        pctx.textBaseline = 'middle';
+        pctx.fillText(priceValText, centerX, y);
+        pctx.restore();
         
         pctx.setLineDash([5, 4]);
       });
 
+      // --- DRAW MICRO DYNAMIC SUPPORT / RESISTANCE (SCALPING EXTREMO) ---
+      if (activeCandles.length > 0) {
+        const latestPrice = closes[closes.length - 1];
+        
+        // Reset check for transitions when symbol or timeframe changes
+        if (typeof drawCharts.lastSymbol === 'undefined') {
+          drawCharts.lastSymbol = selectedSymbol;
+        }
+        if (typeof drawCharts.lastInterval === 'undefined') {
+          drawCharts.lastInterval = activeInterval;
+        }
+        if (drawCharts.lastSymbol !== selectedSymbol || drawCharts.lastInterval !== activeInterval) {
+          smoothedMicroTarget = null;
+          drawCharts.lastSymbol = selectedSymbol;
+          drawCharts.lastInterval = activeInterval;
+        }
+
+        let microTargetPrice = null;
+        let microLabel = "";
+        
+        if (currentIsLong) {
+          // Find nearest micro-resistance above latestPrice
+          const recentHighs = highs.slice(-15);
+          const potentialResistances = recentHighs.filter(h => h > latestPrice);
+          if (potentialResistances.length > 0) {
+            microTargetPrice = Math.min(...potentialResistances);
+          } else {
+            // Fallback: use ATR-like fraction above
+            microTargetPrice = latestPrice + (r2 - s2) * 0.08;
+          }
+          microLabel = "TP (RESISTENCIA MICRO)";
+        } else {
+          // Find nearest micro-support below latestPrice
+          const recentLows = lows.slice(-15);
+          const potentialSupports = recentLows.filter(l => l < latestPrice);
+          if (potentialSupports.length > 0) {
+            microTargetPrice = Math.max(...potentialSupports);
+          } else {
+            // Fallback: use ATR-like fraction below
+            microTargetPrice = latestPrice - (r2 - s2) * 0.08;
+          }
+          microLabel = "TP (SOPORTE MICRO)";
+        }
+
+        if (smoothedMicroTarget === null) {
+          smoothedMicroTarget = microTargetPrice;
+        } else {
+          smoothedMicroTarget += (microTargetPrice - smoothedMicroTarget) * 0.15;
+        }
+
+        const microY = scaleY(smoothedMicroTarget);
+
+        if (microY >= 0 && microY <= p_h) {
+          pctx.save();
+          pctx.strokeStyle = '#D4FF00'; // Neon fluorescent yellow-green
+          pctx.lineWidth = 2.5;
+          pctx.setLineDash([6, 4]);
+          pctx.beginPath();
+          pctx.moveTo(0, microY);
+          pctx.lineTo(p_w, microY);
+          pctx.stroke();
+
+          // Draw the price and label centered between the center support/resistance numbers and the right price axis
+          pctx.setLineDash([]);
+          pctx.font = 'bold 10px "Inter", sans-serif';
+          const microText = `${microLabel}: ${f(smoothedMicroTarget)}`;
+          const microTextWidth = pctx.measureText(microText).width;
+          const microCenterX = p_w * 0.75; // Perfectly centered between 0.5 (center) and 1.0 (right edge)
+
+          pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
+          pctx.fillRect(microCenterX - microTextWidth / 2 - 8, microY - 20, microTextWidth + 16, 17);
+          pctx.strokeStyle = '#D4FF00';
+          pctx.lineWidth = 1.2;
+          pctx.strokeRect(microCenterX - microTextWidth / 2 - 8, microY - 20, microTextWidth + 16, 17);
+
+          pctx.fillStyle = '#D4FF00';
+          pctx.textAlign = 'center';
+          pctx.textBaseline = 'middle';
+          pctx.fillText(microText, microCenterX, microY - 11);
+          pctx.restore();
+        }
+      }
+
       pctx.restore();
 
-      // Dynamically update the Right Y-Axis values with calculated support/resistance and current price
+      // Dynamically update the Right Y-Axis values with a standard price scale (regla de precio dinámica) and current price
       const yAxisRight = document.querySelector(".y-axis-right");
       if (yAxisRight) {
         const getTopPct = (price) => {
@@ -3982,16 +4079,23 @@
         };
 
         const latestPrice = closes[closes.length - 1];
-        const f = (val) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+        
+        // Calculate dynamic ticks (added 3 more, total 8, larger size, pure white)
+        const paddingFactor = 0.15;
+        const innerMin = minPrice - priceRange * paddingFactor;
+        const innerMax = maxPrice + priceRange * paddingFactor;
+        const ticksCount = 8;
+        let ticksHTML = '';
+        for (let i = 0; i < ticksCount; i++) {
+          const val = innerMin + (innerMax - innerMin) * (i / (ticksCount - 1));
+          const topPct = (100 - (i / (ticksCount - 1)) * 100).toFixed(1);
+          ticksHTML += `<div style="position: absolute; top: ${topPct}%; transform: translateY(-50%); color: #ffffff; font-weight: 600; font-family: 'Inter', sans-serif; font-size: 11px;">${f(val)}</div>`;
+        }
 
-        yAxisRight.innerHTML = `
-          <div style="position: absolute; top: ${getTopPct(r2)}%; transform: translateY(-50%); color: #ff4c5b; font-weight: bold;">${f(r2)}</div>
-          <div style="position: absolute; top: ${getTopPct(r1)}%; transform: translateY(-50%); color: #ff808b; font-weight: bold;">${f(r1)}</div>
+        yAxisRight.innerHTML = ticksHTML + `
           <div style="position: absolute; top: ${getTopPct(latestPrice)}%; transform: translateY(-50%); z-index: 10;">
-            <span style="background: #2b5c8f; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 8px rgba(43,92,143,0.5); font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums;">${f(latestPrice)}</span>
+            <span style="background: #2b5c8f; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 8px rgba(43,92,143,0.5); font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px;">${f(latestPrice)}</span>
           </div>
-          <div style="position: absolute; top: ${getTopPct(s1)}%; transform: translateY(-50%); color: #5effb1; font-weight: bold;">${f(s1)}</div>
-          <div style="position: absolute; top: ${getTopPct(s2)}%; transform: translateY(-50%); color: #00ff88; font-weight: bold;">${f(s2)}</div>
         `;
       }
 
@@ -4824,6 +4928,377 @@
           searchDropdown.style.display = 'none';
         }
       });
+    })();
+  </script>
+
+  <!-- DYNAMIC LIQUIDITY HEATMAP ENGINE -->
+  <script>
+    (function(){
+      const canvas = document.getElementById('heatmap-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let W = canvas.width;
+      let H = canvas.height;
+
+      // Real-time state
+      let currentSymbol = "";
+      let lastSymbol = "";
+      let currentPrice = 0;
+      let orderBookLiquidity = null;
+
+      // Smooth Y-axis scaling limits (easing)
+      let yMin = 0;
+      let yMax = 0;
+      let referencePrice = 0;
+
+      // Real-time history buffer for scrolling heatmap (decoupled from any candle timeframe)
+      const history = [];
+      const maxHistory = 180;
+
+      // Seeded random for deterministic but unique asset bands
+      function getSeededRandom(seedStr) {
+        let hash = 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return function() {
+          let x = Math.sin(hash++) * 10000;
+          return x - Math.floor(x);
+        };
+      }
+
+      // External API interface called by loadActiveAssetChart
+      window.updateLiquidityHeatmapData = function(data) {
+        currentSymbol = data.symbol || "";
+        currentPrice = data.price || 0;
+        orderBookLiquidity = data;
+
+        // Reset history and reference price if active token changed
+        if (currentSymbol !== lastSymbol) {
+          history.length = 0;
+          lastSymbol = currentSymbol;
+          referencePrice = currentPrice;
+          yMin = referencePrice * 0.965;
+          yMax = referencePrice * 1.035;
+        }
+
+        if (currentPrice > 0) {
+          // Record snap
+          history.push({
+            time: Date.now(),
+            price: currentPrice,
+            l1_price: data.l1_price || currentPrice * 1.01,
+            l2_price: data.l2_price || currentPrice * 1.02,
+            l3_price: data.l3_price || currentPrice * 1.03,
+            l1_vol: data.l1_vol || 1000,
+            l2_vol: data.l2_vol || 1200,
+            l3_vol: data.l3_vol || 1500
+          });
+
+          if (history.length > maxHistory) {
+            history.shift();
+          }
+        }
+      };
+
+      function updateSize() {
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        W = canvas.width;
+        H = canvas.height;
+        ctx.scale(dpr, dpr);
+      }
+
+      updateSize();
+
+      let resizeFrame = null;
+      window.addEventListener('resize', () => {
+        if (resizeFrame) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(updateSize);
+      });
+
+      // Render Loop
+      function render() {
+        if (W === 0 || H === 0) {
+          updateSize();
+        }
+
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        const cssW = W / dpr;
+        const cssH = H / dpr;
+
+        // Draw background
+        ctx.fillStyle = '#060e15';
+        ctx.fillRect(0, 0, cssW, cssH);
+
+        const parentCandles = (typeof activeCandles !== 'undefined') ? activeCandles : [];
+        if (currentPrice === 0 && parentCandles && parentCandles.length > 0) {
+          currentPrice = parentCandles[parentCandles.length - 1].close;
+        }
+        if (!currentSymbol && parentCandles && parentCandles.length > 0) {
+          currentSymbol = (typeof selectedSymbol !== 'undefined') ? selectedSymbol : "ETHFIUSDT";
+        }
+
+        // Initialize/Seed history if empty to maintain active state
+        if (currentPrice > 0 && history.length === 0) {
+          referencePrice = currentPrice;
+          const p1 = currentPrice * 1.01;
+          const p2 = currentPrice * 1.025;
+          const p3 = currentPrice * 1.04;
+          for (let i = 0; i < maxHistory; i++) {
+            history.push({
+              time: Date.now() - (maxHistory - i) * 1000,
+              price: currentPrice,
+              l1_price: p1,
+              l2_price: p2,
+              l3_price: p3,
+              l1_vol: 1000,
+              l2_vol: 1200,
+              l3_vol: 1500
+            });
+          }
+        }
+
+        if (!currentPrice || history.length === 0) {
+          // Loading state inside canvas
+          ctx.fillStyle = 'rgba(0, 255, 140, 0.45)';
+          ctx.font = "11px 'JetBrains Mono', monospace";
+          ctx.textAlign = "center";
+          ctx.fillText("ESPERANDO DATOS...", cssW / 2, cssH / 2);
+          requestAnimationFrame(render);
+          return;
+        }
+
+        // Update reference price with extremely high damping/filtering to guarantee steady, solid grid lines
+        if (referencePrice === 0) {
+          referencePrice = currentPrice;
+        } else {
+          // Extremely slow tracking keeps horizontal lines beautifully steady
+          const drift = currentPrice - referencePrice;
+          if (Math.abs(drift) > referencePrice * 0.015) {
+            referencePrice += drift * 0.005;
+          } else {
+            referencePrice += drift * 0.001;
+          }
+        }
+
+        // Setup Y-axis range (balanced +/- 3.5% centered around referencePrice)
+        let targetMin = referencePrice * 0.965;
+        let targetMax = referencePrice * 1.035;
+
+        if (yMin === 0 || yMax === 0) {
+          yMin = targetMin;
+          yMax = targetMax;
+        } else {
+          // Extremely slow interpolation so there's zero vertical shaking/shuddering
+          yMin += (targetMin - yMin) * 0.004;
+          yMax += (targetMax - yMax) * 0.004;
+        }
+
+        // Format price with dot decimal and no thousands separator to avoid dots inside zeros
+        function formatPriceNoSeparator(value) {
+          let str;
+          if (value >= 1000) {
+            str = value.toFixed(1);
+          } else if (value >= 100) {
+            str = value.toFixed(2);
+          } else if (value >= 1) {
+            str = value.toFixed(3);
+          } else {
+            str = value.toFixed(4);
+            if (str.endsWith('0')) {
+              str = str.slice(0, -1);
+            }
+          }
+          return str.replace(',', '.');
+        }
+
+        const paddingRight = 68;
+        const paddingBottom = 16;
+        const chartW = cssW - paddingRight;
+        const chartH = cssH - paddingBottom;
+
+        function getValY(val) {
+          const pct = (val - yMin) / (yMax - yMin);
+          return chartH - pct * chartH;
+        }
+
+        // Draw Y-Axis grid lines & labels
+        const numTicks = 5;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.font = "bold 11px 'Inter', sans-serif";
+
+        for (let i = 0; i < numTicks; i++) {
+          const val = yMin + (yMax - yMin) * (i / (numTicks - 1));
+          const y = getValY(val);
+
+          // Draw faint gridline
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.015)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(chartW, y);
+          ctx.stroke();
+
+          // Draw label in pure white, larger, without localized dots inside zeros
+          ctx.fillStyle = '#ffffff';
+          let formattedLabel = formatPriceNoSeparator(val);
+          ctx.fillText(formattedLabel, chartW + 5, y);
+        }
+
+        // Draw vertical background grid lines (independent of candlestick timeline)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.01)';
+        ctx.lineWidth = 1;
+        for (let j = 0; j <= 4; j++) {
+          const gx = (chartW / 4) * j;
+          ctx.beginPath();
+          ctx.moveTo(gx, 0);
+          ctx.lineTo(gx, chartH);
+          ctx.stroke();
+        }
+
+        // Render Instant, Stable Horizontal Heatmap Bands (Full Screen Width)
+        const numLanes = 65;
+        const startOffset = -0.035; // -3.5%
+        const endOffset = 0.035;   // +3.5%
+        const step = (endOffset - startOffset) / (numLanes - 1);
+
+        // Active Order Book Levels
+        const l1_p = (orderBookLiquidity && orderBookLiquidity.l1_price) || currentPrice * 1.008;
+        const l2_p = (orderBookLiquidity && orderBookLiquidity.l2_price) || currentPrice * 1.018;
+        const l3_p = (orderBookLiquidity && orderBookLiquidity.l3_price) || currentPrice * 1.028;
+
+        const s1_p = currentPrice * 0.992;
+        const s2_p = currentPrice * 0.982;
+        const s3_p = currentPrice * 0.972;
+
+        const v1 = (orderBookLiquidity && orderBookLiquidity.l1_vol) || 1000;
+        const v2 = (orderBookLiquidity && orderBookLiquidity.l2_vol) || 1200;
+        const v3 = (orderBookLiquidity && orderBookLiquidity.l3_vol) || 1500;
+        const maxV = Math.max(v1, v2, v3, 1);
+
+        const i1 = v1 / maxV;
+        const i2 = v2 / maxV;
+        const i3 = v3 / maxV;
+
+        for (let l = 0; l < numLanes; l++) {
+          const offset = startOffset + l * step;
+          const lanePrice = referencePrice * (1 + offset);
+
+          // Latent deterministic background intensity for this lane (perfectly stable per symbol)
+          let hash = 0;
+          const seedStr = currentSymbol + "_" + l;
+          for (let i = 0; i < seedStr.length; i++) {
+            hash = seedStr.charCodeAt(i) + ((hash << 5) - hash);
+          }
+          const randVal = Math.abs(Math.sin(hash)) * 0.28; // 0 to 0.28 background intensity
+          let laneIntensity = randVal;
+
+          // Proximity function (Gaussian bell curve spread for natural heat glow)
+          const getProximity = (lp, targetP, normalizedVol) => {
+            if (!targetP) return 0;
+            const diffPct = Math.abs(lp - targetP) / targetP;
+            const sigma = 0.0016; // Elegant thickness glow spread
+            const proximity = Math.exp(-Math.pow(diffPct / sigma, 2));
+            return proximity * normalizedVol;
+          };
+
+          const p_r1 = getProximity(lanePrice, l1_p, i1 * 0.68);
+          const p_r2 = getProximity(lanePrice, l2_p, i2 * 0.84);
+          const p_r3 = getProximity(lanePrice, l3_p, i3 * 0.98);
+
+          const p_s1 = getProximity(lanePrice, s1_p, i1 * 0.62);
+          const p_s2 = getProximity(lanePrice, s2_p, i2 * 0.80);
+          const p_s3 = getProximity(lanePrice, s3_p, i3 * 0.95);
+
+          // Merge level influences
+          laneIntensity = Math.max(laneIntensity, p_r1, p_r2, p_r3, p_s1, p_s2, p_s3);
+
+          const y = getValY(lanePrice);
+          if (y < 0 || y > chartH) continue;
+
+          let r = 0, g = 0, b_val = 0;
+          let op = laneIntensity * 0.92;
+
+          // Spectrum coloring matches image: Yellow (Extrema), Green (High), Cyan (Medium-High), Blue (Medium), Purple (Low background)
+          if (laneIntensity >= 0.84) {
+            r = 250; g = 204; b_val = 21; // Yellow
+          } else if (laneIntensity >= 0.64) {
+            r = 34; g = 197; b_val = 94;  // Green
+          } else if (laneIntensity >= 0.44) {
+            r = 6; g = 182; b_val = 212;  // Cyan
+          } else if (laneIntensity >= 0.24) {
+            r = 59; g = 130; b_val = 246;  // Blue
+          } else {
+            r = 124; g = 58; b_val = 237;  // Purple
+            op = laneIntensity * 0.52;
+          }
+
+          // Linear gradient gives older data a beautifully soft historical fade, keeping live action vibrant on the right
+          const grad = ctx.createLinearGradient(0, 0, chartW, 0);
+          grad.addColorStop(0, `rgba(${r}, ${g}, ${b_val}, ${op * 0.28})`);
+          grad.addColorStop(0.3, `rgba(${r}, ${g}, ${b_val}, ${op * 0.62})`);
+          grad.addColorStop(0.7, `rgba(${r}, ${g}, ${b_val}, ${op * 0.85})`);
+          grad.addColorStop(1, `rgba(${r}, ${g}, ${b_val}, ${op})`);
+
+          ctx.fillStyle = grad;
+          const thickness = 2.4;
+          ctx.fillRect(0, y - thickness / 2, chartW, thickness);
+        }
+
+        // Draw clean, smooth historical white price line tracking price path smoothly through heatmap space
+        if (history.length > 0) {
+          ctx.beginPath();
+          const colWidth = chartW / maxHistory;
+          history.forEach((snap, idx) => {
+            const x = idx * colWidth + colWidth / 2;
+            const y = getValY(snap.price);
+            if (idx === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          });
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+
+        // Draw dynamic dotted price line (horizontal crossing) tracking live price
+        const priceY = getValY(currentPrice);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(0, priceY);
+        ctx.lineTo(chartW, priceY);
+        ctx.stroke();
+        ctx.setLineDash([]); // reset
+
+        // Price badge tag
+        ctx.fillStyle = '#062f4f';
+        ctx.fillRect(chartW + 2, priceY - 9, 62, 18);
+        ctx.strokeStyle = '#00f58c';
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(chartW + 2, priceY - 9, 62, 18);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = "bold 11px 'Inter', sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        let displayP = formatPriceNoSeparator(currentPrice);
+        ctx.fillText(displayP, chartW + 5, priceY);
+
+        requestAnimationFrame(render);
+      }
+
+      // Launch render loop
+      requestAnimationFrame(render);
     })();
   </script>
 

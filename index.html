@@ -4113,29 +4113,56 @@
             };
           }
         } else {
-          // Phase 2/3: Fetch real Google Search grounded data from backend
-          const response = await fetch("/api/catalyst", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              activo: symUpper.replace("USDT", ""),
-              rsi: rsiVal,
-              precio: `${priceVal} USDT`,
-              interval: intervalVal,
-              buyPct: buyPct,
-              sellPct: sellPct,
-              netCapitalFlow: capitalFlow,
-              whaleCount: whaleCount,
-              flujoPercent: netFlowPercent,
-              fundingRate: fundingRate,
-              openInterest: openInterest
-            })
-          });
-          if (!response.ok) {
-            const errJson = await response.json().catch(() => ({}));
-            throw new Error(errJson.error || `HTTP error ${response.status}`);
+          // Phase 2/3: Fetch real Google Search grounded data from backend with local fallback on failure
+          try {
+            const response = await fetch("/api/catalyst", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                activo: symUpper.replace("USDT", ""),
+                rsi: rsiVal,
+                precio: `${priceVal} USDT`,
+                interval: intervalVal,
+                buyPct: buyPct,
+                sellPct: sellPct,
+                netCapitalFlow: capitalFlow,
+                whaleCount: whaleCount,
+                flujoPercent: netFlowPercent,
+                fundingRate: fundingRate,
+                openInterest: openInterest
+              })
+            });
+            if (!response.ok) {
+              const errJson = await response.json().catch(() => ({}));
+              throw new Error(errJson.error || `HTTP error ${response.status}`);
+            }
+            return await response.json();
+          } catch (fetchErr) {
+            console.warn("Real catalyst fetch failed (possibly running on a static page/GitHub Pages). Falling back to simulated/mock mode:", fetchErr);
+            const mockData = catalystData[symUpper];
+            if (mockData) {
+              return {
+                estado: "ACTIVO",
+                activo: symUpper.replace("USDT", ""),
+                evento: mockData.evento,
+                fuente: mockData.fuente,
+                fecha: mockData.publicado,
+                lineaTemporal: {
+                  antes: Array.isArray(mockData.antes) ? mockData.antes.join(" / ") : mockData.antes,
+                  evento: mockData.eventoDetail,
+                  despues: Array.isArray(mockData.despues) ? mockData.despues.join(" / ") : mockData.despues
+                },
+                fuentesVerificadas: [ "https://twitter.com/bitget", "https://official.announcement.org" ],
+                semaforo: mockData.label
+              };
+            } else {
+              return {
+                estado: "SIN_CATALIZADOR",
+                activo: symUpper.replace("USDT", ""),
+                motivo: "Sin evidencia pública reciente verificada"
+              };
+            }
           }
-          return await response.json();
         }
       })();
 

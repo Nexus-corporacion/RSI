@@ -57,12 +57,12 @@
       display: grid;
       grid-template-columns: 320px 1000px 320px;
       gap: 10px;
-      height: 95px;
+      height: 115px;
     }
 
     .logo-container {
       width: 320px;
-      height: 95px;
+      height: 115px;
       background: transparent;
       border: 1px solid #1d2b39;
       border-radius: 12px;
@@ -74,7 +74,7 @@
     }
 
     .logo-container > img {
-      height: 95px;
+      height: 115px;
       width: 318px;
       object-fit: contain;
       mix-blend-mode: screen;
@@ -83,7 +83,7 @@
     /* Logo Paleta 1 Styles */
     .logo-wrap {
       width: 316px;
-      height: 95px;
+      height: 115px;
       background: #000;
       position: relative;
       overflow: hidden;
@@ -95,17 +95,17 @@
 
     /* Left Side: Dynamic Vector Cyber Eye Panel */
     .logo-wrap .eye-canvas {
-      width: 95px;
-      height: 95px;
+      width: 115px;
+      height: 115px;
       position: relative;
       flex-shrink: 0;
     }
 
-    /* Target/HUD rings centered exactly on the eye-canvas center (X: 48px, Y: 48px) */
+    /* Target/HUD rings centered exactly on the eye-canvas center */
     .logo-wrap .hud-ring {
       position: absolute;
-      left: 48px;
-      top: 48px;
+      left: 50%;
+      top: 50%;
       border-radius: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
@@ -268,7 +268,7 @@
     /* Nexus Header Custom styled bar */
     .market-bar {
       flex: 1;
-      height: 95px;
+      height: 115px;
       background: #0b111b;
       border: 1px solid #1d2b39;
       border-radius: 12px;
@@ -294,11 +294,11 @@
     }
 
     .market-label {
-      font-size: 11px;
+      font-size: 12.5px;
       letter-spacing: 2px;
       color: #6f8497;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-weight: 600;
     }
 
@@ -335,7 +335,7 @@
     /* Alarm Control Block */
     .alarm-card {
       width: 320px;
-      height: 95px;
+      height: 115px;
       background: #0b111b;
       border: 1px solid #1d2b39;
       border-radius: 12px;
@@ -1214,9 +1214,51 @@
 
     .trades-canvas-wrap {
       width: 100%;
-      height: 90px;
+      height: 110px;
       position: relative;
       overflow: visible;
+    }
+
+    /* Custom neon glowing bars for Compradores vs Vendedores */
+    .glow-bar {
+      height: 6px;
+      border-radius: 3px;
+      width: 100%;
+      position: relative;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.01);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02);
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .green-bar {
+      background: #00ff88;
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .red-bar {
+      background: #ff4c5b;
+      box-shadow: 0 0 12px rgba(255, 76, 91, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes bar-pulse {
+      0%, 100% {
+        opacity: 0.85;
+        filter: brightness(1.0);
+      }
+      50% {
+        opacity: 1.0;
+        filter: brightness(1.4) saturate(1.2);
+        box-shadow: 0 0 16px rgba(var(--bar-glow-rgb), 0.95), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .green-bar {
+      --bar-glow-rgb: 0, 255, 136;
+    }
+
+    .red-bar {
+      --bar-glow-rgb: 255, 76, 91;
     }
 
     .trades-legend-row {
@@ -1482,7 +1524,7 @@
             <div class="hud-ring hud-outer"></div>
 
             <!-- Vector Cyber Eye SVG -->
-            <svg class="cyber-eye-svg" viewBox="0 0 100 100" width="64" height="64" style="position: absolute; left: 48px; top: 48px; transform: translate(-50%, -50%);">
+            <svg class="cyber-eye-svg" viewBox="0 0 100 100" width="64" height="64" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
               <!-- Outer glowing cybernetic eye shape -->
               <path d="M 12 50 C 32 18, 68 18, 88 50 C 68 82, 32 82, 12 50 Z" 
                     fill="none" 
@@ -1529,10 +1571,10 @@
       <div class="market-bar" style="position: relative;">
         
         <!-- MÓDULO 1: ODIN AI COMMANDER -->
-        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-1">
-          <div class="market-label" style="margin-bottom: 6px; text-align: center;">ODIN AI COMMANDER</div>
-          <div class="market-value" id="ai-decision" style="font-size: 20px; margin-top: 2px; text-align: center; width: 100%;">ANALIZANDO...</div>
-          <div class="ai-details" id="ai-mod-1-details" style="font-size: 9px; color: #8fa0af; margin-top: 5px; display: flex; gap: 8px; justify-content: center; font-family: 'JetBrains Mono', monospace; width: 100%;">
+        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-1">
+          <div class="market-label" style="margin-bottom: 8px; text-align: center;">ODIN AI COMMANDER</div>
+          <div class="market-value" id="ai-decision" style="font-size: 24px; margin-top: 2px; text-align: center; width: 100%;">ANALIZANDO...</div>
+          <div class="ai-details" id="ai-mod-1-details" style="font-size: 11.5px; color: #8fa0af; margin-top: 6px; display: flex; gap: 8px; justify-content: center; font-family: 'JetBrains Mono', monospace; width: 100%;">
             <span>Conf: <span id="ai-confidence" style="color: #00f0ff;">--</span></span>
             <span>|</span>
             <span>Esc: <span id="ai-scenario" style="color: #ffd93d;">--</span></span>
@@ -1542,31 +1584,31 @@
         </div>
 
         <!-- MÓDULO 2: RAZONAMIENTO IA -->
-        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-2">
-          <div class="market-label" style="margin-bottom: 6px; text-align: center;">RAZONAMIENTO IA</div>
-          <div id="ai-reasons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; width: 100%; font-size: 9.5px; font-family: 'Inter', sans-serif;">
-            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 9px; margin-top: 8px; font-family: 'JetBrains Mono', monospace;">Cargando...</div>
+        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-2">
+          <div class="market-label" style="margin-bottom: 8px; text-align: center;">RAZONAMIENTO IA</div>
+          <div id="ai-reasons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; width: 100%; font-size: 12px; font-family: 'Inter', sans-serif;">
+            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 11px; margin-top: 10px; font-family: 'JetBrains Mono', monospace;">Cargando...</div>
           </div>
         </div>
 
         <!-- MÓDULO 3: PLAN DE OPERACIÓN -->
-        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-3">
-          <div class="market-label" style="margin-bottom: 6px; text-align: center;">PLAN DE OPERACIÓN</div>
-          <div id="ai-plan-layout" style="display: flex; flex-direction: column; gap: 3px; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 9.5px;">
-            <div style="color: #8fa0af; text-align: center; font-size: 9px; margin-top: 8px;">Cargando...</div>
+        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-3">
+          <div class="market-label" style="margin-bottom: 8px; text-align: center;">PLAN DE OPERACIÓN</div>
+          <div id="ai-plan-layout" style="display: flex; flex-direction: column; gap: 4px; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
+            <div style="color: #8fa0af; text-align: center; font-size: 11px; margin-top: 10px;">Cargando...</div>
           </div>
         </div>
 
         <!-- MÓDULO 4: MOTOR AI -->
-        <div class="market-card" style="padding: 10px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-4">
-          <div class="market-label" style="margin-bottom: 6px; text-align: center;">MOTOR AI</div>
-          <div style="display: flex; flex-direction: column; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; line-height: 1.35;">
+        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-4">
+          <div class="market-label" style="margin-bottom: 8px; text-align: center;">MOTOR AI</div>
+          <div style="display: flex; flex-direction: column; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.45;">
             <div style="display: flex; justify-content: space-between; color: #8fa0af;">
               <span>Motor: <span id="ai-motor-status" style="color: #ffd93d; font-weight: bold;">ANALIZANDO</span></span>
               <span id="ai-motor-timer">0.0s</span>
             </div>
-            <div id="ai-motor-log" style="color: #00f0ff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 2px;">Iniciando análisis...</div>
-            <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 4px; overflow: hidden; position: relative;">
+            <div id="ai-motor-log" style="color: #00f0ff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 4px;">Iniciando análisis...</div>
+            <div style="width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 6px; overflow: hidden; position: relative;">
               <div id="ai-motor-progress" style="height: 100%; width: 10%; background: linear-gradient(90deg, #00f0ff, #00ff88); transition: width 0.3s ease; position: absolute; left: 0; top: 0;"></div>
             </div>
           </div>
@@ -1952,24 +1994,61 @@
             <div style="opacity: .7; font-size: 11px">Últimos 30 min</div>
           </div>
 
-          <div class="trades-canvas-wrap" style="position: relative; width: 100%; height: 90px; overflow: hidden; border-radius: 8px;">
-            <canvas id="waves-canvas" style="width: 100%; height: 100%; display: block;"></canvas>
-            
-            <!-- VS Badge in the exact center -->
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;">
-              <div class="vs-badge" style="width: 32px; height: 32px; border-radius: 50%; background: #060e15; border: 2.5px solid #142230; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 11px; color: #fff; box-shadow: 0 0 12px rgba(0,0,0,0.85);">VS</div>
-            </div>
-            
-            <!-- Left Overlay: 50% COMPRADORES -->
-            <div style="position: absolute; bottom: 8px; left: 12px; text-align: left; z-index: 10;">
-              <div class="pct buy" id="pct-buy" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.35); line-height: 1;">50%</div>
-              <div style="font-size: 9px; font-weight: bold; color: #00ff88; letter-spacing: 0.5px; margin-top: 2px;">COMPRADORES</div>
-            </div>
+          <div class="trades-canvas-wrap" style="position: relative; width: 100%; height: 110px; overflow: hidden; border-radius: 8px; border: 1px solid #142230; background: #03070a;">
+            <!-- Dual Neon Box Container with movable divide -->
+            <div style="display: flex; width: 100%; height: 100%; position: relative;">
+              
+              <!-- LEFT SIDE: BULLS (Green) -->
+              <div id="bull-side" style="display: flex; align-items: center; width: 50%; height: 100%; border-right: 1px solid #142230; padding: 12px 18px; box-sizing: border-box; background: rgba(0, 255, 136, 0.02); position: relative;">
+                
+                <!-- 8 Horizontal Green Bars with Staggered Neon Pulse Animation -->
+                <div class="bars-stack" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; height: 100%; padding: 4px 0; overflow: hidden;">
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.0s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.25s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.5s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.75s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.0s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.25s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.5s;"></div>
+                  <div class="glow-bar green-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.75s;"></div>
+                </div>
 
-            <!-- Right Overlay: 50% VENDEDORES -->
-            <div style="position: absolute; bottom: 8px; right: 12px; text-align: right; z-index: 10;">
-              <div class="pct sell" id="pct-sell" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(255,255,255,0.3); line-height: 1;">50%</div>
-              <div style="font-size: 9px; font-weight: bold; color: #ff4c5b; letter-spacing: 0.5px; margin-top: 2px;">VENDEDORES</div>
+                <!-- Text Overlay -->
+                <div style="position: absolute; bottom: 8px; left: 16px; text-align: left; z-index: 10; pointer-events: none;">
+                  <div class="pct buy" id="pct-buy" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(0,255,136,0.6); line-height: 1;">50%</div>
+                  <div style="font-size: 8.5px; font-weight: bold; color: #00ff88; letter-spacing: 0.5px; margin-top: 2px; font-family: 'Orbitron', sans-serif;">COMPRADORES</div>
+                </div>
+
+              </div>
+
+              <!-- RIGHT SIDE: BEARS (Red) -->
+              <div id="bear-side" style="display: flex; align-items: center; width: 50%; height: 100%; padding: 12px 18px; box-sizing: border-box; background: rgba(255, 76, 91, 0.02); position: relative;">
+                
+                <!-- 8 Horizontal Red Bars with Staggered Neon Pulse Animation -->
+                <div class="bars-stack" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; height: 100%; padding: 4px 0; overflow: hidden;">
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.1s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.35s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.6s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 0.85s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.1s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.35s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.6s;"></div>
+                  <div class="glow-bar red-bar" style="animation: bar-pulse 2s infinite ease-in-out; animation-delay: 1.85s;"></div>
+                </div>
+
+                <!-- Text Overlay -->
+                <div style="position: absolute; bottom: 8px; right: 16px; text-align: right; z-index: 10; pointer-events: none;">
+                  <div class="pct sell" id="pct-sell" style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #ffffff; text-shadow: 0 0 8px rgba(255,76,91,0.6); line-height: 1;">50%</div>
+                  <div style="font-size: 8.5px; font-weight: bold; color: #ff4c5b; letter-spacing: 0.5px; margin-top: 2px; font-family: 'Orbitron', sans-serif;">VENDEDORES</div>
+                </div>
+
+              </div>
+
+              <!-- VS Divider Badge in moving center line -->
+              <div id="vs-divider-badge" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 15;">
+                <div class="vs-badge" style="width: 32px; height: 32px; border-radius: 50%; background: #060e15; border: 2.5px solid #142230; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 11px; color: #fff; box-shadow: 0 0 12px rgba(0,0,0,0.85);">VS</div>
+              </div>
+
             </div>
           </div>
 
@@ -2052,53 +2131,32 @@
           </div>
         </div>
 
-        <!-- 9. VALIDACIÓN SHORT/LONG -->
-        <div class="vs-card" id="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 290px; transition: all 0.3s ease;">
-          <div class="vs-header" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0;">
-            <svg class="vs-icon" id="vs-main-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" style="transition: all 0.3s ease;">
-              <circle cx="12" cy="12" r="10" stroke="#00F58C" stroke-width="2"/>
-              <path d="M12 7 L14.8 11 H9.2 L12 7 Z" fill="#00F58C"/>
-            </svg>
-            <span style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: bold; color: #fff; letter-spacing: 0.5px;">VALIDACIÓN SHORT/LONG</span>
+        <!-- 9. CATALIZADOR -->
+        <div class="vs-card" id="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 14px 16px; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; min-height: 290px; transition: all 0.3s ease;">
+          <div class="vs-header" style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; border-bottom: 1px solid #142230; padding-bottom: 8px; flex-shrink: 0; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 8px; font-family: 'Orbitron', sans-serif;">
+              <span id="catalyst-indicator-symbol" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0c1520; border: 1px solid #142230; font-size: 11px; user-select: none;">⚪</span>
+              <span style="font-size: 13px; font-weight: bold; color: #fff; letter-spacing: 0.8px;">CATALIZADOR</span>
+              <span id="catalizador-dot-label" style="text-transform: uppercase; font-size: 8.5px; letter-spacing: 0.5px; font-weight: bold; border: 1px solid #142230; background: #0c1520; color: #7c8ba1; padding: 1.5px 6px; border-radius: 4px; margin-left: 4px; transition: all 0.3s ease;">ESPERANDO EXTREMO</span>
+              <div id="catalizador-dot" style="display: none !important;"></div>
+            </div>
           </div>
           
-          <div class="vs-content" style="display: flex; flex-direction: column; gap: 14px; flex: 1; justify-content: space-around;">
-            
-            <!-- Group 1: NO OPERAR -->
-            <div class="vs-group" id="vs-group-no-operar" style="transition: all 0.4s ease; transform-origin: left center;">
-              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #7c8ba1; margin-bottom: 6px;">
-                <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #7c8ba1; display: inline-block; box-shadow: 0 0 6px #7c8ba1;"></span>
-                NO OPERAR (CONSOLIDACIÓN)
-              </div>
-              <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #7c8ba1; background: rgba(124, 139, 161, 0.05); border: 1px solid rgba(124, 139, 161, 0.12); font-family: 'Inter', sans-serif;">Precio cerca de EMA 9 (Rango)</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #7c8ba1; background: rgba(124, 139, 161, 0.05); border: 1px solid rgba(124, 139, 161, 0.12); font-family: 'Inter', sans-serif;">Sin tendencia clara</span>
-              </div>
-            </div>
-
-            <!-- Group 2: VIGILAR -->
-            <div class="vs-group" id="vs-group-vigilar" style="transition: all 0.4s ease; transform-origin: left center;">
-              <div class="vs-group-header" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd24a; margin-bottom: 6px;">
-                <span class="vs-group-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #ffd24a; display: inline-block; box-shadow: 0 0 6px #ffd24a;"></span>
-                VIGILAR (TRANSICIÓN / ALERTA)
-              </div>
-              <div class="vs-group-items" style="display: flex; flex-direction: column; gap: 5px; align-items: flex-start;">
-                <span class="vs-badge-tag" id="vs-badge-rsi-val" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12); font-family: 'Inter', sans-serif;">RSI cercano a zonas extremas</span>
-                <span class="vs-badge-tag" style="display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; color: #ffe89e; background: rgba(255, 210, 74, 0.05); border: 1px solid rgba(255, 210, 74, 0.12); font-family: 'Inter', sans-serif;">Cruces de medias o volumen neutro</span>
-              </div>
-            </div>
-
-            <!-- Group 3: OPERACIÓN RECOMENDADA -->
-            <div class="vs-group" id="vs-group-operar" style="transition: all 0.4s ease; transform-origin: left center;">
-              <div class="vs-group-header" id="vs-operar-title-row" style="display: flex; align-items: center; gap: 6px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #00ff88; margin-bottom: 6px;">
-                <span class="vs-group-dot" id="vs-operar-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #00ff88; display: inline-block; box-shadow: 0 0 6px #00ff88;"></span>
-                <span id="vs-operar-title-text">LONG FAVORABLE</span>
-              </div>
-              <div class="vs-group-items" id="vs-operar-items" style="display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start;">
-                <!-- Filled dynamically with LONG or SHORT tags -->
-              </div>
-            </div>
-
+          <div id="catalizador-content" style="display: flex; flex-direction: column; flex: 1; justify-content: flex-start; gap: 10px;">
+            <!-- Rendered Dynamically -->
+          </div>
+          
+          <!-- Hidden legacy validation elements to preserve original background logic without crashing -->
+          <div style="display: none !important;">
+            <div id="vs-group-no-operar"></div>
+            <div id="vs-group-vigilar"></div>
+            <div id="vs-group-operar"></div>
+            <svg id="vs-main-icon"><circle cx="12" cy="12" r="10"></circle><path></path></svg>
+            <span id="vs-operar-title-text"></span>
+            <span id="vs-operar-dot"></span>
+            <span id="vs-operar-title-row"></span>
+            <div id="vs-operar-items"></div>
+            <span id="vs-badge-rsi-val"></span>
           </div>
         </div>
 
@@ -2395,8 +2453,10 @@
     let activeCandles = [];
     let rsiValues = [];
     let emaValues = [];
-    let currentIsLong = true;
     let smoothedMicroTarget = null;
+    let cachedMicroTargetPrice = null;
+    let cachedMicroTargetLabel = "";
+    let lastCandleKey = "";
     let scannedSymbolsData = []; // Array of scanned coin objects with real values
     let allBitgetContracts = []; // All available Bitget contracts for the search panel
 
@@ -3669,8 +3729,6 @@
           activeState = "vigilar";
         }
 
-        currentIsLong = isLong; // Sync to global state
-
         // Update Group 3 inner elements depending on bias (Long vs Short)
         const vsOperarTitleText = document.getElementById("vs-operar-title-text");
         const vsOperarDot = document.getElementById("vs-operar-dot");
@@ -3768,7 +3826,591 @@
       runOdinAI(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
 
       requestChartsRedraw();
+      
+      // Update Catalizador dynamic module
+      updateCatalyst(selectedSymbol);
     }
+
+    // --- CATALIZADOR COMPONENT SYSTEM (EVIDENCE MOTOR ENGINE) ---
+    const catalystData = {
+      "ETHFIUSDT": {
+        status: "ACTIVO",
+        color: "green",
+        colorHex: "#00ff8c",
+        label: "VERDE (CATALIZADOR FUERTE)",
+        evento: "Airdrop Temporada 2 & Staking",
+        fuente: "ETHFI Foundation Oficial",
+        publicado: "Hace 4 horas",
+        antes: [
+          "Sin incentivos de staking masivos.",
+          "Sin eventos relevantes anunciados.",
+          "Volumen de red estable."
+        ],
+        eventoDetail: "Lanzamiento oficial de Staking y distribución de recompensas de la Temporada 2.",
+        despues: [
+          "Flujo neto de capital positivo.",
+          "Incremento masivo de TVL.",
+          "La tendencia alcista continúa."
+        ]
+      },
+      "POWERUSDT": {
+        status: "ACTIVO",
+        color: "green",
+        colorHex: "#00ff8c",
+        label: "VERDE (CATALIZADOR FUERTE)",
+        evento: "Mainnet V2 Upgrade & Token Burn",
+        fuente: "PowerPool Oficial",
+        publicado: "Hace 10 horas",
+        antes: [
+          "Red de prueba con límites.",
+          "Suministro circulante completo.",
+          "Volumen promedio en exchanges."
+        ],
+        eventoDetail: "Migración exitosa a Mainnet V2 e implementación de quema del 5% del suministro.",
+        despues: [
+          "Tarifas más bajas y transacciones rápidas.",
+          "Suministro circulante disminuye.",
+          "Volumen de compra récord en Binance."
+        ]
+      },
+      "BTCUSDT": {
+        status: "ACTIVO",
+        color: "green",
+        colorHex: "#00ff8c",
+        label: "VERDE (CATALIZADOR FUERTE)",
+        evento: "Aprobación de ETF Spot en Asia",
+        fuente: "SFC Hong Kong Oficial",
+        publicado: "Hace 12 horas",
+        antes: [
+          "Consolidación en rango estrecho.",
+          "Volumen institucional moderado.",
+          "Incertidumbre regulatoria global."
+        ],
+        eventoDetail: "Aprobación definitiva de múltiples ETFs spot de Bitcoin por parte de la reguladora SFC.",
+        despues: [
+          "Entrada masiva de capital institucional.",
+          "Nuevos compradores en mercados asiáticos.",
+          "Ruptura limpia de la resistencia clave."
+        ]
+      },
+      "SOLUSDT": {
+        status: "ACTIVO",
+        color: "yellow",
+        colorHex: "#ffd400",
+        label: "AMARILLO (DEBILITÁNDOSE)",
+        evento: "Actualización de Red v1.18",
+        fuente: "Solana Status Oficial",
+        publicado: "Hace 2 días",
+        antes: [
+          "Congestión de red y fallas de transacciones.",
+          "Descontento en la comunidad de desarrolladores.",
+          "Volumen inestable."
+        ],
+        eventoDetail: "Despliegue de la actualización v1.18 para mitigar la congestión del programador.",
+        despues: [
+          "Transacciones estabilizadas temporalmente.",
+          "Impacto positivo inicial disminuye.",
+          "Volumen vuelve a niveles normales."
+        ]
+      },
+      "ETHUSDT": {
+        status: "ACTIVO",
+        color: "yellow",
+        colorHex: "#ffd400",
+        label: "AMARILLO (LIMITADO)",
+        evento: "Propuesta de Mejora EIP-7732",
+        fuente: "Ethereum Research Forum",
+        publicado: "Hace 1 día",
+        antes: [
+          "Bajas tarifas de gas en Capa 1.",
+          "Discusiones técnicas continuas.",
+          "Actividad moderada."
+        ],
+        eventoDetail: "Publicación de la propuesta formal EIP-7732 para validación paralela en Ethereum.",
+        despues: [
+          "Interés especulativo en foros de tecnología.",
+          "Impacto inmediato limitado.",
+          "Falta de fecha de implementación concreta."
+        ]
+      }
+    };
+
+    // Global cache and state management for Catalyst
+    window.catalystCache = window.catalystCache || {};
+    window.catalystScanningSymbol = window.catalystScanningSymbol || null;
+
+    async function updateCatalyst(symbol) {
+      const symUpper = symbol.toUpperCase().replace("/", "");
+      const dotEl = document.getElementById("catalizador-dot");
+      const dotLabelEl = document.getElementById("catalizador-dot-label");
+      const contentEl = document.getElementById("catalizador-content");
+      const symbolEl = document.getElementById("catalyst-indicator-symbol");
+      
+      if (!dotEl || !dotLabelEl || !contentEl) return;
+
+      // Extract RSI and current price from ODIN globals
+      const rsiVal = rsiValues && rsiValues.length > 0 ? parseFloat(rsiValues[rsiValues.length - 1].toFixed(1)) : null;
+      const priceVal = activeCandles && activeCandles.length > 0 ? activeCandles[activeCandles.length - 1].close : null;
+      const intervalVal = activeInterval;
+
+      // If data is still loading
+      if (rsiVal === null || priceVal === null) {
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 200px; gap: 10px; color: #7c8ba1;">
+            <div style="font-size: 10px; font-family: 'Orbitron', sans-serif;">CARGANDO MÉTRICAS...</div>
+          </div>
+        `;
+        return;
+      }
+
+      const isExtreme = rsiVal >= 85 || rsiVal <= 15;
+      const mode = "real";
+      const cacheKey = `${symUpper}_${mode}_${isExtreme ? 'extreme' : 'normal'}`;
+
+      // 1. RSI is NOT extreme -> Show Waiting / Idle State
+      if (!isExtreme) {
+        dotEl.className = `ballena-dot`;
+        dotEl.style.background = "#7c8ba1";
+        dotEl.style.boxShadow = "0 0 6px #7c8ba1";
+        dotLabelEl.textContent = "ESPERANDO EXTREMO";
+        dotLabelEl.style.color = "#7c8ba1";
+        dotLabelEl.style.borderColor = "#142230";
+        if (symbolEl) symbolEl.textContent = "⚪";
+        
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 200px; gap: 12px; padding: 10px; text-align: center;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c8ba1" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" />
+                <path d="M12 8v4M12 16h.01" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #7c8ba1; letter-spacing: 0.8px;">SISTEMA EN ESPERA</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: rgba(156, 163, 175, 0.7); max-width: 230px; line-height: 1.4;">
+                RSI actual en rango neutro (${rsiVal}). El Catalizador AI se activa en extremos <span style="color: #ff9a2e; font-weight: bold;"><= 15</span> o <span style="color: #ff9a2e; font-weight: bold;">>= 85</span> para escanear eventos fundamentales en tiempo real.
+              </span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // 2. RSI is Extreme -> Retrieve from cache if already loaded
+      if (window.catalystCache[cacheKey]) {
+        renderCatalystResult(window.catalystCache[cacheKey]);
+        return;
+      }
+
+      // If we are currently scanning, do not interrupt the animation
+      if (window.catalystScanningSymbol === cacheKey) {
+        return;
+      }
+
+      // 3. Start Scanning Process (Terminal Animation + Fetch)
+      window.catalystScanningSymbol = cacheKey;
+      
+      // Update dot to scanning state
+      dotEl.className = "ballena-dot yellow";
+      dotEl.style.background = "#ffd400";
+      dotEl.style.boxShadow = "0 0 8px #ffd400";
+      dotLabelEl.textContent = "ESCANEANDO";
+      dotLabelEl.style.color = "#ffd400";
+      dotLabelEl.style.borderColor = "rgba(255, 212, 0, 0.2)";
+      if (symbolEl) symbolEl.textContent = "🟡";
+
+      // Display internal terminal logs sequentially
+      const logs = [
+        "🤖 CATALIZADOR AI ACTIVADO",
+        `> Analizando activo seleccionado: ${symUpper}`,
+        `> RSI extremo detectado: ${rsiVal}`,
+        `> Consultando evidencia pública (Grounding Search)...`,
+        `> Verificando comunicados y anuncios oficiales...`,
+        `> Revisando actividad on-chain del token...`,
+        `> Validando y auditando fuentes públicas...`
+      ];
+
+      contentEl.innerHTML = `
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #00ff8c; background: #02070c; border: 1px solid #142230; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 5px; min-height: 200px; text-align: left; box-sizing: border-box;">
+          <div id="catalyst-terminal-text" style="display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1;"></div>
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 8.5px; color: #ffd400; border-top: 1px solid rgba(255,212,0,0.1); padding-top: 6px; margin-top: 4px; font-weight: bold;">
+            <div class="ballena-dot yellow" style="width: 6px; height: 6px;"></div>
+            CONECTANDO CON EL MOTOR GROUNDED...
+          </div>
+        </div>
+      `;
+
+      const termEl = document.getElementById("catalyst-terminal-text");
+      
+      // Extract client-side indicators from ODIN elements
+      const buyPctEl = document.getElementById("pct-buy");
+      const buyPct = buyPctEl ? parseFloat(buyPctEl.textContent) : 50;
+      const sellPct = 100 - buyPct;
+      
+      const capitalEl = document.getElementById("capital");
+      const capitalFlow = capitalEl ? capitalEl.textContent.trim() : "$0";
+      
+      const whaleCountEl = document.getElementById("whale-count");
+      const whaleCount = whaleCountEl ? parseInt(whaleCountEl.textContent) : 0;
+      
+      const flujoPercentEl = document.getElementById("flujo-percent");
+      const netFlowPercent = flujoPercentEl ? flujoPercentEl.textContent.trim() : "0%";
+
+      // Dynamic fetch of Funding Rate and Open Interest from Bitget without touching ODIN
+      let fundingRate = null;
+      let openInterest = null;
+
+      try {
+        const fundingRes = await fetch(`https://api.bitget.com/api/v2/mix/market/ticker?symbol=${symUpper}&productType=USDT-FUTURES`);
+        if (fundingRes.ok) {
+          const fundJson = await fundingRes.json();
+          if (fundJson && fundJson.code === "00000" && fundJson.data && fundJson.data.length > 0) {
+            fundingRate = fundJson.data[0].fundingRate || fundJson.data[0].funding;
+          }
+        }
+      } catch (e) {
+        console.warn("Could not fetch live funding rate:", e);
+      }
+
+      try {
+        const oiRes = await fetch(`https://api.bitget.com/api/v2/mix/market/open-interest?symbol=${symUpper}&productType=USDT-FUTURES`);
+        if (oiRes.ok) {
+          const oiJson = await oiRes.json();
+          if (oiJson && oiJson.code === "00000" && oiJson.data) {
+            openInterest = oiJson.data.openInterest || oiJson.data.openInterestVolume;
+          }
+        }
+      } catch (e) {
+        console.warn("Could not fetch live open interest:", e);
+      }
+      
+      // Concurrently kick off data retrieval
+      const dataPromise = (async () => {
+        if (mode === "simulado") {
+          // Phase 1: Retrieve local simulated mock data if available
+          await new Promise(r => setTimeout(r, 1800)); // Simulate delay
+          const mockData = catalystData[symUpper];
+          if (mockData) {
+            return {
+              estado: "ACTIVO",
+              activo: symUpper.replace("USDT", ""),
+              evento: mockData.evento,
+              fuente: mockData.fuente,
+              fecha: mockData.publicado,
+              lineaTemporal: {
+                antes: Array.isArray(mockData.antes) ? mockData.antes.join(" / ") : mockData.antes,
+                evento: mockData.eventoDetail,
+                despues: Array.isArray(mockData.despues) ? mockData.despues.join(" / ") : mockData.despues
+              },
+              fuentesVerificadas: [ "https://twitter.com/bitget", "https://official.announcement.org" ],
+              semaforo: mockData.label
+            };
+          } else {
+            return {
+              estado: "SIN_CATALIZADOR",
+              activo: symUpper.replace("USDT", ""),
+              motivo: "Sin evidencia pública verificada en simulado"
+            };
+          }
+        } else {
+          // Phase 2/3: Fetch real Google Search grounded data from backend
+          const response = await fetch("/api/catalyst", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              activo: symUpper.replace("USDT", ""),
+              rsi: rsiVal,
+              precio: `${priceVal} USDT`,
+              interval: intervalVal,
+              buyPct: buyPct,
+              sellPct: sellPct,
+              netCapitalFlow: capitalFlow,
+              whaleCount: whaleCount,
+              flujoPercent: netFlowPercent,
+              fundingRate: fundingRate,
+              openInterest: openInterest
+            })
+          });
+          if (!response.ok) {
+            const errJson = await response.json().catch(() => ({}));
+            throw new Error(errJson.error || `HTTP error ${response.status}`);
+          }
+          return await response.json();
+        }
+      })();
+
+      // Sequential log printing animation
+      try {
+        for (const log of logs) {
+          if (!document.getElementById("catalyst-terminal-text")) break; // user switched symbol mid-scan
+          const line = document.createElement("div");
+          line.textContent = log;
+          line.style.lineHeight = "1.3";
+          if (log.startsWith("🤖")) {
+            line.style.color = "#00f0ff";
+            line.style.fontWeight = "bold";
+            line.style.borderBottom = "1px solid rgba(0,240,255,0.15)";
+            line.style.paddingBottom = "3px";
+            line.style.marginBottom = "3px";
+          }
+          termEl.appendChild(line);
+          termEl.scrollTop = termEl.scrollHeight;
+          await new Promise(r => setTimeout(r, 250));
+        }
+
+        // Wait for backend or simulated data to resolve
+        const result = await dataPromise;
+        
+        // Inject current context variables to cache and render them
+        result.context = {
+          fundingRate: fundingRate,
+          openInterest: openInterest,
+          buyPct: buyPct,
+          sellPct: sellPct,
+          netCapitalFlow: capitalFlow,
+          whaleCount: whaleCount,
+          flujoPercent: netFlowPercent
+        };
+        
+        // Cache and render
+        window.catalystCache[cacheKey] = result;
+        window.catalystScanningSymbol = null;
+        renderCatalystResult(result);
+      } catch (err) {
+        console.error("Catalyst scanning failed:", err);
+        window.catalystScanningSymbol = null;
+        dotEl.className = "ballena-dot red";
+        dotEl.style.background = "#ff4c5b";
+        dotEl.style.boxShadow = "0 0 8px #ff4c5b";
+        dotLabelEl.textContent = "SIN CONEXIÓN";
+        dotLabelEl.style.color = "#ff4c5b";
+        dotLabelEl.style.borderColor = "rgba(255, 76, 91, 0.2)";
+        if (symbolEl) symbolEl.textContent = "🔴";
+
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 200px; gap: 10px; padding: 12px; text-align: center;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 76, 91, 0.1); border: 1px solid rgba(255, 76, 91, 0.2); display: flex; align-items: center; justify-content: center;">
+              <span style="color: #ff4c5b; font-weight: bold; font-size: 14px;">!</span>
+            </div>
+            <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: bold; color: #ff4c5b;">SIN CONEXIÓN CATALIZADOR</span>
+            <span style="font-family: 'Inter', sans-serif; font-size: 10px; color: #9ca3af; max-width: 220px; line-height: 1.4;">
+              ${err.message || "No se pudo conectar con el servicio de análisis del Catalizador."}
+            </span>
+            <button onclick="updateCatalyst('${symbol}')" style="margin-top: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: 9px; padding: 4px 10px; border-radius: 4px; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+              REINTENTAR
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function renderCatalystResult(data) {
+      const dotEl = document.getElementById("catalizador-dot");
+      const dotLabelEl = document.getElementById("catalizador-dot-label");
+      const contentEl = document.getElementById("catalizador-content");
+      const symbolEl = document.getElementById("catalyst-indicator-symbol");
+      
+      if (!dotEl || !dotLabelEl || !contentEl) return;
+
+      const formatFundingRate = (fr) => {
+        if (!fr) return "N/A";
+        const num = parseFloat(fr);
+        if (isNaN(num)) return fr;
+        if (Math.abs(num) < 0.01) {
+          return (num * 100).toFixed(4) + "%";
+        }
+        return num.toFixed(4) + "%";
+      };
+
+      const formatOpenInterest = (oi) => {
+        if (!oi) return "N/A";
+        const num = parseFloat(oi);
+        if (isNaN(num)) return oi;
+        if (num >= 1000000) {
+          return (num / 1000000).toFixed(2) + "M";
+        }
+        if (num >= 1000) {
+          return (num / 1000).toFixed(1) + "K";
+        }
+        return num.toLocaleString();
+      };
+
+      if (data && data.estado === "ACTIVO") {
+        let colorHex = "#00ff8c";
+        let colorClass = "green";
+        let semLabel = data.semaforo || "VERDE";
+
+        if (semLabel.toUpperCase().includes("VERDE")) {
+          colorHex = "#00ff8c";
+          colorClass = "green";
+        } else if (semLabel.toUpperCase().includes("AMARILLO") || semLabel.toUpperCase().includes("NARANJA")) {
+          colorHex = "#ffd400";
+          colorClass = "yellow";
+        } else if (semLabel.toUpperCase().includes("ROJO")) {
+          colorHex = "#ff4c5b";
+          colorClass = "red";
+        }
+
+        dotEl.className = `ballena-dot ${colorClass}`;
+        dotEl.style.background = colorHex;
+        dotEl.style.boxShadow = `0 0 8px ${colorHex}`;
+        dotLabelEl.textContent = "EVENTO DETECTADO";
+        dotLabelEl.style.color = colorHex;
+        dotLabelEl.style.borderColor = colorHex + "40";
+        if (symbolEl) symbolEl.textContent = "🟢";
+
+        const antesVal = Array.isArray(data.lineaTemporal.antes) ? data.lineaTemporal.antes.join(" / ") : data.lineaTemporal.antes;
+        const eventoVal = Array.isArray(data.lineaTemporal.evento) ? data.lineaTemporal.evento.join(" / ") : data.lineaTemporal.evento;
+        const despuesVal = Array.isArray(data.lineaTemporal.despues) ? data.lineaTemporal.despues.join(" / ") : data.lineaTemporal.despues;
+
+        let sourcesHtml = "";
+        if (data.fuentesVerificadas && data.fuentesVerificadas.length > 0) {
+          sourcesHtml = `
+            <div style="margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px; display: flex; flex-direction: column; gap: 4px; text-align: left; width: 100%;">
+              <span style="font-size: 8px; color: rgba(255,255,255,0.4); font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Fuentes Auditadas:</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                ${data.fuentesVerificadas.map((url, i) => {
+                  let domain = "Enlace Verificado";
+                  try {
+                    domain = new URL(url).hostname.replace("www.", "");
+                  } catch(e) {}
+                  return `
+                    <a href="${url}" target="_blank" style="font-size: 8.5px; color: #00f0ff; text-decoration: none; border: 1px solid rgba(0, 240, 255, 0.2); background: rgba(0, 240, 255, 0.05); padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; gap: 3px; font-family: 'JetBrains Mono', monospace; transition: all 0.2s;" onmouseover="this.style.background='rgba(0, 240, 255, 0.15)'" onmouseout="this.style.background='rgba(0, 240, 255, 0.05)'">
+                      <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="flex-shrink: 0;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                      ${domain}
+                    </a>
+                  `;
+                }).join("")}
+              </div>
+            </div>
+          `;
+        }
+
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+            <!-- Details Box -->
+            <div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; text-align: left; width: 100%;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 9px; color: rgba(255,255,255,0.4); font-family: 'Orbitron', sans-serif; text-transform: uppercase;">Estado AI</span>
+                <span style="font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; background: rgba(0, 255, 140, 0.08); color: ${colorHex}; border: 1px solid rgba(0, 255, 140, 0.15); font-family: 'Orbitron', sans-serif;">CATALIZADOR DETECTADO</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <span style="font-size: 9px; color: rgba(255,255,255,0.4); font-family: 'Orbitron', sans-serif; text-transform: uppercase; margin-top: 2px;">Evento</span>
+                <span style="font-size: 11px; font-weight: bold; color: #ffffff; text-align: right; font-family: 'Inter', sans-serif; line-height: 1.2;">${data.evento}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 9px; color: rgba(255,255,255,0.4); font-family: 'Orbitron', sans-serif; text-transform: uppercase;">Emisor / Fuente</span>
+                <span style="font-size: 9.5px; font-weight: 600; color: #eafef5; font-family: 'Inter', sans-serif;">${data.fuente}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 9px; color: rgba(255,255,255,0.4); font-family: 'Orbitron', sans-serif; text-transform: uppercase;">Antigüedad</span>
+                <span style="font-size: 9.5px; font-weight: 500; color: #9ca3af; font-family: 'Inter', sans-serif;">${data.fecha}</span>
+              </div>
+              
+              ${data.context ? `
+              <div style="margin-top: 6px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+                <div style="font-size: 7.5px; color: rgba(255,255,255,0.3); font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Auditoría de Flujo Futuros (Bitget)</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                  <div style="display: flex; flex-direction: column; gap: 1px;">
+                    <span style="font-size: 7.5px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif;">Funding Rate</span>
+                    <span style="font-size: 9px; font-weight: bold; color: ${parseFloat(data.context.fundingRate) >= 0 ? '#00ff8c' : '#ff4c5b'}; font-family: 'JetBrains Mono', monospace;">${formatFundingRate(data.context.fundingRate)}</span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 1px;">
+                    <span style="font-size: 7.5px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif;">Open Interest</span>
+                    <span style="font-size: 9px; font-weight: bold; color: #00f0ff; font-family: 'JetBrains Mono', monospace;">${formatOpenInterest(data.context.openInterest)}</span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 1px;">
+                    <span style="font-size: 7.5px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif;">Ratio Compras</span>
+                    <span style="font-size: 9px; font-weight: bold; color: #00ff8c; font-family: 'JetBrains Mono', monospace;">${data.context.buyPct}%</span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 1px;">
+                    <span style="font-size: 7.5px; color: rgba(255,255,255,0.4); font-family: 'Inter', sans-serif;">Flujo Ballenas (30m)</span>
+                    <span style="font-size: 9px; font-weight: bold; color: ${data.context.netCapitalFlow.startsWith('-') ? '#ff4c5b' : '#00f6ff'}; font-family: 'JetBrains Mono', monospace;">${data.context.netCapitalFlow}</span>
+                  </div>
+                </div>
+              </div>
+              ` : ''}
+            </div>
+
+            <!-- Timeline -->
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 4px; text-align: left; width: 100%;">
+              <!-- ANTES -->
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 3px; flex-shrink: 0;">
+                  <div style="width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25);"></div>
+                  <div style="width: 1px; height: 24px; border-left: 1px dashed rgba(255,255,255,0.15);"></div>
+                </div>
+                <div>
+                  <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 0.5px;">SITUACIÓN PREVIA (ANTES)</div>
+                  <div style="font-family: 'Inter', sans-serif; font-size: 9.5px; color: #9ca3af; margin-top: 1px; line-height: 1.3;">
+                    ${antesVal}
+                  </div>
+                </div>
+              </div>
+
+              <!-- EVENTO -->
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 3px; flex-shrink: 0;">
+                  <div style="width: 8px; height: 8px; border-radius: 50%; background: ${colorHex}; box-shadow: 0 0 6px ${colorHex};"></div>
+                  <div style="width: 1px; height: 24px; border-left: 1px dashed rgba(255,255,255,0.15);"></div>
+                </div>
+                <div>
+                  <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 800; color: ${colorHex}; letter-spacing: 0.5px;">EVENTO DETECTADO</div>
+                  <div style="font-family: 'Inter', sans-serif; font-size: 9.5px; font-weight: 600; color: #ffffff; margin-top: 1px; line-height: 1.3;">
+                    ${eventoVal}
+                  </div>
+                </div>
+              </div>
+
+              <!-- DESPUÉS -->
+              <div style="display: flex; gap: 8px; align-items: flex-start;">
+                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 3px; flex-shrink: 0;">
+                  <div style="width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25);"></div>
+                </div>
+                <div>
+                  <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 0.5px;">IMPACTO MECÁNICO (DESPUÉS)</div>
+                  <div style="font-family: 'Inter', sans-serif; font-size: 9.5px; color: #9ca3af; margin-top: 1px; line-height: 1.3;">
+                    ${despuesVal}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sources Verificadas -->
+            ${sourcesHtml}
+          </div>
+        `;
+      } else {
+        // No Catalyst verified
+        dotEl.className = `ballena-dot blue`;
+        dotEl.style.background = "#3b82f6";
+        dotEl.style.boxShadow = "0 0 8px #3b82f6";
+        dotLabelEl.textContent = "SIN CATALIZADOR";
+        dotLabelEl.style.color = "#3b82f6";
+        dotLabelEl.style.borderColor = "rgba(59, 130, 246, 0.2)";
+        if (symbolEl) symbolEl.textContent = "🔵";
+
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 200px; gap: 12px; padding: 10px; text-align: center; width: 100%;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; margin-bottom: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c8ba1" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" />
+                <path d="M12 8v4M12 16h.01" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; text-align: center; width: 100%;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #7c8ba1; letter-spacing: 0.8px;">SIN CATALIZADOR FUNDAMENTAL</span>
+              <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: rgba(156, 163, 175, 0.7); max-width: 220px; margin: 0 auto; line-height: 1.4;">
+                No existen eventos o noticias públicas verificadas recientes. El movimiento extremo actual parece deberse puramente a factores técnicos, flujo de mercado, liquidez, o presión de compra/venta.
+              </span>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+
+    
 
     let isDrawingPending = false;
     function requestChartsRedraw() {
@@ -3995,69 +4637,157 @@
         }
         if (drawCharts.lastSymbol !== selectedSymbol || drawCharts.lastInterval !== activeInterval) {
           smoothedMicroTarget = null;
+          cachedMicroTargetPrice = null;
+          cachedMicroTargetLabel = "";
+          lastCandleKey = "";
           drawCharts.lastSymbol = selectedSymbol;
           drawCharts.lastInterval = activeInterval;
         }
 
-        let microTargetPrice = null;
-        let microLabel = "";
-        
-        if (currentIsLong) {
-          // Find nearest micro-resistance above latestPrice
-          const recentHighs = highs.slice(-15);
-          const potentialResistances = recentHighs.filter(h => h > latestPrice);
-          if (potentialResistances.length > 0) {
-            microTargetPrice = Math.min(...potentialResistances);
-          } else {
-            // Fallback: use ATR-like fraction above
-            microTargetPrice = latestPrice + (r2 - s2) * 0.08;
+        // Calculate only when candle closed or structure changed to avoid moving with every price tick
+        const lastCandle = activeCandles[activeCandles.length - 1];
+        const currentCandleKey = lastCandle ? `${lastCandle.open}-${lastCandle.close}-${activeCandles.length}` : "";
+
+        if (cachedMicroTargetPrice === null || currentCandleKey !== lastCandleKey) {
+          lastCandleKey = currentCandleKey;
+
+          const rsiVal = rsiValues && rsiValues.length > 0 ? rsiValues[rsiValues.length - 1] : 50;
+          const lookDown = rsiVal >= 50;
+
+          // Extract last 40 candles and scan for reaction zones
+          const sampleCandles = activeCandles.slice(-40);
+          let candidates = [];
+
+          for (let i = 1; i < sampleCandles.length - 1; i++) {
+            const prev = sampleCandles[i - 1];
+            const curr = sampleCandles[i];
+            const next = sampleCandles[i + 1];
+
+            // Swing low / Pivot low
+            if (curr.low <= prev.low && curr.low <= next.low) {
+              candidates.push({
+                price: curr.low,
+                volume: curr.volume || 1,
+                isPivot: true,
+                type: 'low'
+              });
+            }
+            // Swing high / Pivot high
+            if (curr.high >= prev.high && curr.high >= next.high) {
+              candidates.push({
+                price: curr.high,
+                volume: curr.volume || 1,
+                isPivot: true,
+                type: 'high'
+              });
+            }
+            // Regular candle high/low reactions
+            candidates.push({ price: curr.low, volume: curr.volume || 1, isPivot: false, type: 'low' });
+            candidates.push({ price: curr.high, volume: curr.volume || 1, isPivot: false, type: 'high' });
           }
-          microLabel = "TP (RESISTENCIA MICRO)";
-        } else {
-          // Find nearest micro-support below latestPrice
-          const recentLows = lows.slice(-15);
-          const potentialSupports = recentLows.filter(l => l < latestPrice);
-          if (potentialSupports.length > 0) {
-            microTargetPrice = Math.max(...potentialSupports);
+
+          // Score reaction zones
+          const maxVolume = Math.max(...sampleCandles.map(c => c.volume || 1), 1);
+          candidates.forEach(cand => {
+            let score = 0;
+            const p = cand.price;
+            const relVolume = (cand.volume || 1) / maxVolume;
+            score += relVolume * 15;
+
+            if (cand.isPivot) {
+              score += 10;
+            }
+
+            // Touch points validation
+            sampleCandles.forEach(c => {
+              const distLow = Math.abs(c.low - p) / p;
+              const distHigh = Math.abs(c.high - p) / p;
+              const distOpen = Math.abs(c.open - p) / p;
+              const distClose = Math.abs(c.close - p) / p;
+
+              if (distLow < 0.003) score += 3;
+              if (distHigh < 0.003) score += 3;
+              if (distOpen < 0.003) score += 1.5;
+              if (distClose < 0.003) score += 1.5;
+            });
+
+            cand.score = score;
+          });
+
+          // Noise/distance limit: balanced buffer (1.0%) to filter out immediate price noise and current candle range
+          const minDistance = 0.01 * latestPrice;
+          let selectedCandidate = null;
+
+          if (lookDown) {
+            // Filter by price and reasonable score to ensure it is a valid reaction level
+            let validCandidates = candidates.filter(cand => cand.price <= latestPrice - minDistance && cand.score >= 4);
+            // Fallback to any candidate if none meet score threshold
+            if (validCandidates.length === 0) {
+              validCandidates = candidates.filter(cand => cand.price <= latestPrice - minDistance);
+            }
+
+            if (validCandidates.length > 0) {
+              // Sort DESCENDING by price to get the NEAREST valid reaction level below the current price
+              validCandidates.sort((a, b) => b.price - a.price);
+              selectedCandidate = validCandidates[0].price;
+            } else {
+              selectedCandidate = latestPrice * 0.98; // 2.0% fallback for scalping
+            }
+            cachedMicroTargetLabel = rsiVal >= 85 ? "SOPORTE MICRO EXTREMO" : "SOPORTE MICRO";
           } else {
-            // Fallback: use ATR-like fraction below
-            microTargetPrice = latestPrice - (r2 - s2) * 0.08;
+            // Filter by price and reasonable score to ensure it is a valid reaction level
+            let validCandidates = candidates.filter(cand => cand.price >= latestPrice + minDistance && cand.score >= 4);
+            // Fallback to any candidate if none meet score threshold
+            if (validCandidates.length === 0) {
+              validCandidates = candidates.filter(cand => cand.price >= latestPrice + minDistance);
+            }
+
+            if (validCandidates.length > 0) {
+              // Sort ASCENDING by price to get the NEAREST valid reaction level above the current price
+              validCandidates.sort((a, b) => a.price - b.price);
+              selectedCandidate = validCandidates[0].price;
+            } else {
+              selectedCandidate = latestPrice * 1.02; // 2.0% fallback for scalping
+            }
+            cachedMicroTargetLabel = rsiVal <= 15 ? "RESISTENCIA MICRO EXTREMO" : "RESISTENCIA MICRO";
           }
-          microLabel = "TP (SOPORTE MICRO)";
+
+          cachedMicroTargetPrice = selectedCandidate;
         }
 
         if (smoothedMicroTarget === null) {
-          smoothedMicroTarget = microTargetPrice;
+          smoothedMicroTarget = cachedMicroTargetPrice;
         } else {
-          smoothedMicroTarget += (microTargetPrice - smoothedMicroTarget) * 0.15;
+          smoothedMicroTarget += (cachedMicroTargetPrice - smoothedMicroTarget) * 0.15;
         }
 
         const microY = scaleY(smoothedMicroTarget);
 
         if (microY >= 0 && microY <= p_h) {
           pctx.save();
-          pctx.strokeStyle = '#D4FF00'; // Neon fluorescent yellow-green
+          // Beautiful contrasting deep neon gold/orange to compare
+          pctx.strokeStyle = '#FFA700';
           pctx.lineWidth = 2.5;
-          pctx.setLineDash([6, 4]);
+          pctx.setLineDash([2, 3]); // Distinct dotted pattern
           pctx.beginPath();
           pctx.moveTo(0, microY);
           pctx.lineTo(p_w, microY);
           pctx.stroke();
 
-          // Draw the price and label centered between the center support/resistance numbers and the right price axis
+          // Draw label centered on the chart
           pctx.setLineDash([]);
           pctx.font = 'bold 10px "Inter", sans-serif';
-          const microText = `${microLabel}: ${f(smoothedMicroTarget)}`;
+          const microText = `${cachedMicroTargetLabel}: ${f(smoothedMicroTarget)}`;
           const microTextWidth = pctx.measureText(microText).width;
-          const microCenterX = p_w * 0.75; // Perfectly centered between 0.5 (center) and 1.0 (right edge)
+          const microCenterX = p_w * 0.5; // Centered at 50% of width
 
           pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
           pctx.fillRect(microCenterX - microTextWidth / 2 - 8, microY - 20, microTextWidth + 16, 17);
-          pctx.strokeStyle = '#D4FF00';
+          pctx.strokeStyle = '#FFA700';
           pctx.lineWidth = 1.2;
           pctx.strokeRect(microCenterX - microTextWidth / 2 - 8, microY - 20, microTextWidth + 16, 17);
 
-          pctx.fillStyle = '#D4FF00';
+          pctx.fillStyle = '#FFA700';
           pctx.textAlign = 'center';
           pctx.textBaseline = 'middle';
           pctx.fillText(microText, microCenterX, microY - 11);
@@ -4600,106 +5330,111 @@
     // Start everything!
     initApp();
 
-    /* 6. COMPRADORES VS VENDEDORES WAVES ANIMATION */
+    /* 6. COMPRADORES VS VENDEDORES DYNAMIC NEON BARS & DIVISION SLIDE */
     (function(){
-      const canvas = document.getElementById('waves-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
       let phase = 0;
 
-      let W = canvas.width;
-      let H = canvas.height;
-
-      function updateSize() {
-        if (!canvas) return;
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-        W = canvas.width;
-        H = canvas.height;
-      }
-      updateSize();
-
-      let resizeFrame = null;
-      window.addEventListener('resize', () => {
-        if (resizeFrame) cancelAnimationFrame(resizeFrame);
-        resizeFrame = requestAnimationFrame(updateSize);
-      });
-
       function animate() {
-        ctx.clearRect(0,0,W,H);
-
         // Fetch current live buyer percentage
         const buyPctEl = document.getElementById("pct-buy");
         const buyPctVal = buyPctEl ? parseFloat(buyPctEl.textContent) : 50;
         const sellPctVal = 100 - buyPctVal;
 
-        // Dynamic parameters based on buyer/seller percentage
-        const buyHeightMultiplier = 0.15 + 0.65 * (buyPctVal / 100);
-        const buySpeed = 0.8 + 1.4 * (buyPctVal / 100);
-        const buyAmp = 2 + 8 * (buyPctVal / 100);
+        // Dynamic widths and dividing line position
+        const bullSide = document.getElementById("bull-side");
+        const bearSide = document.getElementById("bear-side");
+        const vsBadge = document.getElementById("vs-divider-badge");
 
-        const sellHeightMultiplier = 0.15 + 0.65 * (sellPctVal / 100);
-        const sellSpeed = 0.8 + 1.4 * (sellPctVal / 100);
-        const sellAmp = 2 + 8 * (sellPctVal / 100);
+        // Keep layout static centered at 50%
+        if (bullSide) bullSide.style.width = `50%`;
+        if (bearSide) bearSide.style.width = `50%`;
+        if (vsBadge) vsBadge.style.left = `50%`;
 
-        // Buyers wave
-        ctx.beginPath();
-        ctx.moveTo(0, H);
-        for (let x = 0; x <= W; x++) {
-          const factor = Math.max(0, Math.sin((x / W) * Math.PI * 0.8));
-          const y = H - (H * buyHeightMultiplier * factor) - Math.sin(phase * buySpeed + x * 0.04) * buyAmp * factor;
-          ctx.lineTo(x, y);
+        // Update the active green and red bars
+        // The more the percentage, the more bars are active!
+        // We have 8 bars on each side. We light them up one by one from bottom to top!
+        if (bullSide) {
+          const greenBars = bullSide.querySelectorAll(".glow-bar");
+          const numActiveGreen = Math.round((buyPctVal / 100) * 8);
+          greenBars.forEach((bar, idx) => {
+            // idx is 0 (top) to 7 (bottom). 7-idx gives the distance from bottom.
+            if ((7 - idx) < numActiveGreen) {
+              bar.className = "glow-bar green-bar";
+              bar.style.opacity = "1";
+            } else {
+              bar.className = "glow-bar";
+              bar.style.opacity = "0.15";
+            }
+          });
         }
-        ctx.lineTo(W, H);
-        ctx.closePath();
-        const greenGrad = ctx.createLinearGradient(0, H, 0, H * (1 - buyHeightMultiplier));
-        greenGrad.addColorStop(0, 'rgba(0, 255, 136, 0.01)');
-        greenGrad.addColorStop(1, 'rgba(0, 255, 136, 0.22)');
-        ctx.fillStyle = greenGrad;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(0, 255, 136, 0.85)';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
 
-        // Sellers wave
-        ctx.beginPath();
-        ctx.moveTo(0, H);
-        for (let x = 0; x <= W; x++) {
-          const factor = Math.max(0, Math.sin(((W - x) / W) * Math.PI * 0.8));
-          const y = H - (H * sellHeightMultiplier * factor) - Math.sin(phase * sellSpeed + x * 0.04) * sellAmp * factor;
-          ctx.lineTo(x, y);
+        if (bearSide) {
+          const redBars = bearSide.querySelectorAll(".glow-bar");
+          const numActiveRed = Math.round((sellPctVal / 100) * 8);
+          redBars.forEach((bar, idx) => {
+            // idx is 0 (top) to 7 (bottom). 7-idx gives the distance from bottom.
+            if ((7 - idx) < numActiveRed) {
+              bar.className = "glow-bar red-bar";
+              bar.style.opacity = "1";
+            } else {
+              bar.className = "glow-bar";
+              bar.style.opacity = "0.15";
+            }
+          });
         }
-        ctx.lineTo(W, H);
-        ctx.closePath();
-        const redGrad = ctx.createLinearGradient(0, H, 0, H * (1 - sellHeightMultiplier));
-        redGrad.addColorStop(0, 'rgba(255, 76, 91, 0.01)');
-        redGrad.addColorStop(1, 'rgba(255, 76, 91, 0.18)');
-        ctx.fillStyle = redGrad;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 76, 91, 0.85)';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
 
-        // Interpolate liquidity bars & add micro-pulses
-        liqCurrentW1 += (liqTargetW1 - liqCurrentW1) * 0.08;
-        liqCurrentW2 += (liqTargetW2 - liqCurrentW2) * 0.08;
-        liqCurrentW3 += (liqTargetW3 - liqCurrentW3) * 0.08;
+        // Highlight the winning/dominant side icon with extra neon glow and scale
+        const bullIcon = bullSide ? bullSide.querySelector(".bull-icon-wrap") : null;
+        const bearIcon = bearSide ? bearSide.querySelector(".bear-icon-wrap") : null;
+        if (bullIcon && bearIcon) {
+          if (buyPctVal > sellPctVal) {
+            bullIcon.style.transform = "scale(1.12)";
+            bullIcon.style.borderColor = "rgba(0, 255, 136, 0.85)";
+            bullIcon.style.boxShadow = "0 0 16px rgba(0, 255, 136, 0.5), inset 0 0 8px rgba(0, 255, 136, 0.2)";
+            
+            bearIcon.style.transform = "scale(0.92)";
+            bearIcon.style.borderColor = "rgba(255, 76, 91, 0.12)";
+            bearIcon.style.boxShadow = "none";
+          } else if (sellPctVal > buyPctVal) {
+            bearIcon.style.transform = "scale(1.12)";
+            bearIcon.style.borderColor = "rgba(255, 76, 91, 0.85)";
+            bearIcon.style.boxShadow = "0 0 16px rgba(255, 76, 91, 0.5), inset 0 0 8px rgba(255, 76, 91, 0.2)";
+            
+            bullIcon.style.transform = "scale(0.92)";
+            bullIcon.style.borderColor = "rgba(0, 255, 136, 0.12)";
+            bullIcon.style.boxShadow = "none";
+          } else {
+            bullIcon.style.transform = "scale(1)";
+            bullIcon.style.borderColor = "rgba(0, 255, 136, 0.25)";
+            bullIcon.style.boxShadow = "0 0 10px rgba(0, 255, 136, 0.15)";
+            
+            bearIcon.style.transform = "scale(1)";
+            bearIcon.style.borderColor = "rgba(255, 76, 91, 0.25)";
+            bearIcon.style.boxShadow = "0 0 10px rgba(255, 76, 91, 0.15)";
+          }
+        }
 
-        const noise1 = Math.sin(Date.now() / 1500) * 0.4;
-        const noise2 = Math.cos(Date.now() / 1800) * 0.5;
-        const noise3 = Math.sin(Date.now() / 2200) * 0.3;
+        // Interpolate liquidity bars & add micro-pulses (from outer scope)
+        if (typeof liqCurrentW1 !== 'undefined') {
+          liqCurrentW1 += (liqTargetW1 - liqCurrentW1) * 0.08;
+          liqCurrentW2 += (liqTargetW2 - liqCurrentW2) * 0.08;
+          liqCurrentW3 += (liqTargetW3 - liqCurrentW3) * 0.08;
 
-        const dispW1 = Math.max(5, Math.min(100, liqCurrentW1 + noise1));
-        const dispW2 = Math.max(5, Math.min(100, liqCurrentW2 + noise2));
-        const dispW3 = Math.max(5, Math.min(100, liqCurrentW3 + noise3));
+          const noise1 = Math.sin(Date.now() / 1500) * 0.4;
+          const noise2 = Math.cos(Date.now() / 1800) * 0.5;
+          const noise3 = Math.sin(Date.now() / 2200) * 0.3;
 
-        const g1 = document.getElementById("liq-glow-1");
-        const g2 = document.getElementById("liq-glow-2");
-        const g3 = document.getElementById("liq-glow-3");
-        if (g1) g1.style.width = `${dispW1}%`;
-        if (g2) g2.style.width = `${dispW2}%`;
-        if (g3) g3.style.width = `${dispW3}%`;
+          const dispW1 = Math.max(5, Math.min(100, liqCurrentW1 + noise1));
+          const dispW2 = Math.max(5, Math.min(100, liqCurrentW2 + noise2));
+          const dispW3 = Math.max(5, Math.min(100, liqCurrentW3 + noise3));
+
+          const g1 = document.getElementById("liq-glow-1");
+          const g2 = document.getElementById("liq-glow-2");
+          const g3 = document.getElementById("liq-glow-3");
+          if (g1) g1.style.width = `${dispW1}%`;
+          if (g2) g2.style.width = `${dispW2}%`;
+          if (g3) g3.style.width = `${dispW3}%`;
+        }
 
         phase += 0.02;
         requestAnimationFrame(animate);
@@ -4979,8 +5714,8 @@
           history.length = 0;
           lastSymbol = currentSymbol;
           referencePrice = currentPrice;
-          yMin = referencePrice * 0.965;
-          yMax = referencePrice * 1.035;
+          yMin = referencePrice * 0.94;
+          yMax = referencePrice * 1.06;
         }
 
         if (currentPrice > 0) {
@@ -5086,9 +5821,9 @@
           }
         }
 
-        // Setup Y-axis range (balanced +/- 3.5% centered around referencePrice)
-        let targetMin = referencePrice * 0.965;
-        let targetMax = referencePrice * 1.035;
+        // Setup Y-axis range (balanced +/- 6.0% centered around referencePrice)
+        let targetMin = referencePrice * 0.94;
+        let targetMax = referencePrice * 1.06;
 
         if (yMin === 0 || yMax === 0) {
           yMin = targetMin;
@@ -5128,7 +5863,7 @@
         }
 
         // Draw Y-Axis grid lines & labels
-        const numTicks = 5;
+        const numTicks = 9;
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
         ctx.font = "bold 11px 'Inter', sans-serif";
@@ -5164,8 +5899,8 @@
 
         // Render Instant, Stable Horizontal Heatmap Bands (Full Screen Width)
         const numLanes = 65;
-        const startOffset = -0.035; // -3.5%
-        const endOffset = 0.035;   // +3.5%
+        const startOffset = -0.06; // -6.0%
+        const endOffset = 0.06;   // +6.0%
         const step = (endOffset - startOffset) / (numLanes - 1);
 
         // Active Order Book Levels

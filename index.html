@@ -2418,7 +2418,7 @@
             .map(coin => coin.symbol)
         );
 
-        const batchSize = 10;
+        const batchSize = 45;
         for (let i = 0; i < allCoins.length; i += batchSize) {
           const batch = allCoins.slice(i, i + batchSize);
           await Promise.all(batch.map(async (coin) => {
@@ -2438,7 +2438,7 @@
             }
           }));
           if (i + batchSize < allCoins.length) {
-            await new Promise(res => setTimeout(res, 200));
+            await new Promise(res => setTimeout(res, 50));
           }
         }
 
@@ -5080,7 +5080,8 @@
     // Initial load & Watch Mode loop
     let watchInterval = null;
     async function initApp() {
-      await loadCoinGeckoCaps();
+      // Load market caps asynchronously in the background so it doesn't block app initialization
+      loadCoinGeckoCaps().catch(err => console.warn("Failed to load CoinGecko market caps:", err));
 
       renderTableLoadingState();
 
@@ -5138,7 +5139,7 @@
 
             // Scan ALL symbols with limited concurrency to avoid 429 rate limit errors on Bitget API (Requirement 1)
             const allCoins = scannedSymbolsData; // Scan ALL of them
-            const batchSize = 10;
+            const batchSize = 45;
             for (let i = 0; i < allCoins.length; i += batchSize) {
               const batch = allCoins.slice(i, i + batchSize);
               await Promise.all(batch.map(async (coin) => {
@@ -5153,7 +5154,7 @@
               }));
               // Small delay between batches to respect Bitget's rate limits
               if (i + batchSize < allCoins.length) {
-                await new Promise(res => setTimeout(res, 200));
+                await new Promise(res => setTimeout(res, 50));
               }
             }
 

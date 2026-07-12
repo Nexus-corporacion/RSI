@@ -5074,7 +5074,7 @@
                 volume: t ? parseFloat(t.usdtVolume) : 0,
                 rsi: 50 // initial default
               };
-            }).filter(item => item.price > 0 && item.volume > 1000000);
+            }).filter(item => item.price > 0 && item.volume > 200000);
 
             scannedSymbolsData.sort((a, b) => b.volume - a.volume);
 

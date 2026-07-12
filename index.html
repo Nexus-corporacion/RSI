@@ -1505,6 +1505,12 @@
       margin-bottom: 3px;
     }
 
+    /* Clean Zeros for ODIN AI COMMANDER and Scanner: avoid dotted/slashed zeros that look like eights */
+    #ai-mod-1, #ai-mod-1 *, #ai-mod-2, #ai-mod-2 *, #ai-mod-3, #ai-mod-3 *, #ai-mod-4, #ai-mod-4 *, #catalyst-terminal-text, #catalyst-terminal-text *, #opp-tbody, #opp-tbody *, .opp-tbody, .opp-table, .opp-table *, .opp-rsi-val, .result-price, .result-rsi, .rsi-current, .asset-stat b, .level-pill, .rsi-pill, .rsi-box input, .volume-axis, .rsi-axis, .y-axis {
+      font-family: 'Inter', sans-serif !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+
   </style>
 </head>
 <body>
@@ -2315,15 +2321,50 @@
       } catch (e) {}
     }
 
-    function playOdinAlert(message = "SEÑAL DETECTADA") {
+    function playOdinAlert(message = "SEÑAL DETECTADA", isLong = false) {
       if (!alarmEnabled) return;
 
-      // SECUENCIA DE ALARMA FUERTE
-      beep(1400, 250);
-      setTimeout(() => beep(1700, 250), 300);
-      setTimeout(() => beep(2000, 300), 600);
-      setTimeout(() => beep(1700, 250), 1000);
-      setTimeout(() => beep(2200, 350), 1300);
+      if (isLong) {
+        // BUBBLE SOUND: unas burbujas sonido suave pero volumen super fuerte (sine oscillator)
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const playBubble = (startTime, freqStart, freqEnd, duration) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine"; // soft wave
+            osc.frequency.setValueAtTime(freqStart, startTime);
+            osc.frequency.exponentialRampToValueAtTime(freqEnd, startTime + duration);
+            
+            gain.gain.setValueAtTime(0, startTime);
+            gain.gain.linearRampToValueAtTime((volume.value / 100) * 0.9, startTime + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+          };
+
+          const now = ctx.currentTime;
+          playBubble(now, 500, 1000, 0.15);
+          playBubble(now + 0.10, 700, 1300, 0.15);
+          playBubble(now + 0.20, 600, 1100, 0.15);
+          playBubble(now + 0.30, 800, 1500, 0.18);
+          playBubble(now + 0.40, 900, 1700, 0.20);
+          
+          setTimeout(() => {
+            ctx.close();
+          }, 800);
+        } catch (e) {}
+      } else {
+        // SECUENCIA DE ALARMA FUERTE ORIGINAL PARA SHORT (RSI >= 85)
+        beep(1400, 250);
+        setTimeout(() => beep(1700, 250), 300);
+        setTimeout(() => beep(2000, 300), 600);
+        setTimeout(() => beep(1700, 250), 1000);
+        setTimeout(() => beep(2200, 350), 1300);
+      }
 
       // NOTIFICACIÓN WINDOWS / CHROME (Works in background/minimized)
       if (Notification.permission === "granted") {
@@ -2405,16 +2446,20 @@
         const nowExtreme = allCoins.filter(coin => coin.rsi <= rsiLowerLimit || coin.rsi >= rsiUpperLimit);
         let newExtremeFound = false;
         let alertedCoins = [];
+        let hasLong = false;
 
         nowExtreme.forEach(coin => {
           if (!previouslyExtreme.has(coin.symbol)) {
             newExtremeFound = true;
+            if (coin.rsi <= rsiLowerLimit) {
+              hasLong = true;
+            }
             alertedCoins.push(`${coin.symbol.replace("USDT", "/USDT")} (RSI: ${coin.rsi.toFixed(1)})`);
           }
         });
 
         if (newExtremeFound && alertedCoins.length > 0) {
-          playOdinAlert(`EXTREMO DETECTADO: ${alertedCoins.join(", ")}`);
+          playOdinAlert(`EXTREMO DETECTADO: ${alertedCoins.join(", ")}`, hasLong);
         }
 
         updateExtremeOpportunitiesList();
@@ -5074,7 +5119,7 @@
                 volume: t ? parseFloat(t.usdtVolume) : 0,
                 rsi: 50 // initial default
               };
-            }).filter(item => item.price > 0 && item.volume > 200000);
+            }).filter(item => item.price > 0 && item.volume > 100000);
 
             scannedSymbolsData.sort((a, b) => b.volume - a.volume);
 
@@ -5828,7 +5873,7 @@
         if (!currentPrice || history.length === 0) {
           // Loading state inside canvas
           ctx.fillStyle = 'rgba(0, 255, 140, 0.45)';
-          ctx.font = "11px 'JetBrains Mono', monospace";
+          ctx.font = "11px 'Inter', sans-serif";
           ctx.textAlign = "center";
           ctx.fillText("ESPERANDO DATOS...", cssW / 2, cssH / 2);
           requestAnimationFrame(render);

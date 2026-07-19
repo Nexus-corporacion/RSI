@@ -2101,7 +2101,7 @@
             <div class="plot-area" style="flex: 1; position: relative;">
               <canvas id="price-canvas"></canvas>
             </div>
-            <div class="y-axis-right" style="width: 72px; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px; color: rgba(255,255,255,0.45); text-align: left; padding-left: 10px; position: relative; border-left: 1px dashed rgba(255, 255, 255, 0.04);">
+            <div class="y-axis-right" style="width: 82px; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px; color: rgba(255,255,255,0.45); text-align: left; padding-left: 10px; position: relative; border-left: 1px dashed rgba(255, 255, 255, 0.04);">
               <div style="position: absolute; top: 10%; transform: translateY(-50%); color: #ff4c5b; font-weight: bold;">4.200</div>
               <div style="position: absolute; top: 28%; transform: translateY(-50%); color: #ff4c5b; font-weight: bold;">4.080</div>
               <div style="position: absolute; top: 45%; transform: translateY(-50%); z-index: 10;">
@@ -2118,7 +2118,7 @@
               <div style="position: absolute; top: 4px; left: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff88; font-weight: bold; z-index: 5;">Vol. 126.4M</div>
               <canvas id="volume-canvas"></canvas>
             </div>
-            <div style="width: 72px; border-left: 1px dashed rgba(255, 255, 255, 0.04);"></div>
+            <div style="width: 82px; border-left: 1px dashed rgba(255, 255, 255, 0.04);"></div>
           </div>
 
           <div class="rsi-area" style="display: flex; position: relative; height: 120px; margin-top: 8px;">
@@ -2126,7 +2126,7 @@
               <div style="position: absolute; top: 4px; left: 8px; font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px; color: rgba(255, 255, 255, 0.6); font-weight: bold; z-index: 5;">RSI (14) <span id="rsi-live-text" style="color: #a855f7; font-weight: bold;">73.9</span></div>
               <canvas id="rsi-canvas"></canvas>
             </div>
-            <div class="rsi-y-axis" style="width: 72px; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px; color: rgba(255,255,255,0.45); text-align: left; padding-left: 10px; position: relative; border-left: 1px dashed rgba(255, 255, 255, 0.04);">
+            <div class="rsi-y-axis" style="width: 82px; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 11px; color: rgba(255,255,255,0.45); text-align: left; padding-left: 10px; position: relative; border-left: 1px dashed rgba(255, 255, 255, 0.04);">
               <div style="position: absolute; top: 0%; transform: translateY(-50%);">100</div>
               <div style="position: absolute; top: 15%; transform: translateY(-50%); color: #ff4c5b; font-weight: bold;">85.00</div>
               <div style="position: absolute; top: 30%; transform: translateY(-50%); z-index: 10;">
@@ -3864,6 +3864,22 @@
       });
     });
 
+    // Formateador de precios de alta precisión dinámico para evitar solapamientos y redondear
+    function formatPrice(val) {
+      if (val === null || val === undefined) return "";
+      let decimals = 4;
+      if (val < 0.01) {
+        decimals = 6;
+      } else if (val < 1) {
+        decimals = 5;
+      } else if (val < 10) {
+        decimals = 4;
+      } else {
+        decimals = 2;
+      }
+      return val.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
     // Race-condition and overlapping fetches preventer
     let currentLoadId = 0;
 
@@ -3912,7 +3928,7 @@
 
       // Update central dashboard elements
       document.querySelector(".asset-stats .asset-stat:nth-child(1) b").textContent = latestRSI;
-      document.querySelector(".asset-stats .asset-stat:nth-child(2) b").textContent = `${latestPrice.toLocaleString()} USDT`;
+      document.querySelector(".asset-stats .asset-stat:nth-child(2) b").textContent = `${formatPrice(latestPrice)} USDT`;
       
       const varStat = document.querySelector(".asset-stats .asset-stat:nth-child(3) b");
       varStat.textContent = `${pctSign}${pctChange}%`;
@@ -3930,18 +3946,18 @@
 
       // Update OHLC details
       const subtitleRowHTML = `
-        <span style="color: rgba(255,255,255,0.4);">O</span> <span style="color: #00ff88; font-weight: bold;">${latestCandle.open.toLocaleString()}</span>
-        <span style="color: rgba(255,255,255,0.4);">H</span> <span style="color: #00ff88; font-weight: bold;">${latestCandle.high.toLocaleString()}</span>
-        <span style="color: rgba(255,255,255,0.4);">L</span> <span style="color: #00ff88; font-weight: bold;">${latestCandle.low.toLocaleString()}</span>
-        <span style="color: rgba(255,255,255,0.4);">C</span> <span style="color: #00ff88; font-weight: bold;">${latestCandle.close.toLocaleString()}</span>
-        <span style="color: #00ff88; font-weight: bold; margin-left: 4px;">${pctSign}${priceChange.toLocaleString()} (${pctSign}${pctChange}%)</span>
+        <span style="color: rgba(255,255,255,0.4);">O</span> <span style="color: #00ff88; font-weight: bold;">${formatPrice(latestCandle.open)}</span>
+        <span style="color: rgba(255,255,255,0.4);">H</span> <span style="color: #00ff88; font-weight: bold;">${formatPrice(latestCandle.high)}</span>
+        <span style="color: rgba(255,255,255,0.4);">L</span> <span style="color: #00ff88; font-weight: bold;">${formatPrice(latestCandle.low)}</span>
+        <span style="color: rgba(255,255,255,0.4);">C</span> <span style="color: #00ff88; font-weight: bold;">${formatPrice(latestCandle.close)}</span>
+        <span style="color: #00ff88; font-weight: bold; margin-left: 4px;">${pctSign}${formatPrice(priceChange)} (${pctSign}${pctChange}%)</span>
       `;
       
       const chartSubRow = document.getElementById("chart-ohlc-row");
       if (chartSubRow) chartSubRow.innerHTML = subtitleRowHTML;
 
       const emaLabel = document.getElementById("chart-ema-row");
-      if (emaLabel) emaLabel.innerHTML = `EMA 9 <span style="color: #ffd24a; font-weight: bold;">${parseFloat(latestEMA).toLocaleString()}</span>`;
+      if (emaLabel) emaLabel.innerHTML = `EMA 9 <span style="color: #ffd24a; font-weight: bold;">${formatPrice(parseFloat(latestEMA))}</span>`;
 
       // Update Module 11: Liquidez levels dynamically by fetching real depth/order-book from Bitget
       let depthAsks = [];
@@ -5123,7 +5139,7 @@
       const r2 = Math.max(...highs);
       const s2 = Math.min(...lows);
       const totalRange = r2 - s2 || 1;
-      const f = (val) => val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+      const f = (val) => formatPrice(val);
 
       // Find Swing Points (local pivot highs and lows)
       const findPivots = (arr, type, minRadius = 2, maxRadius = 8) => {
@@ -5258,16 +5274,16 @@
 
         // --- DRAW CENTERED PRICE BADGE (WHITE BOXES LOCATION) ---
         pctx.save();
-        pctx.font = 'bold 13px "Inter", sans-serif';
+        pctx.font = 'bold 14px "Inter", sans-serif';
         const priceValText = f(lvl.price);
         const priceTextWidth = pctx.measureText(priceValText).width;
         const centerX = p_w / 2;
         
         pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
-        pctx.fillRect(centerX - priceTextWidth / 2 - 10, y - 11, priceTextWidth + 20, 22);
+        pctx.fillRect(centerX - priceTextWidth / 2 - 10, y - 13, priceTextWidth + 20, 26);
         pctx.strokeStyle = lvl.color;
         pctx.lineWidth = 1.8;
-        pctx.strokeRect(centerX - priceTextWidth / 2 - 10, y - 11, priceTextWidth + 20, 22);
+        pctx.strokeRect(centerX - priceTextWidth / 2 - 10, y - 13, priceTextWidth + 20, 26);
 
         pctx.fillStyle = '#ffffff';
         pctx.textAlign = 'center';
@@ -5430,21 +5446,38 @@
 
           // Draw label positioned at the midpoint between center resistances and the right price axis
           pctx.setLineDash([]);
-          pctx.font = 'bold 13px "Inter", sans-serif';
-          const microText = `${cachedMicroTargetLabel}: ${f(smoothedMicroTarget)}`;
-          const microTextWidth = pctx.measureText(microText).width;
+          
+          const labelStr = `${cachedMicroTargetLabel}: `;
+          const priceStr = f(smoothedMicroTarget);
+
+          pctx.font = 'bold 9px "Orbitron", sans-serif';
+          const labelWidth = pctx.measureText(labelStr).width;
+
+          pctx.font = 'bold 14px "Inter", sans-serif';
+          const priceWidth = pctx.measureText(priceStr).width;
+
+          const totalWidth = labelWidth + priceWidth;
           const microCenterX = p_w * 0.75; // Positioned exactly at 75% of width
 
           pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
-          pctx.fillRect(microCenterX - microTextWidth / 2 - 10, microY - 22, microTextWidth + 20, 22);
+          pctx.fillRect(microCenterX - totalWidth / 2 - 10, microY - 13, totalWidth + 20, 26);
           pctx.strokeStyle = '#FFA700';
           pctx.lineWidth = 1.8;
-          pctx.strokeRect(microCenterX - microTextWidth / 2 - 10, microY - 22, microTextWidth + 20, 22);
+          pctx.strokeRect(microCenterX - totalWidth / 2 - 10, microY - 13, totalWidth + 20, 26);
 
-          pctx.fillStyle = '#ffffff';
-          pctx.textAlign = 'center';
+          // Draw the label
+          pctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+          pctx.font = 'bold 9px "Orbitron", sans-serif';
+          pctx.textAlign = 'left';
           pctx.textBaseline = 'middle';
-          pctx.fillText(microText, microCenterX, microY - 11);
+          pctx.fillText(labelStr, microCenterX - totalWidth / 2, microY);
+
+          // Draw the number (larger!)
+          pctx.fillStyle = '#ffffff';
+          pctx.font = 'bold 14px "Inter", sans-serif';
+          pctx.textAlign = 'left';
+          pctx.textBaseline = 'middle';
+          pctx.fillText(priceStr, microCenterX - totalWidth / 2 + labelWidth, microY);
           pctx.restore();
         }
       }
@@ -5473,12 +5506,12 @@
         for (let i = 0; i < ticksCount; i++) {
           const val = innerMin + (innerMax - innerMin) * (i / (ticksCount - 1));
           const topPct = (100 - (i / (ticksCount - 1)) * 100).toFixed(1);
-          ticksHTML += `<div style="position: absolute; top: ${topPct}%; transform: translateY(-50%); color: #ffffff; font-weight: 800; font-family: 'Inter', sans-serif; font-size: 13px; text-shadow: 0 0 2px rgba(0,0,0,0.8);">${f(val)}</div>`;
+          ticksHTML += `<div style="position: absolute; top: ${topPct}%; transform: translateY(-50%); color: #ffffff; font-weight: 800; font-family: 'Inter', sans-serif; font-size: 13.5px; letter-spacing: -0.04em; text-shadow: 0 0 2px rgba(0,0,0,0.8); font-variant-numeric: tabular-nums; white-space: nowrap; left: 8px;">${f(val)}</div>`;
         }
 
         yAxisRight.innerHTML = ticksHTML + `
-          <div style="position: absolute; top: ${getTopPct(latestPrice)}%; transform: translateY(-50%); z-index: 10;">
-            <span style="background: #2b5c8f; color: #ffffff; padding: 3px 8px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 10px rgba(43,92,143,0.6); font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 13px; border: 1px solid #ffffff;">${f(latestPrice)}</span>
+          <div style="position: absolute; top: ${getTopPct(latestPrice)}%; transform: translateY(-50%); z-index: 10; left: 4px;">
+            <span style="background: #2b5c8f; color: #ffffff; padding: 2.5px 5.5px; border-radius: 4px; font-weight: 900; box-shadow: 0 0 10px rgba(43,92,143,0.6); font-family: 'Inter', sans-serif; font-variant-numeric: tabular-nums; font-size: 13px; letter-spacing: -0.04em; border: 1px solid #ffffff; white-space: nowrap; display: inline-block;">${f(latestPrice)}</span>
           </div>
         `;
       }

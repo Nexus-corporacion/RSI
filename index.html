@@ -4375,7 +4375,14 @@
     // --- CATALIZADOR COMPONENT SYSTEM (EVIDENCE MOTOR ENGINE) ---
     // Global cache and state management for Catalyst
     window.catalystCache = window.catalystCache || {};
+    try {
+      const savedHistory = sessionStorage.getItem("odin_catalyst_history");
+      window.catalystHistory = savedHistory ? JSON.parse(savedHistory) : {};
+    } catch (e) {
+      window.catalystHistory = {};
+    }
     window.catalystScanningSymbol = window.catalystScanningSymbol || null;
+    window.catalystCooldownMinutes = window.catalystCooldownMinutes || 5; // Enfriamiento configurado en minutos
 
     async function updateCatalyst(symbol) {
       const symUpper = symbol.toUpperCase().replace("/", "");
@@ -4409,6 +4416,10 @@
 
       // If data is still loading
       if (rsiVal === null || priceVal === null) {
+        if (window.catalystHistory[symUpper] && window.catalystHistory[symUpper].result) {
+          renderCatalystResult(window.catalystHistory[symUpper].result);
+          return;
+        }
         contentEl.innerHTML = `
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 110px; gap: 4px; color: #7c8ba1;">
             <div style="font-size: 12px; font-family: 'Orbitron', sans-serif;">CARGANDO...</div>
@@ -4418,11 +4429,41 @@
       }
 
       const isExtreme = rsiVal >= rsiUpperLimit || rsiVal <= rsiLowerLimit;
-      const mode = "real";
-      const cacheKey = `${symUpper}_${mode}_${isExtreme ? 'extreme' : 'normal'}`;
+      const currentRsiCondition = isExtreme ? (rsiVal >= rsiUpperLimit ? 'overbought' : 'oversold') : 'normal';
+      const history = window.catalystHistory[symUpper];
+      const cooldownMs = (window.catalystCooldownMinutes || 5) * 60 * 1000;
 
-      // 1. RSI is NOT extreme -> Show Waiting / Idle State
-      if (!isExtreme) {
+      let shouldInvestigate = false;
+
+      if (isExtreme) {
+        if (!history || !history.result) {
+          // No previous analysis for this symbol -> Investigate
+          shouldInvestigate = true;
+        } else {
+          // Check anti-repetition conditions
+          const timeElapsed = Date.now() - history.timestamp;
+          const isCooldownOver = timeElapsed >= cooldownMs;
+          
+          // A "new valid event" means:
+          // - RSI extreme condition changed (e.g. overbought -> oversold or vice-versa)
+          // - Or rsiCondition was not extreme and is now extreme
+          const isNewExtremeEvent = history.rsiCondition !== currentRsiCondition;
+
+          if (isNewExtremeEvent) {
+            shouldInvestigate = true;
+          } else if (isCooldownOver) {
+            shouldInvestigate = true;
+          }
+        }
+      }
+
+      // If no new investigation is triggered, persist the last final result or display waiting status
+      if (!shouldInvestigate) {
+        if (history && history.result) {
+          renderCatalystResult(history.result);
+          return;
+        }
+
         contentEl.innerHTML = `
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 120px; gap: 8px; padding: 12px; text-align: center; width: 100%; border: 1.5px dashed rgba(255,255,255,0.03); border-radius: 8px; background: rgba(255,255,255,0.005);">
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -4440,19 +4481,14 @@
         return;
       }
 
-      // 2. RSI is Extreme -> Retrieve from cache if already loaded
-      if (window.catalystCache[cacheKey]) {
-        renderCatalystResult(window.catalystCache[cacheKey]);
-        return;
-      }
-
-      // If we are currently scanning, do not interrupt
-      if (window.catalystScanningSymbol === cacheKey) {
+      // If already scanning this specific RSI extreme condition, prevent double execution
+      const scanKey = `${symUpper}_${currentRsiCondition}`;
+      if (window.catalystScanningSymbol === scanKey) {
         return;
       }
 
       // 3. Start Scanning Process
-      window.catalystScanningSymbol = cacheKey;
+      window.catalystScanningSymbol = scanKey;
       
       contentEl.innerHTML = `
         <style>
@@ -4520,9 +4556,13 @@
       
       // Concurrently kick off data retrieval from our server's hybrid AI agent endpoint
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15-second timeout
+
         const response = await fetch("/api/catalyst", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
           body: JSON.stringify({
             activo: symUpper.replace("USDT", ""),
             rsi: rsiVal,
@@ -4537,6 +4577,8 @@
             openInterest: openInterest
           })
         });
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
           throw new Error(`HTTP error ${response.status}`);
@@ -4559,21 +4601,32 @@
         };
         
         // Cache and render
-        window.catalystCache[cacheKey] = result;
+        window.catalystHistory[symUpper] = {
+          result: result,
+          rsiCondition: currentRsiCondition,
+          timestamp: Date.now(),
+          rsiVal: rsiVal
+        };
+        
+        try {
+          sessionStorage.setItem("odin_catalyst_history", JSON.stringify(window.catalystHistory));
+        } catch (e) {}
+        
         window.catalystScanningSymbol = null;
         renderCatalystResult(result);
       } catch (err) {
         console.error("Catalyst API request failed:", err);
         window.catalystScanningSymbol = null;
-        renderCatalystResult({
+        
+        const errorResult = {
           estado: "SIN_CATALIZADOR",
           activo: symUpper.replace("USDT", ""),
           descripcion: "Error en la conexión con el motor híbrido.",
-          lineaTemporal: { antes: "Consolidación.", evento: "Fallo de conexión.", despues: "Espera de reintento." },
+          lineaTemporal: { antes: "Consolidación.", evento: "Fallo de conexión o timeout.", despues: "Espera de reintento." },
           fuentesVerificadas: [],
           semaforo: "GRIS (SIN CATALIZADOR)",
           confianza: 35,
-          analisisMercado: "Métricas de Bitget temporalmente limitadas por red.",
+          analisisMercado: "Métricas de Bitget temporalmente limitadas por red o timeout del agente.",
           conclusionUnica: "❌ SIN CATALIZADOR EXTERNO. Fallo temporal de conexión con el motor híbrido.",
           context: {
             fundingRate: fundingRate,
@@ -4584,13 +4637,34 @@
             whaleCount: whaleCount,
             flujoPercent: netFlowPercent
           }
-        });
+        };
+
+        window.catalystHistory[symUpper] = {
+          result: errorResult,
+          rsiCondition: currentRsiCondition,
+          timestamp: Date.now(),
+          rsiVal: rsiVal
+        };
+
+        try {
+          sessionStorage.setItem("odin_catalyst_history", JSON.stringify(window.catalystHistory));
+        } catch (e) {}
+
+        renderCatalystResult(errorResult);
       }
     }
 
     function renderCatalystResult(data) {
       const contentEl = document.getElementById("catalizador-content");
       if (!contentEl) return;
+
+      // Anti-race condition check: Ensure the loaded data matches the active symbol selected in the UI
+      const currentSymUpper = (typeof selectedSymbol !== "undefined") ? selectedSymbol.toUpperCase().replace("/", "").replace("USDT", "") : "";
+      const resultSymUpper = (data && data.activo) ? data.activo.toUpperCase().replace("/", "").replace("USDT", "") : "";
+      if (currentSymUpper && resultSymUpper && currentSymUpper !== resultSymUpper) {
+        // This is a background task callback from an asset the user already deselected. Save to cache but do not render on screen.
+        return;
+      }
 
       const rsiVal = rsiValues && rsiValues.length > 0 ? parseFloat(rsiValues[rsiValues.length - 1].toFixed(1)) : 50;
       const isUpTrend = rsiVal >= rsiUpperLimit;

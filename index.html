@@ -5324,102 +5324,366 @@
           const rsiVal = rsiValues && rsiValues.length > 0 ? rsiValues[rsiValues.length - 1] : 50;
           const lookDown = rsiVal >= 50;
 
-          // Extract last 40 candles and scan for reaction zones
-          const sampleCandles = activeCandles.slice(-40);
-          let candidates = [];
-
-          for (let i = 1; i < sampleCandles.length - 1; i++) {
-            const prev = sampleCandles[i - 1];
-            const curr = sampleCandles[i];
-            const next = sampleCandles[i + 1];
-
-            // Swing low / Pivot low
-            if (curr.low <= prev.low && curr.low <= next.low) {
-              candidates.push({
-                price: curr.low,
-                volume: curr.volume || 1,
-                isPivot: true,
-                type: 'low'
-              });
+          // Helper to calculate Parabolic SAR over the sample candles
+          const getLatestSAR = (candles) => {
+            if (candles.length < 5) return candles[candles.length - 1].close;
+            let isLong = true;
+            let sar = candles[0].low;
+            let ep = candles[0].high;
+            let af = 0.02;
+            for (let i = 1; i < candles.length; i++) {
+              const prevSar = sar;
+              if (isLong) {
+                sar = prevSar + af * (ep - prevSar);
+                if (candles[i].low < sar) {
+                  isLong = false;
+                  sar = ep;
+                  ep = candles[i].low;
+                  af = 0.02;
+                } else {
+                  if (candles[i].high > ep) {
+                    ep = candles[i].high;
+                    af = Math.min(0.2, af + 0.02);
+                  }
+                }
+              } else {
+                sar = prevSar + af * (ep - prevSar);
+                if (candles[i].high > sar) {
+                  isLong = true;
+                  sar = ep;
+                  ep = candles[i].high;
+                  af = 0.02;
+                } else {
+                  if (candles[i].low < ep) {
+                    ep = candles[i].low;
+                    af = Math.min(0.2, af + 0.02);
+                  }
+                }
+              }
             }
-            // Swing high / Pivot high
-            if (curr.high >= prev.high && curr.high >= next.high) {
-              candidates.push({
-                price: curr.high,
-                volume: curr.volume || 1,
-                isPivot: true,
-                type: 'high'
-              });
+            return sar;
+          };
+
+          // Helper to calculate SuperTrend Bands
+          const getLatestSuperTrend = (candles) => {
+            if (candles.length < 10) return { upper: candles[candles.length - 1].close, lower: candles[candles.length - 1].close };
+            let trs = [];
+            for (let i = 1; i < candles.length; i++) {
+              const h = candles[i].high;
+              const l = candles[i].low;
+              const pc = candles[i-1].close;
+              const tr = Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc));
+              trs.push(tr);
             }
-            // Regular candle high/low reactions
-            candidates.push({ price: curr.low, volume: curr.volume || 1, isPivot: false, type: 'low' });
-            candidates.push({ price: curr.high, volume: curr.volume || 1, isPivot: false, type: 'high' });
+            let atr = trs.slice(-10).reduce((a, b) => a + b, 0) / 10;
+            const multiplier = 3;
+            const lastCandle = candles[candles.length - 1];
+            const src = (lastCandle.high + lastCandle.low) / 2;
+            return {
+              upper: src + multiplier * atr,
+              lower: src - multiplier * atr
+            };
+          };
+
+          // Helper to get psychological score
+          const getPsychologicalScoreAndSnapped = (price) => {
+            let scale = 100;
+            if (price < 0.01) scale = 1000000;
+            else if (price < 1) scale = 100000;
+            else if (price < 10) scale = 10000;
+            else scale = 100;
+
+            const pScaled = Math.round(price * scale);
+            const lastTwo = pScaled % 100;
+
+            const d00 = Math.min(lastTwo, 100 - lastTwo);
+            const d50 = Math.abs(lastTwo - 50);
+            const d69 = Math.abs(lastTwo - 69);
+
+            let score = 0;
+            let dist = Math.min(d00, d50, d69);
+
+            if (dist === d00) {
+              score = 15;
+            } else if (dist === d50) {
+              score = 12;
+            } else if (dist === d69) {
+              score = 18; // Specific request priority ending .xxx69
+            }
+
+            if (dist === 0) return { score: score, dist: 0 };
+            if (dist <= 2) return { score: score * 0.8, dist: dist };
+            if (dist <= 5) return { score: score * 0.5, dist: dist };
+            return { score: 0, dist: dist };
+          };
+
+          // Extract last 60-80 candles for robust Pivot Detection
+          const sampleCandles = activeCandles.slice(-80);
+          
+          // Pivot detection radius 4 and radius 2 fallback
+          const findPivots = (candles, type, radius = 4) => {
+            const pivots = [];
+            for (let i = radius; i < candles.length - radius; i++) {
+              const curr = candles[i];
+              let isPivot = true;
+              if (type === 'low') {
+                for (let j = -radius; j <= radius; j++) {
+                  if (j !== 0 && candles[i + j].low < curr.low) {
+                    isPivot = false;
+                    break;
+                  }
+                }
+              } else {
+                for (let j = -radius; j <= radius; j++) {
+                  if (j !== 0 && candles[i + j].high > curr.high) {
+                    isPivot = false;
+                    break;
+                  }
+                }
+              }
+              if (isPivot) {
+                pivots.push({
+                  price: type === 'low' ? curr.low : curr.high,
+                  volume: curr.volume || 1,
+                  isPivot: true
+                });
+              }
+            }
+            return pivots;
+          };
+
+          let pivotCandidates = findPivots(sampleCandles, lookDown ? 'low' : 'high', 4);
+          if (pivotCandidates.length === 0) {
+            pivotCandidates = findPivots(sampleCandles, lookDown ? 'low' : 'high', 2);
           }
 
-          // Score reaction zones
-          const maxVolume = Math.max(...sampleCandles.map(c => c.volume || 1), 1);
-          candidates.forEach(cand => {
-            let score = 0;
-            const p = cand.price;
-            const relVolume = (cand.volume || 1) / maxVolume;
-            score += relVolume * 15;
+          // Build candidates list
+          const candidates = [];
+          pivotCandidates.forEach(p => {
+            candidates.push({
+              price: p.price,
+              isPivot: true,
+              volume: p.volume,
+              score: 25 // base pivot bonus score
+            });
+          });
 
-            if (cand.isPivot) {
-              score += 10;
+          // Add other candle extremes to find maximum confluence
+          for (let i = 2; i < sampleCandles.length - 2; i++) {
+            const c = sampleCandles[i];
+            candidates.push({
+              price: lookDown ? c.low : c.high,
+              isPivot: false,
+              volume: c.volume || 1,
+              score: 5
+            });
+          }
+
+          // 1. Volume Profile (Volume Delta / POC)
+          const lows = sampleCandles.map(c => c.low);
+          const highs = sampleCandles.map(c => c.high);
+          const minP = Math.min(...lows);
+          const maxP = Math.max(...highs);
+          const priceRange = maxP - minP || 1;
+          const binsCount = 20;
+          const bins = Array(binsCount).fill(0);
+          const binSize = priceRange / binsCount;
+
+          sampleCandles.forEach(c => {
+            const price = c.close;
+            const binIdx = Math.min(binsCount - 1, Math.floor((price - minP) / binSize));
+            if (binIdx >= 0) {
+              bins[binIdx] += c.volume || 1;
             }
+          });
 
-            // Touch points validation
+          let maxBinVolume = 0;
+          let pocBinIdx = 0;
+          for (let i = 0; i < binsCount; i++) {
+            if (bins[i] > maxBinVolume) {
+              maxBinVolume = bins[i];
+              pocBinIdx = i;
+            }
+          }
+          const pocPrice = minP + (pocBinIdx + 0.5) * binSize;
+
+          // 2. Estructura de mercado (Fair Value Gaps / Order Blocks Breakout)
+          const fvgLevels = [];
+          for (let i = 2; i < sampleCandles.length; i++) {
+            if (lookDown) {
+              // Bullish FVG
+              if (sampleCandles[i - 2].high < sampleCandles[i].low) {
+                fvgLevels.push((sampleCandles[i - 2].high + sampleCandles[i].low) / 2);
+              }
+            } else {
+              // Bearish FVG
+              if (sampleCandles[i - 2].low > sampleCandles[i].high) {
+                fvgLevels.push((sampleCandles[i - 2].low + sampleCandles[i].high) / 2);
+              }
+            }
+          }
+
+          const obLevels = [];
+          for (let i = 1; i < sampleCandles.length - 3; i++) {
+            if (lookDown) {
+              const isDownCandle = sampleCandles[i].close < sampleCandles[i].open;
+              const nextThreeUp = sampleCandles[i+1].close > sampleCandles[i+1].open &&
+                                  sampleCandles[i+2].close > sampleCandles[i+2].open &&
+                                  sampleCandles[i+3].close > sampleCandles[i+3].open;
+              if (isDownCandle && nextThreeUp) {
+                obLevels.push(sampleCandles[i].low);
+              }
+            } else {
+              const isUpCandle = sampleCandles[i].close > sampleCandles[i].open;
+              const nextThreeDown = sampleCandles[i+1].close < sampleCandles[i+1].open &&
+                                    sampleCandles[i+2].close < sampleCandles[i+2].open &&
+                                    sampleCandles[i+3].close < sampleCandles[i+3].open;
+              if (isUpCandle && nextThreeDown) {
+                obLevels.push(sampleCandles[i].high);
+              }
+            }
+          }
+
+          // 3. Indicadores (EMA 9, SAR, SuperTrend)
+          const latestEMAVal = emaValues && emaValues.length > 0 ? emaValues[emaValues.length - 1] : latestPrice;
+          const latestSARVal = getLatestSAR(sampleCandles);
+          const superTrend = getLatestSuperTrend(sampleCandles);
+
+          // Scoring final with confluences
+          candidates.forEach(cand => {
+            let score = cand.score;
+            const p = cand.price;
+
+            // Confluence 1: Volume Profile
+            const distToPOC = Math.abs(p - pocPrice) / pocPrice;
+            if (distToPOC < 0.002) score += 20;
+            else if (distToPOC < 0.005) score += 15;
+            else if (distToPOC < 0.01) score += 8;
+
+            // Confluence 2: Market Structure (FVG / OB)
+            let closestStructDist = Infinity;
+            fvgLevels.forEach(fvg => {
+              const d = Math.abs(p - fvg) / fvg;
+              if (d < closestStructDist) closestStructDist = d;
+            });
+            obLevels.forEach(ob => {
+              const d = Math.abs(p - ob) / ob;
+              if (d < closestStructDist) closestStructDist = d;
+            });
+            if (closestStructDist < 0.002) score += 20;
+            else if (closestStructDist < 0.005) score += 15;
+            else if (closestStructDist < 0.01) score += 8;
+
+            // Confluence 3: Psychological Ending (.xxx69, .xx00, .xx50)
+            const psychInfo = getPsychologicalScoreAndSnapped(p);
+            score += psychInfo.score;
+
+            // Confluence 4: Indicators (EMA 9, SAR, SuperTrend Lower/Upper Band)
+            const distToEMA = Math.abs(p - latestEMAVal) / latestEMAVal;
+            const distToSAR = Math.abs(p - latestSARVal) / latestSARVal;
+            const stBand = lookDown ? superTrend.lower : superTrend.upper;
+            const distToST = Math.abs(p - stBand) / stBand;
+
+            const minDistInd = Math.min(distToEMA, distToSAR, distToST);
+            if (minDistInd < 0.002) score += 20;
+            else if (minDistInd < 0.005) score += 15;
+            else if (minDistInd < 0.01) score += 8;
+
+            // Touch points in past candles
             sampleCandles.forEach(c => {
-              const distLow = Math.abs(c.low - p) / p;
-              const distHigh = Math.abs(c.high - p) / p;
-              const distOpen = Math.abs(c.open - p) / p;
-              const distClose = Math.abs(c.close - p) / p;
-
-              if (distLow < 0.003) score += 3;
-              if (distHigh < 0.003) score += 3;
-              if (distOpen < 0.003) score += 1.5;
-              if (distClose < 0.003) score += 1.5;
+              if (Math.abs(c.low - p) / p < 0.003) score += 3;
+              if (Math.abs(c.high - p) / p < 0.003) score += 3;
+              if (Math.abs(c.close - p) / p < 0.002) score += 1.5;
             });
 
             cand.score = score;
           });
 
-          // Noise/distance limit: balanced buffer (1.0%) to filter out immediate price noise and current candle range
-          const minDistance = 0.01 * latestPrice;
-          let selectedCandidate = null;
-
+          // Noise/distance filter: Target the first reaction leg sweet spot (Latigazo Scalp)
+          // Minimum distance of 1.5% to prevent being "pegadísimo"
+          // Maximum distance of 5.2% to prevent being too deep ("super abajo", below major macros)
+          const minDistance = 0.015 * latestPrice;
+          const maxDistance = 0.052 * latestPrice;
+          
+          let validCandidates = [];
           if (lookDown) {
-            // Filter by price and reasonable score to ensure it is a valid reaction level
-            let validCandidates = candidates.filter(cand => cand.price <= latestPrice - minDistance && cand.score >= 4);
-            // Fallback to any candidate if none meet score threshold
-            if (validCandidates.length === 0) {
-              validCandidates = candidates.filter(cand => cand.price <= latestPrice - minDistance);
-            }
-
-            if (validCandidates.length > 0) {
-              // Sort DESCENDING by price to get the NEAREST valid reaction level below the current price
-              validCandidates.sort((a, b) => b.price - a.price);
-              selectedCandidate = validCandidates[0].price;
-            } else {
-              selectedCandidate = latestPrice * 0.98; // 2.0% fallback for scalping
-            }
-            cachedMicroTargetLabel = rsiVal >= 85 ? "SOPORTE MICRO EXTREMO" : "SOPORTE MICRO";
+            validCandidates = candidates.filter(cand => 
+              cand.price >= latestPrice - maxDistance && 
+              cand.price <= latestPrice - minDistance
+            );
           } else {
-            // Filter by price and reasonable score to ensure it is a valid reaction level
-            let validCandidates = candidates.filter(cand => cand.price >= latestPrice + minDistance && cand.score >= 4);
-            // Fallback to any candidate if none meet score threshold
-            if (validCandidates.length === 0) {
-              validCandidates = candidates.filter(cand => cand.price >= latestPrice + minDistance);
-            }
+            validCandidates = candidates.filter(cand => 
+              cand.price >= latestPrice + minDistance && 
+              cand.price <= latestPrice + maxDistance
+            );
+          }
 
-            if (validCandidates.length > 0) {
-              // Sort ASCENDING by price to get the NEAREST valid reaction level above the current price
-              validCandidates.sort((a, b) => a.price - b.price);
-              selectedCandidate = validCandidates[0].price;
+          // Fallback 1: Expand range slightly to 1.0% - 6.5% if no candidates are found
+          if (validCandidates.length === 0) {
+            const fallbackMin = 0.010 * latestPrice;
+            const fallbackMax = 0.065 * latestPrice;
+            if (lookDown) {
+              validCandidates = candidates.filter(cand => 
+                cand.price >= latestPrice - fallbackMax && 
+                cand.price <= latestPrice - fallbackMin
+              );
             } else {
-              selectedCandidate = latestPrice * 1.02; // 2.0% fallback for scalping
+              validCandidates = candidates.filter(cand => 
+                cand.price >= latestPrice + fallbackMin && 
+                cand.price <= latestPrice + fallbackMax
+              );
             }
-            cachedMicroTargetLabel = rsiVal <= 15 ? "RESISTENCIA MICRO EXTREMO" : "RESISTENCIA MICRO";
+          }
+
+          // Fallback 2: Any candidate that is at least 1.0% away to prevent "pegadísimo"
+          if (validCandidates.length === 0) {
+            const finalMin = 0.010 * latestPrice;
+            if (lookDown) {
+              validCandidates = candidates.filter(cand => cand.price <= latestPrice - finalMin);
+            } else {
+              validCandidates = candidates.filter(cand => cand.price >= latestPrice + finalMin);
+            }
+          }
+
+          let selectedCandidate = null;
+          if (validCandidates.length > 0) {
+            // Sort by score descending to get the highest confluence target in this range
+            validCandidates.sort((a, b) => b.score - a.score);
+            selectedCandidate = validCandidates[0].price;
+          } else {
+            selectedCandidate = lookDown ? latestPrice * 0.972 : latestPrice * 1.028; // Standard ~2.8% target fallback
+          }
+
+          // Dynamic Psychological level snapping to make levels clean and exact (.xxx69, .xx00, .xx50)
+          let scale = 100;
+          if (selectedCandidate < 0.01) scale = 1000000;
+          else if (selectedCandidate < 1) scale = 100000;
+          else if (selectedCandidate < 10) scale = 10000;
+          else scale = 100;
+
+          const pScaled = selectedCandidate * scale;
+          const basePrice = Math.floor(pScaled / 100) * 100;
+          const endings = [0, 50, 69, 100];
+          let bestSnappedPrice = selectedCandidate;
+          let bestSnappedDist = Infinity;
+
+          endings.forEach(end => {
+            const targetPrice = (basePrice + end) / scale;
+            const dist = Math.abs(selectedCandidate - targetPrice) / selectedCandidate;
+            if (dist < 0.004 && dist < bestSnappedDist) {
+              bestSnappedDist = dist;
+              bestSnappedPrice = targetPrice;
+            }
+          });
+
+          selectedCandidate = bestSnappedPrice;
+
+          // Set labels depending on whether we look down (S3 / Support) or look up (R3 / Resistance)
+          const isExtremeRSI = rsiVal <= 15 || rsiVal >= 85;
+          if (lookDown) {
+            cachedMicroTargetLabel = isExtremeRSI ? "S3 DINÁMICO FUERTE" : "SOPORTE MICRO S3";
+          } else {
+            cachedMicroTargetLabel = isExtremeRSI ? "R3 DINÁMICO FUERTE" : "RESISTENCIA MICRO R3";
           }
 
           cachedMicroTargetPrice = selectedCandidate;

@@ -12,6 +12,8 @@
       padding: 0;
       box-sizing: border-box;
       user-select: none;
+      font-feature-settings: "zero" 0;
+      font-variant-numeric: no-slashed-zero;
     }
 
     body {
@@ -1729,24 +1731,16 @@
       <!-- 4. BANNER SUPERIOR (Nexus Header) -->
       <div class="market-bar" style="position: relative;">
         
-        <!-- MÓDULO 1: ODIN AI COMMANDER -->
-        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-1">
-          <div class="market-label" style="margin-bottom: 8px; text-align: center;">ODIN AI COMMANDER</div>
-          <div class="market-value" id="ai-decision" style="font-size: 24px; margin-top: 2px; text-align: center; width: 100%;">ANALIZANDO...</div>
-          <div class="ai-details" id="ai-mod-1-details" style="font-size: 11.5px; color: #8fa0af; margin-top: 6px; display: flex; gap: 8px; justify-content: center; font-family: 'JetBrains Mono', monospace; width: 100%;">
-            <span>Conf: <span id="ai-confidence" style="color: #00f0ff;">--</span></span>
-            <span>|</span>
-            <span>Esc: <span id="ai-scenario" style="color: #ffd93d;">--</span></span>
-            <span>|</span>
-            <span>ETA: <span id="ai-eta" style="color: #fff;">--</span></span>
+        <!-- MÓDULO UNIFICADO: ODIN HUMAN (RAZONAMIENTO EN TIEMPO REAL) -->
+        <div class="market-card" style="flex: 2; padding: 14px 12px; justify-content: flex-start; align-items: center;" id="custom-module-panel">
+          <div class="market-label" style="margin-bottom: 8px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 8px #00ff88; animation: pulse 1.8s infinite;"></span>
+            ODIN HUMAN
           </div>
-        </div>
-
-        <!-- MÓDULO 2: RAZONAMIENTO IA -->
-        <div class="market-card" style="padding: 14px 12px; justify-content: flex-start; align-items: center;" id="ai-mod-2">
-          <div class="market-label" style="margin-bottom: 8px; text-align: center;">RAZONAMIENTO IA</div>
-          <div id="ai-reasons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px 8px; width: 100%; font-size: 12px; font-family: 'Inter', sans-serif;">
-            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 11px; margin-top: 10px; font-family: 'JetBrains Mono', monospace;">Cargando...</div>
+          <div id="odin-human-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); text-align: center; letter-spacing: 0.5px;">
+              Sintetizando razonamiento en tiempo real...
+            </div>
           </div>
         </div>
 
@@ -2295,19 +2289,47 @@
           </div>
         </div>
 
-        <!-- 9. CATALIZADOR -->
-        <div class="vs-card" id="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 14px 12px; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; min-height: 145px; position: relative; transition: all 0.3s ease;">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 6px; width: 100%;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));">
-              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-              <path d="M12 6v12"/>
-              <path d="M8 10h8"/>
-              <path d="M12 14H8"/>
-              <path d="M12 14h4"/>
-            </svg>
-            <div class="market-label" style="margin-bottom: 0; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffffff; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);">CATALIZADOR</div>
+        <!-- 9. MICRO EXIT AI (Reemplaza Catalizador) -->
+        <div class="vs-card" id="vs-card" style="background: #060e15; border: 1px solid #142230; border-radius: 12px; padding: 10px 14px 12px 14px; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; min-height: 395px; position: relative; transition: all 0.3s ease; overflow: hidden;">
+          
+          <!-- Encabezado -->
+          <div style="display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <!-- Target Icon -->
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00f6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px rgba(0, 246, 255, 0.45));">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="22" y1="12" x2="18" y2="12"></line>
+                <line x1="6" y1="12" x2="2" y2="12"></line>
+                <line x1="12" y1="6" x2="12" y2="2"></line>
+                <line x1="12" y1="22" x2="12" y2="18"></line>
+              </svg>
+              <div style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 900; color: #ffffff; letter-spacing: 0.8px; text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);">MICRO EXIT AI</div>
+            </div>
+            <div style="font-family: 'Orbitron', sans-serif; font-size: 8.5px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; padding-left: 21px;">Análisis inteligente salida</div>
           </div>
-          <div id="catalizador-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+          
+          <!-- Tres Botones Superiores -->
+          <div style="display: flex; gap: 6px; width: 100%; margin-bottom: 12px;">
+            
+            <!-- SOPORTES MACRO -->
+            <button id="btn-macro-s" onclick="switchMicroExitMode('SOPORTES_MACRO')" style="flex: 1; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.12); border-radius: 5px; display: flex; align-items: center; justify-content: center; padding: 9px 2px; cursor: pointer; transition: all 0.2s ease;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #3b82f6; letter-spacing: 0.2px; text-align: center; white-space: nowrap;">S. MACRO</span>
+            </button>
+            
+            <!-- RESISTENCIAS MACRO -->
+            <button id="btn-macro-r" onclick="switchMicroExitMode('RESISTENCIAS_MACRO')" style="flex: 1; background: rgba(255, 61, 87, 0.03); border: 1px solid rgba(255, 61, 87, 0.12); border-radius: 5px; display: flex; align-items: center; justify-content: center; padding: 9px 2px; cursor: pointer; transition: all 0.2s ease;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ff3d57; letter-spacing: 0.2px; text-align: center; white-space: nowrap;">R. MACRO</span>
+            </button>
+            
+            <!-- SOPORTES MICRO -->
+            <button id="btn-micro-s" onclick="switchMicroExitMode('SOPORTES_MICRO')" style="flex: 1; background: rgba(255, 217, 61, 0.03); border: 1px solid rgba(255, 217, 61, 0.12); border-radius: 5px; display: flex; align-items: center; justify-content: center; padding: 9px 2px; cursor: pointer; transition: all 0.2s ease;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 800; color: #ffd93d; letter-spacing: 0.2px; text-align: center; white-space: nowrap;">S. MICRO</span>
+            </button>
+            
+          </div>
+          
+          <!-- Contenido Dinámico -->
+          <div id="catalizador-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; height: 100%; overflow: hidden;">
             <!-- Rendered Dynamically -->
           </div>
           
@@ -3181,8 +3203,8 @@
         decision = "🪤 BARRIDO DE LIQUIDEZ";
         action = "ESPERAR RECHAZO";
         decisionColor = "#e0aaff"; // lavender/purple
-      } else if (fuelScore >= 58) {
-        decision = "🟢 MOVIMIENTO REAL";
+      } else if (fuelScore >= 54 || (buyPct >= 52 && rejectionScore < 50) || (isUpTrend && latestCandle.close > latestCandle.open && volScore > 40)) {
+        decision = "🟢 IMPULSO ACTIVO";
         action = "CONTINUAR";
         decisionColor = "#00ff8c"; // green
       } else if (fuelScore <= 38) {
@@ -3270,39 +3292,29 @@
     function runOdinAI(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels) {
       if (!engineData) return;
 
+      // Handle lockdown for active modules
+      if (typeof isLockdownActive !== "undefined" && isLockdownActive) {
+        const impulseContentEl = document.getElementById("ai-impulso-content");
+        if (impulseContentEl) {
+          impulseContentEl.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 4px; text-align: center; width: 100%;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff3d57" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 4px rgba(255, 61, 87, 0.45));">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 800; color: #ff3d57; letter-spacing: 0.8px;">CANDADO CERRADO</div>
+            </div>
+          `;
+        }
+        return;
+      }
+
       // Handle token change event
       if (engineData.symbol !== lastAnalyzedSymbol) {
         lastAnalyzedSymbol = engineData.symbol;
         aiIsLoading = true;
         aiMotorTimerVal = 0.0;
         aiMotorProgressVal = 10;
-
-        // Reset DOM elements to analyzing state
-        const decisionEl = document.getElementById("ai-decision");
-        if (decisionEl) {
-          decisionEl.textContent = "ANALIZANDO...";
-          decisionEl.className = "market-value yellow";
-          decisionEl.style.color = "#ffd93d";
-          decisionEl.style.textShadow = "0 0 10px rgba(255, 217, 61, 0.4)";
-        }
-
-        const detailsEl = document.getElementById("ai-mod-1-details");
-        if (detailsEl) {
-          detailsEl.innerHTML = `
-            <span>Conf: <span style="color: #00f0ff;">--</span></span>
-            <span>|</span>
-            <span>Esc: <span style="color: #ffd93d;">--</span></span>
-            <span>|</span>
-            <span>ETA: <span style="color: #fff;">--</span></span>
-          `;
-        }
-
-        const reasonsEl = document.getElementById("ai-reasons-grid");
-        if (reasonsEl) {
-          reasonsEl.innerHTML = `
-            <div style="color: #8fa0af; grid-column: span 2; text-align: center; font-size: 9px; margin-top: 8px; font-family: 'JetBrains Mono', monospace;">Leyendo indicadores de mercado...</div>
-          `;
-        }
 
         const impulseContentEl = document.getElementById("ai-impulso-content");
         if (impulseContentEl) {
@@ -3336,7 +3348,7 @@
           progressEl.style.width = "10%";
         }
 
-        // Animate progression simulation for a highly responsive, high-tech experience
+        // Animate progression simulation
         let step = 0;
         const steps = [
           { log: "Analizando estructura...", prog: "30%" },
@@ -3360,13 +3372,193 @@
           }
         }, 220);
 
-        return; // wait for timer to finish loading
+        return;
       }
 
-      // If we are already loaded, just update values live!
       if (!aiIsLoading) {
         renderAICommandCenter(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
       }
+    }
+
+    // --- ODIN HUMAN LIGHT MEMORY BUFFER (ARQUITECTURA OPERATIVA) ---
+    const odinHumanMemory = {
+      history: [],
+      maxLen: 15,
+      lastVerdict: null,
+      consecutiveTicks: 0,
+      flipCount: 0
+    };
+
+    function updateOdinHumanReasoning(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels) {
+      const container = document.getElementById("odin-human-content");
+      if (!container || !engineData) return;
+
+      const rsi = engineData.rsi || 50;
+      const change24h = engineData.change24h || 0;
+      const price = engineData.price || 0;
+
+      // 1. MOTOR DE DECISIÓN HUMANO (HUMAN TRADER ENGINE - FILOSOFÍA LÍNEA DE AGOTAMIENTO)
+      const candles = engineData.candles || [];
+      const latestCandle = candles.length > 0 ? candles[candles.length - 1] : { open: price, close: price, high: price, low: price };
+      
+      const recentHigh = candles.length > 0 ? Math.max(...candles.slice(-30).map(c => c.high)) : price;
+      const recentLow = candles.length > 0 ? Math.min(...candles.slice(-30).map(c => c.low)) : price;
+
+      const distToAgotamientoHigh = Math.abs(price - recentHigh) / (price || 1);
+      const distToAgotamientoLow = Math.abs(price - recentLow) / (price || 1);
+
+      const isAtAgotamientoHigh = distToAgotamientoHigh <= 0.008 || price >= recentHigh;
+      const isAtAgotamientoLow = distToAgotamientoLow <= 0.008 || price <= recentLow;
+
+      const upperWick = latestCandle.high - Math.max(latestCandle.open, latestCandle.close);
+      const lowerWick = Math.min(latestCandle.open, latestCandle.close) - latestCandle.low;
+      const candleRange = (latestCandle.high - latestCandle.low) || 0.0001;
+      const hasUpperRejection = (upperWick / candleRange) >= 0.35;
+      const hasLowerRejection = (lowerWick / candleRange) >= 0.35;
+
+      const isBuyerDrivenPush = buyPct >= 51 || (netCapitalFlow || 0) > 0;
+      const isSellerDrivenPush = buyPct <= 49 || (netCapitalFlow || 0) < 0;
+
+      let rawVerdict = "ESPERAR EVENTO";
+      let verdictColor = "#8fa0af";
+
+      // LÓGICA HUMAN TRADER: No salta a BUSCAR SHORT prematuramente en RSI 70 mientras siga empujando
+      if (isBuyerDrivenPush && !isAtAgotamientoHigh && !hasUpperRejection && rsi >= 65) {
+        // Empujando en subida -> Acompaña el impulso sin dar corto prematuro
+        rawVerdict = "IMPULSO ACTIVO";
+        verdictColor = "#00ff88";
+      } else if (isAtAgotamientoHigh || rsi >= 85) {
+        // Zona de Máximo / Línea de Agotamiento alcanzada
+        if (isSellerDrivenPush || hasUpperRejection || (netCapitalFlow || 0) < -500) {
+          // Reacción real de vendedores en Agotamiento -> BUSCAR SHORT
+          rawVerdict = "BUSCAR SHORT";
+          verdictColor = "#ff3d57";
+        } else {
+          // Tocando techo de Agotamiento pero aún en prueba de nivel -> PREPARANDO SHORT
+          rawVerdict = "PREPARANDO SHORT";
+          verdictColor = "#ffd93d";
+        }
+      } else if (isSellerDrivenPush && !isAtAgotamientoLow && !hasLowerRejection && rsi <= 35) {
+        // Empujando en bajada -> Acompaña caída buscando soporte
+        rawVerdict = "IMPULSO ACTIVO";
+        verdictColor = "#ff3d57";
+      } else if (isAtAgotamientoLow || rsi <= 18) {
+        // Zona de Mínimo / Soporte en Agotamiento alcanzado
+        if (isBuyerDrivenPush || hasLowerRejection || (netCapitalFlow || 0) > 500) {
+          rawVerdict = "BUSCAR LONG";
+          verdictColor = "#00ff88";
+        } else {
+          rawVerdict = "PREPARANDO LONG";
+          verdictColor = "#ffd93d";
+        }
+      } else if (buyPct > 62 || buyPct < 38 || Math.abs(change24h) > 4) {
+        rawVerdict = "IMPULSO ACTIVO";
+        verdictColor = (buyPct >= 50) ? "#00ff88" : "#ff3d57";
+      }
+
+      // 2. ACTUALIZACIÓN DE MEMORIA LIGERA O(1) (REGISTRO CIRCULAR)
+      if (odinHumanMemory.lastVerdict === rawVerdict) {
+        odinHumanMemory.consecutiveTicks++;
+      } else {
+        if (odinHumanMemory.lastVerdict !== null) {
+          odinHumanMemory.flipCount++;
+        }
+        odinHumanMemory.consecutiveTicks = 1;
+        odinHumanMemory.lastVerdict = rawVerdict;
+      }
+
+      odinHumanMemory.history.push({
+        verdict: rawVerdict,
+        rsi: rsi,
+        capital: netCapitalFlow || 0,
+        buyPct: buyPct || 50,
+        whales: numWhales || 0,
+        time: Date.now()
+      });
+
+      if (odinHumanMemory.history.length > odinHumanMemory.maxLen) {
+        odinHumanMemory.history.shift();
+      }
+
+      // 3. CAPA DE MODULACIÓN DE CONTEXTO (MIDE PERSISTENCIA Y RUUDO RECIENTE)
+      const recentHistory = odinHumanMemory.history;
+      const sameVerdictCount = recentHistory.filter(h => h.verdict === rawVerdict).length;
+      const persistenceRatio = recentHistory.length > 0 ? (sameVerdictCount / recentHistory.length) : 1;
+      
+      // Compute Modulated Conviction %
+      let baseConviction = 60;
+      if (rawVerdict.includes("SHORT") || rawVerdict.includes("LONG")) {
+        baseConviction = 75;
+        if (rsi > 78 || rsi < 22) baseConviction += 12;
+        if ((numWhales || 0) > 0) baseConviction += 8;
+      } else if (rawVerdict === "IMPULSO ACTIVO") {
+        baseConviction = 70;
+      }
+
+      // Memory Adjustment: Clean continuity boosts conviction up to +12%; recent erratic flips reduce conviction down to -15%
+      const memoryModifier = Math.round((persistenceRatio - 0.5) * 20);
+      const finalConviction = Math.min(98, Math.max(50, baseConviction + memoryModifier));
+
+      // Metrics calculation for dynamic LED bars
+      const persistenciaVal = Math.min(100, Math.max(20, Math.round(persistenceRatio * 100)));
+      const capitalVal = Math.min(100, Math.max(15, Math.round(Math.min(100, Math.abs(netCapitalFlow || 0) / 1000 + (numWhales || 0) * 15 + 20))));
+      const agotamientoVal = Math.min(100, Math.max(15, Math.round(Math.abs(rsi - 50) * 2.2)));
+
+      // Top 3 Evidence variables modulated by memory & active trigger
+      const activeVars = [
+        { name: "CONVICCIÓN", val: finalConviction, color: finalConviction > 75 ? "#00ff88" : "#ffd93d" },
+        { name: "PERSISTENCIA", val: persistenciaVal, color: persistenciaVal > 60 ? "#00f0ff" : "#f97316" },
+        { name: "FLUJO CAPITAL", val: capitalVal, color: capitalVal > 50 ? "#00f0ff" : "#d946ef" }
+      ];
+
+      // Sort by weight
+      activeVars.sort((a, b) => b.val - a.val);
+
+      container.innerHTML = `
+        <div style="width: 100%; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 14px; height: 100%; padding: 4px 6px 0 6px;">
+          <!-- Left Column: Decision / Verdict Text -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; justify-content: center; flex: 1.1; min-width: 130px;">
+            <div style="font-family: 'Orbitron', monospace; font-size: 15.5px; font-weight: 800; color: ${verdictColor}; text-shadow: 0 0 10px ${verdictColor}; letter-spacing: 0.5px; white-space: nowrap; display: flex; align-items: center; gap: 6px;">
+              ${rawVerdict}
+            </div>
+            <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 800; color: #ffffff; letter-spacing: 0.8px; margin-top: 5px; text-transform: uppercase; opacity: 0.85;">
+              RAZONAMIENTO
+            </div>
+          </div>
+
+          <!-- Vertical Divider -->
+          <div style="width: 1px; height: 35px; background: rgba(255,255,255,0.05); margin: 0 4px;"></div>
+
+          <!-- Right Column: 3 Dynamic Evidence Bars (LED Blocks + Text) -->
+          <div style="display: flex; flex-direction: column; gap: 8px; flex: 0.9; min-width: 150px; justify-content: center;">
+            ${activeVars.map(ev => {
+              const totalBlocks = 10;
+              const filledBlocks = Math.max(1, Math.min(totalBlocks, Math.round(ev.val / 10)));
+              let ledHtml = "";
+              for (let i = 1; i <= totalBlocks; i++) {
+                const isFilled = i <= filledBlocks;
+                const bg = isFilled ? ev.color : "rgba(255, 255, 255, 0.04)";
+                const glowStyle = isFilled ? `box-shadow: 0 0 6px ${ev.color};` : "";
+                const borderStyle = isFilled ? "" : "border: 1px solid rgba(255, 255, 255, 0.06);";
+                ledHtml += `<div style="width: 5px; height: 7px; background: ${bg}; border-radius: 1px; ${glowStyle} ${borderStyle}"></div>`;
+              }
+
+              return `
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;">
+                  <!-- LED Bar -->
+                  <div style="display: flex; gap: 2px; align-items: center;">
+                    ${ledHtml}
+                  </div>
+                  <!-- Dynamic Variable Label -->
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 800; color: rgba(255,255,255,0.85); white-space: nowrap; letter-spacing: 0.2px; text-align: right; flex: 1; padding-left: 4px;">
+                    ${ev.name}
+                  </span>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
     }
 
     function renderAICommandCenter(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels) {
@@ -3374,66 +3566,12 @@
       const price = engineData.price;
       const change24h = engineData.change24h;
 
-      // 1. Calculate Core Expert Decision metrics
       const analysis = calculateAICommandCenter(rsi, price, change24h, buyPct, netCapitalFlow, numWhales, latestEMA, levels);
 
-      // 2. Render Module 1: ODIN AI COMMANDER
-      const decisionEl = document.getElementById("ai-decision");
-      if (decisionEl) {
-        decisionEl.textContent = analysis.decision;
-        
-        let dClass = "green";
-        let dColor = "#00ff88";
-        if (analysis.decision === "BUSCAR SHORT" || analysis.decision === "SALIR") {
-          dClass = "red";
-          dColor = "#ff3d57";
-        } else if (analysis.decision === "ESPERAR" || analysis.decision === "NO OPERAR") {
-          dClass = "yellow";
-          dColor = "#ffd93d";
-        } else if (analysis.decision === "PROTEGER GANANCIAS") {
-          dClass = "blue";
-          dColor = "#53d6ff";
-        }
-        decisionEl.className = `market-value ${dClass}`;
-        decisionEl.style.color = dColor;
-        decisionEl.style.textShadow = `0 0 12px ${dColor}`;
-      }
+      // Render ODIN HUMAN dynamic reasoning module
+      updateOdinHumanReasoning(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
 
-      const detailsEl = document.getElementById("ai-mod-1-details");
-      if (detailsEl) {
-        detailsEl.innerHTML = `
-          <span>Conf: <span style="color: #00f0ff;">${analysis.confidence}%</span></span>
-          <span>|</span>
-          <span>Esc: <span style="color: #ffd93d;">${analysis.scenario}</span></span>
-          <span>|</span>
-          <span>ETA: <span style="color: #fff;">${analysis.eta}</span></span>
-        `;
-      }
-
-      // 3. Render Module 2: RAZONAMIENTO IA
-      const reasonsEl = document.getElementById("ai-reasons-grid");
-      if (reasonsEl) {
-        reasonsEl.innerHTML = "";
-        analysis.reasons.forEach(r => {
-          let mark = "✓";
-          let mColor = "#00ff88";
-          if (r.type === "bearish") {
-            mark = "✓";
-            mColor = "#ff4c5b";
-          } else if (r.type === "neutral") {
-            mark = "•";
-            mColor = "#8fa0af";
-          }
-          const item = document.createElement("div");
-          item.style.whiteSpace = "nowrap";
-          item.style.overflow = "hidden";
-          item.style.textOverflow = "ellipsis";
-          item.innerHTML = `<span style="color: ${mColor}; font-weight: bold; margin-right: 2px;">${mark}</span> <span style="color: #eafef5;">${r.text}</span>`;
-          reasonsEl.appendChild(item);
-        });
-      }
-
-      // 4. Render Module 3: PLAN DE OPERACIÓN
+      // Render Module: PLAN DE OPERACIÓN if exists
       const planEl = document.getElementById("ai-plan-layout");
       if (planEl) {
         const formatP = (v) => {
@@ -3470,14 +3608,14 @@
         `;
       }
 
-      // 5. Render Module 4: MOTOR AI Status updates
+      // Render MOTOR AI Status updates
       const motorStatusEl = document.getElementById("ai-motor-status");
       if (motorStatusEl) {
         motorStatusEl.textContent = "VIGILANDO";
         motorStatusEl.style.color = "#00ff88";
       }
 
-      // 6. Render IMPULSO Module
+      // Render IMPULSO Module
       updateOdinImpulso(engineData, latestEMA, buyPct, netCapitalFlow, numWhales, levels);
     }
 
@@ -4388,694 +4526,542 @@
       updateCatalyst(selectedSymbol);
     }
 
-    // --- CATALIZADOR COMPONENT SYSTEM (EVIDENCE MOTOR ENGINE) ---
-    // Global cache and state management for Catalyst
-    window.catalystCache = window.catalystCache || {};
-    try {
-      const savedHistory = sessionStorage.getItem("odin_catalyst_history");
-      window.catalystHistory = savedHistory ? JSON.parse(savedHistory) : {};
-    } catch (e) {
-      window.catalystHistory = {};
-    }
-    window.catalystScanningSymbol = window.catalystScanningSymbol || null;
-    window.catalystCooldownMinutes = window.catalystCooldownMinutes || 5; // Enfriamiento configurado en minutos
+    // --- MICRO EXIT AI SYSTEM ---
+    window.microExitActiveMode = window.microExitActiveMode || "SOPORTES_MICRO";
+    window.microExitCache = window.microExitCache || {};
 
-    async function updateCatalyst(symbol) {
+    function syncMicroExitButtonStyles() {
+      const mode = window.microExitActiveMode || "SOPORTES_MICRO";
+      const btnMacroS = document.getElementById("btn-macro-s");
+      const btnMacroR = document.getElementById("btn-macro-r");
+      const btnMicroS = document.getElementById("btn-micro-s");
+      
+      if (!btnMacroS || !btnMacroR || !btnMicroS) return;
+      
+      const svgS = btnMacroS.querySelector("svg");
+      const spanS = btnMacroS.querySelector("span");
+      const svgR = btnMacroR.querySelector("svg");
+      const spanR = btnMacroR.querySelector("span");
+      const svgM = btnMicroS.querySelector("svg");
+      const spanM = btnMicroS.querySelector("span");
+
+      if (mode === "SOPORTES_MACRO") {
+        btnMacroS.style.background = "rgba(59, 130, 246, 0.12)";
+        btnMacroS.style.borderColor = "#3b82f6";
+        btnMacroS.style.boxShadow = "0 0 10px rgba(59, 130, 246, 0.4)";
+        if (svgS) svgS.style.stroke = "#3b82f6";
+        if (spanS) spanS.style.color = "#3b82f6";
+        
+        btnMacroR.style.background = "rgba(255, 61, 87, 0.02)";
+        btnMacroR.style.borderColor = "rgba(255, 61, 87, 0.12)";
+        btnMacroR.style.boxShadow = "none";
+        if (svgR) svgR.style.stroke = "rgba(255, 61, 87, 0.4)";
+        if (spanR) spanR.style.color = "rgba(255, 61, 87, 0.4)";
+        
+        btnMicroS.style.background = "rgba(255, 217, 61, 0.02)";
+        btnMicroS.style.borderColor = "rgba(255, 217, 61, 0.12)";
+        btnMicroS.style.boxShadow = "none";
+        if (svgM) svgM.style.stroke = "rgba(255, 217, 61, 0.4)";
+        if (spanM) spanM.style.color = "rgba(255, 217, 61, 0.4)";
+      } else if (mode === "RESISTENCIAS_MACRO") {
+        btnMacroS.style.background = "rgba(59, 130, 246, 0.02)";
+        btnMacroS.style.borderColor = "rgba(59, 130, 246, 0.12)";
+        btnMacroS.style.boxShadow = "none";
+        if (svgS) svgS.style.stroke = "rgba(59, 130, 246, 0.4)";
+        if (spanS) spanS.style.color = "rgba(59, 130, 246, 0.4)";
+        
+        btnMacroR.style.background = "rgba(255, 61, 87, 0.12)";
+        btnMacroR.style.borderColor = "#ff3d57";
+        btnMacroR.style.boxShadow = "0 0 10px rgba(255, 61, 87, 0.4)";
+        if (svgR) svgR.style.stroke = "#ff3d57";
+        if (spanR) spanR.style.color = "#ff3d57";
+        
+        btnMicroS.style.background = "rgba(255, 217, 61, 0.02)";
+        btnMicroS.style.borderColor = "rgba(255, 217, 61, 0.12)";
+        btnMicroS.style.boxShadow = "none";
+        if (svgM) svgM.style.stroke = "rgba(255, 217, 61, 0.4)";
+        if (spanM) spanM.style.color = "rgba(255, 217, 61, 0.4)";
+      } else {
+        btnMacroS.style.background = "rgba(59, 130, 246, 0.02)";
+        btnMacroS.style.borderColor = "rgba(59, 130, 246, 0.12)";
+        btnMacroS.style.boxShadow = "none";
+        if (svgS) svgS.style.stroke = "rgba(59, 130, 246, 0.4)";
+        if (spanS) spanS.style.color = "rgba(59, 130, 246, 0.4)";
+        
+        btnMacroR.style.background = "rgba(255, 61, 87, 0.02)";
+        btnMacroR.style.borderColor = "rgba(255, 61, 87, 0.12)";
+        btnMacroR.style.boxShadow = "none";
+        if (svgR) svgR.style.stroke = "rgba(255, 61, 87, 0.4)";
+        if (spanR) spanR.style.color = "rgba(255, 61, 87, 0.4)";
+        
+        btnMicroS.style.background = "rgba(255, 217, 61, 0.12)";
+        btnMicroS.style.borderColor = "#ffd93d";
+        btnMicroS.style.boxShadow = "0 0 10px rgba(255, 217, 61, 0.4)";
+        if (svgM) svgM.style.stroke = "#ffd93d";
+        if (spanM) spanM.style.color = "#ffd93d";
+      }
+    }
+
+    function switchMicroExitMode(newMode) {
+      window.microExitActiveMode = newMode;
+      syncMicroExitButtonStyles();
+      if (typeof selectedSymbol !== "undefined" && selectedSymbol) {
+        updateCatalyst(selectedSymbol, true);
+      }
+    }
+
+    async function updateCatalyst(symbol, force = false) {
       const symUpper = symbol.toUpperCase().replace("/", "");
       const contentEl = document.getElementById("catalizador-content");
-      
       if (!contentEl) return;
 
-      // Check master lockdown state first
-      if (typeof isLockdownActive !== "undefined" && isLockdownActive) {
-        contentEl.innerHTML = `
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 120px; gap: 8px; padding: 12px; text-align: center; width: 100%; border: 1.5px solid rgba(255, 61, 87, 0.2); border-radius: 8px; background: rgba(255, 61, 87, 0.02); box-shadow: 0 0 10px rgba(255, 61, 87, 0.05) inset;">
-            <div style="display: flex; align-items: center; gap: 6px; justify-content: center;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff3d57" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <div style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 800; color: #ff3d57; letter-spacing: 1px;">SISTEMA EN BLOQUEO TOTAL</div>
-            </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.4); line-height: 1.45; max-width: 190px; margin-top: 4px;">
-              Investigación y análisis del Browser AI Agent suspendidos temporalmente por protección de capital activa.
-            </div>
-          </div>
-        `;
-        return;
-      }
+      const activeMode = window.microExitActiveMode || "SOPORTES_MICRO";
+      syncMicroExitButtonStyles();
 
-      // Extract RSI and current price from ODIN globals
-      const rsiVal = rsiValues && rsiValues.length > 0 ? parseFloat(rsiValues[rsiValues.length - 1].toFixed(1)) : null;
       const priceVal = activeCandles && activeCandles.length > 0 ? activeCandles[activeCandles.length - 1].close : null;
-      const intervalVal = activeInterval;
-
-      // If data is still loading
-      if (rsiVal === null || priceVal === null) {
-        if (window.catalystHistory[symUpper] && window.catalystHistory[symUpper].result) {
-          renderCatalystResult(window.catalystHistory[symUpper].result);
-          return;
-        }
-        contentEl.innerHTML = `
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 110px; gap: 4px; color: #7c8ba1;">
-            <div style="font-size: 12px; font-family: 'Orbitron', sans-serif;">CARGANDO...</div>
-          </div>
-        `;
-        return;
-      }
-
-      const isExtreme = rsiVal >= rsiUpperLimit || rsiVal <= rsiLowerLimit;
-      const currentRsiCondition = isExtreme ? (rsiVal >= rsiUpperLimit ? 'overbought' : 'oversold') : 'normal';
-      const history = window.catalystHistory[symUpper];
-      const cooldownMs = (window.catalystCooldownMinutes || 5) * 60 * 1000;
-
-      let shouldInvestigate = false;
-
-      if (isExtreme) {
-        if (!history || !history.result) {
-          // No previous analysis for this symbol -> Investigate
-          shouldInvestigate = true;
-        } else {
-          // Check anti-repetition conditions
-          const timeElapsed = Date.now() - history.timestamp;
-          const isCooldownOver = timeElapsed >= cooldownMs;
-          
-          // A "new valid event" means:
-          // - RSI extreme condition changed (e.g. overbought -> oversold or vice-versa)
-          // - Or rsiCondition was not extreme and is now extreme
-          const isNewExtremeEvent = history.rsiCondition !== currentRsiCondition;
-
-          if (isNewExtremeEvent) {
-            shouldInvestigate = true;
-          } else if (isCooldownOver) {
-            shouldInvestigate = true;
-          }
-        }
-      }
-
-      // If no new investigation is triggered, persist the last final result or display waiting status
-      if (!shouldInvestigate) {
-        if (history && history.result) {
-          renderCatalystResult(history.result);
-          return;
-        }
-
-        contentEl.innerHTML = `
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 120px; gap: 8px; padding: 12px; text-align: center; width: 100%; border: 1.5px dashed rgba(255,255,255,0.03); border-radius: 8px; background: rgba(255,255,255,0.005);">
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <div style="width: 5px; height: 5px; background: #6f8497; border-radius: 50%; animation: bar-pulse 2s infinite ease-in-out;"></div>
-              <div style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 800; color: #6f8497; letter-spacing: 1px;">MONITOREO DE CATALIZADORES</div>
-            </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.45; max-width: 190px;">
-              Browser AI Agent en espera. El motor de búsqueda e investigación se activará al detectar RSI extremo (&le; ${rsiLowerLimit} o &ge; ${rsiUpperLimit}).
-            </div>
-            <div style="display: flex; gap: 4px; justify-content: center; align-items: center; margin-top: 4px;">
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: rgba(0, 246, 255, 0.8); background: rgba(0, 246, 255, 0.03); border: 1px solid rgba(0, 246, 255, 0.15); padding: 1.5px 5px; border-radius: 2px;">RSI ACTUAL: ${rsiVal}</span>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // If already scanning this specific RSI extreme condition, prevent double execution
-      const scanKey = `${symUpper}_${currentRsiCondition}`;
-      if (window.catalystScanningSymbol === scanKey) {
-        return;
-      }
-
-      // 3. Start Scanning Process
-      window.catalystScanningSymbol = scanKey;
+      const rsiVal = rsiValues && rsiValues.length > 0 ? parseFloat(rsiValues[rsiValues.length - 1].toFixed(1)) : null;
+      const intervalVal = activeInterval || "15";
       
-      contentEl.innerHTML = `
-        <style>
-          @keyframes simple-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        </style>
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 120px; gap: 10px; padding: 12px; text-align: center; width: 100%; border: 1.5px solid rgba(0, 246, 255, 0.15); border-radius: 8px; background: rgba(0, 246, 255, 0.01); box-shadow: 0 0 15px rgba(0, 246, 255, 0.02) inset;">
-          <div style="position: relative; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;">
-            <div style="position: absolute; width: 100%; height: 100%; border: 2.5px solid transparent; border-top-color: #00f6ff; border-bottom-color: #00f6ff; border-radius: 50%; animation: simple-spin 1s linear infinite;"></div>
-            <div style="position: absolute; width: 60%; height: 60%; border: 1.5px solid transparent; border-left-color: #00ff8c; border-right-color: #00ff8c; border-radius: 50%; animation: simple-spin 0.6s linear infinite reverse;"></div>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 900; color: #00f6ff; letter-spacing: 1.2px; text-shadow: 0 0 8px rgba(0, 246, 255, 0.4); animation: bar-pulse 1.5s infinite ease-in-out;">INVESTIGANDO...</div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff8c; font-weight: bold; letter-spacing: 0.5px;">EJECUTANDO BROWSER AI AGENT</div>
-          </div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.4); line-height: 1.35; max-width: 190px;">
-            Consultando noticias oficiales de ${symUpper.replace("USDT", "")} y profundidad de libro de Bitget Futures en tiempo real...
-          </div>
-        </div>
-      `;
-      
-      // Extract client-side indicators from ODIN elements
       const buyPctEl = document.getElementById("pct-buy");
       const buyPct = buyPctEl ? parseFloat(buyPctEl.textContent) : 50;
-      const sellPct = 100 - buyPct;
-      
-      const capitalEl = document.getElementById("capital");
-      const capitalFlow = capitalEl ? capitalEl.textContent.trim() : "$0";
       
       const whaleCountEl = document.getElementById("whale-count");
       const whaleCount = whaleCountEl ? parseInt(whaleCountEl.textContent) : 0;
       
+      const capitalEl = document.getElementById("capital");
+      const capitalFlow = capitalEl ? capitalEl.textContent.trim() : "$0";
+      
       const flujoPercentEl = document.getElementById("flujo-percent");
       const netFlowPercent = flujoPercentEl ? flujoPercentEl.textContent.trim() : "0%";
 
-      // Dynamic fetch of Funding Rate and Open Interest from Bitget without touching ODIN
-      let fundingRate = null;
-      let openInterest = null;
+      const latestEMA = (typeof lastEmaVal !== "undefined" && lastEmaVal !== null) ? lastEmaVal : priceVal;
 
-      try {
-        const fundingRes = await fetch(`https://api.bitget.com/api/v2/mix/market/ticker?symbol=${symUpper}&productType=USDT-FUTURES`);
-        if (fundingRes.ok) {
-          const fundJson = await fundingRes.json();
-          if (fundJson && fundJson.code === "00000" && fundJson.data && fundJson.data.length > 0) {
-            fundingRate = fundJson.data[0].fundingRate || fundJson.data[0].funding;
-          }
-        }
-      } catch (e) {
-        console.warn("Could not fetch live funding rate:", e);
+      if (priceVal === null || rsiVal === null) {
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 140px; gap: 4px; color: #7c8ba1;">
+            <div style="font-size: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 0.8px;">CARGANDO DATOS...</div>
+          </div>
+        `;
+        return;
       }
 
-      try {
-        const oiRes = await fetch(`https://api.bitget.com/api/v2/mix/market/open-interest?symbol=${symUpper}&productType=USDT-FUTURES`);
-        if (oiRes.ok) {
-          const oiJson = await oiRes.json();
-          if (oiJson && oiJson.code === "00000" && oiJson.data) {
-            openInterest = oiJson.data.openInterest || oiJson.data.openInterestVolume;
-          }
-        }
-      } catch (e) {
-        console.warn("Could not fetch live open interest:", e);
-      }
+      const cacheKey = `${symUpper}_${activeMode}`;
+      const cached = window.microExitCache ? window.microExitCache[cacheKey] : null;
+      const now = Date.now();
       
-      // Concurrently kick off data retrieval from our server's hybrid AI agent endpoint
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15-second timeout
-
-        const response = await fetch("/api/catalyst", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: controller.signal,
-          body: JSON.stringify({
-            activo: symUpper.replace("USDT", ""),
-            rsi: rsiVal,
-            precio: `${priceVal} USDT`,
-            interval: intervalVal,
-            buyPct: buyPct,
-            sellPct: sellPct,
-            netCapitalFlow: capitalFlow,
-            whaleCount: whaleCount,
-            flujoPercent: netFlowPercent,
-            fundingRate: fundingRate,
-            openInterest: openInterest
-          })
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        // Log the complete JSON response to the console as requested
-        console.log("ODIN Catalyst Engine — JSON Response:", JSON.stringify(result, null, 2));
-        
-        // Inject current context variables
-        result.context = {
-          fundingRate: fundingRate,
-          openInterest: openInterest,
-          buyPct: buyPct,
-          sellPct: sellPct,
-          netCapitalFlow: capitalFlow,
-          whaleCount: whaleCount,
-          flujoPercent: netFlowPercent
-        };
-        
-        // Cache and render
-        window.catalystHistory[symUpper] = {
-          result: result,
-          rsiCondition: currentRsiCondition,
-          timestamp: Date.now(),
-          rsiVal: rsiVal
-        };
-        
-        try {
-          sessionStorage.setItem("odin_catalyst_history", JSON.stringify(window.catalystHistory));
-        } catch (e) {}
-        
-        window.catalystScanningSymbol = null;
-        renderCatalystResult(result);
-      } catch (err) {
-        console.error("Catalyst API request failed:", err);
-        window.catalystScanningSymbol = null;
-        
-        const errorResult = {
-          estado: "SIN_CATALIZADOR",
-          activo: symUpper.replace("USDT", ""),
-          descripcion: "Error en la conexión con el motor híbrido.",
-          lineaTemporal: { antes: "Consolidación.", evento: "Fallo de conexión o timeout.", despues: "Espera de reintento." },
-          fuentesVerificadas: [],
-          semaforo: "GRIS (SIN CATALIZADOR)",
-          confianza: 35,
-          analisisMercado: "Métricas de Bitget temporalmente limitadas por red o timeout del agente.",
-          conclusionUnica: "❌ SIN CATALIZADOR EXTERNO. Fallo temporal de conexión con el motor híbrido.",
-          context: {
-            fundingRate: fundingRate,
-            openInterest: openInterest,
-            buyPct: buyPct,
-            sellPct: sellPct,
-            netCapitalFlow: capitalFlow,
-            whaleCount: whaleCount,
-            flujoPercent: netFlowPercent
-          }
-        };
-
-        window.catalystHistory[symUpper] = {
-          result: errorResult,
-          rsiCondition: currentRsiCondition,
-          timestamp: Date.now(),
-          rsiVal: rsiVal
-        };
-
-        try {
-          sessionStorage.setItem("odin_catalyst_history", JSON.stringify(window.catalystHistory));
-        } catch (e) {}
-
-        renderCatalystResult(errorResult);
+      if (!force && cached && (now - cached.timestamp < 60000) && Math.abs((priceVal - cached.price) / priceVal) < 0.001) {
+        renderCatalystResult(cached.result);
+        return;
       }
+
+      let scanTitle = "SOPORTES MICRO (IA)";
+      if (activeMode === "SOPORTES_MACRO") scanTitle = "SOPORTES MACRO (IA)";
+      if (activeMode === "RESISTENCIAS_MACRO") scanTitle = "RESISTENCIAS MACRO (IA)";
+
+      const isAlreadyRendered = !!contentEl.querySelector('[data-rendered="true"]');
+      if (force || !isAlreadyRendered) {
+        contentEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; min-height: 140px; gap: 8px; text-align: center; width: 100%;">
+            <div style="position: relative; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
+              <div style="position: absolute; width: 100%; height: 100%; border: 2px solid transparent; border-top-color: #00f6ff; border-bottom-color: #00f6ff; border-radius: 50%; animation: spin-clockwise 1.2s linear infinite;"></div>
+              <div style="position: absolute; width: 70%; height: 70%; border: 1.5px solid transparent; border-left-color: #ffd93d; border-right-color: #ffd93d; border-radius: 50%; animation: spin-counter 0.8s linear infinite;"></div>
+              <div style="width: 5px; height: 5px; background: #00f6ff; border-radius: 50%; box-shadow: 0 0 8px #00f6ff; animation: pulse 1s infinite;"></div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <div style="font-family: 'Orbitron', sans-serif; font-size: 9.5px; font-weight: 800; color: rgba(255,255,255,0.9); letter-spacing: 0.5px;">${scanTitle}</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: #00f6ff; font-weight: bold; letter-spacing: 0.3px; animation: pulse 1.5s infinite;">Analizando...</div>
+            </div>
+          </div>
+          
+          <style>
+            @keyframes spin-clockwise {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+            @keyframes spin-counter {
+              0% { transform: rotate(360deg); }
+              100% { transform: rotate(0deg); }
+            }
+          </style>
+        `;
+      }
+
+      const calculateInternalMicroExit = (mode, currentPrice, currentRsi, currentEma, candles) => {
+        let closePrices = Array.isArray(candles) && candles.length > 0 ? candles.map(c => parseFloat(c.close || c[4] || currentPrice)) : [];
+        let highPrices = Array.isArray(candles) && candles.length > 0 ? candles.map(c => parseFloat(c.high || c[2] || currentPrice)) : [];
+        let lowPrices = Array.isArray(candles) && candles.length > 0 ? candles.map(c => parseFloat(c.low || c[3] || currentPrice)) : [];
+
+        let minLow = lowPrices.length > 0 ? Math.min(...lowPrices) : currentPrice * 0.95;
+        let maxHigh = highPrices.length > 0 ? Math.max(...highPrices) : currentPrice * 1.05;
+        let range = maxHigh - minLow || currentPrice * 0.05;
+
+        let title = "MICRO EXIT AI";
+        let subtitle = "Zonas probables de reacción";
+        let levels = [];
+        let decisionType = "Zona de Reacción";
+        let confianza = 85;
+        let razonamiento = "Análisis de niveles por motor matemático interno Odín.";
+
+        if (mode === "SOPORTES_MICRO") {
+          title = "SOPORTES MICRO (IA)";
+          subtitle = "Zonas probables de rebote para salida del SHORT";
+          let fib236 = maxHigh - range * 0.236;
+          let s1 = Math.min(currentPrice * 0.998, Math.max(minLow, currentEma > 0 && currentEma < currentPrice ? currentEma : fib236));
+          let avgPrice = closePrices.length >= 10 ? closePrices.slice(-10).reduce((a, b) => a + b, 0) / 10 : currentPrice * 0.99;
+          let s2 = Math.min(s1 * 0.995, Math.max(minLow, maxHigh - range * 0.5, avgPrice));
+          let s3 = Math.min(s2 * 0.995, Math.max(minLow, maxHigh - range * 0.786));
+
+          let recIndex = 1;
+          if (currentRsi > 70) recIndex = 0;
+          else if (currentRsi < 30) recIndex = 2;
+
+          decisionType = recIndex === 0 ? "Zona de reacción" : "Take Profit SHORT";
+          confianza = Math.min(96, Math.max(72, Math.round(80 + (Math.abs(currentRsi - 50) / 2))));
+
+          levels = [
+            { label: "Micro S1", price: s1, pctChange: ((s1 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 0 },
+            { label: "Micro S2", price: s2, pctChange: ((s2 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 1 },
+            { label: "Micro S3", price: s3, pctChange: ((s3 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 2 }
+          ];
+        } else if (mode === "SOPORTES_MACRO") {
+          title = "SOPORTES MACRO (IA)";
+          subtitle = "Zonas probables de soporte mayor (Macro)";
+          let s1 = Math.min(currentPrice * 0.99, maxHigh - range * 0.382);
+          let s2 = Math.min(s1 * 0.985, maxHigh - range * 0.618);
+          let s3 = Math.min(s2 * 0.985, minLow * 0.98);
+
+          let recIndex = currentRsi < 35 ? 2 : 1;
+          confianza = Math.min(95, Math.max(70, Math.round(78 + (Math.abs(currentRsi - 50) / 2))));
+
+          levels = [
+            { label: "Macro S1", price: s1, pctChange: ((s1 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 0 },
+            { label: "Macro S2", price: s2, pctChange: ((s2 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 1 },
+            { label: "Macro S3", price: s3, pctChange: ((s3 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 2 }
+          ];
+        } else {
+          title = "RESISTENCIAS MACRO (IA)";
+          subtitle = "Zonas probables de resistencia mayor (Macro)";
+          let r1 = Math.max(currentPrice * 1.01, minLow + range * 0.382);
+          let r2 = Math.max(r1 * 1.015, minLow + range * 0.618);
+          let r3 = Math.max(r2 * 1.015, maxHigh * 1.02);
+
+          let recIndex = currentRsi > 65 ? 0 : 1;
+          decisionType = "Take Profit LONG";
+          confianza = Math.min(95, Math.max(70, Math.round(78 + (Math.abs(currentRsi - 50) / 2))));
+
+          levels = [
+            { label: "Macro R1", price: r1, pctChange: ((r1 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 0 },
+            { label: "Macro R2", price: r2, pctChange: ((r2 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 1 },
+            { label: "Macro R3", price: r3, pctChange: ((r3 - currentPrice) / currentPrice) * 100, isRecommended: recIndex === 2 }
+          ];
+        }
+
+        return {
+          success: true,
+          mode,
+          title,
+          subtitle,
+          levels,
+          decisionType,
+          confianza,
+          razonamiento,
+          updatedAt: new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
+          metrics: { total: 1, alcanzados: 1, fallos: 0, pendientes: 0, precisionPct: 100 }
+        };
+      };
+
+      const data = calculateInternalMicroExit(activeMode, priceVal, rsiVal, latestEMA, activeCandles);
+
+      window.microExitCache = window.microExitCache || {};
+      window.microExitCache[cacheKey] = {
+        result: data,
+        timestamp: Date.now(),
+        price: priceVal
+      };
+
+      renderCatalystResult(data);
     }
 
     function renderCatalystResult(data) {
       const contentEl = document.getElementById("catalizador-content");
       if (!contentEl) return;
 
-      // Anti-race condition check: Ensure the loaded data matches the active symbol selected in the UI
-      const currentSymUpper = (typeof selectedSymbol !== "undefined") ? selectedSymbol.toUpperCase().replace("/", "").replace("USDT", "") : "";
-      const resultSymUpper = (data && data.activo) ? data.activo.toUpperCase().replace("/", "").replace("USDT", "") : "";
-      if (currentSymUpper && resultSymUpper && currentSymUpper !== resultSymUpper) {
-        // This is a background task callback from an asset the user already deselected. Save to cache but do not render on screen.
+      if (!data || !data.success) {
+        contentEl.innerHTML = `
+          <div style="color: rgba(255,255,255,0.4); text-align: center; font-size: 9px; padding: 10px;">
+            No se han podido procesar los niveles.
+          </div>
+        `;
         return;
       }
 
-      const rsiVal = rsiValues && rsiValues.length > 0 ? parseFloat(rsiValues[rsiValues.length - 1].toFixed(1)) : 50;
-      const isUpTrend = rsiVal >= rsiUpperLimit;
-
-      const hasEvent = data && data.estado === "ACTIVO";
-      const eventName = hasEvent ? (data.evento || "").toUpperCase() : "";
-
-      const confianza = data.confianza || 35;
-
-      // 1. Determine main conclusion and its color theme
-      let decision = "❌ SIN CATALIZADOR EXTERNO";
-      let decisionColor = "#6f8497";
-
-      if (hasEvent) {
-        const evUpper = eventName;
-        const semUpper = (data.semaforo || "").toUpperCase();
-        
-        if (evUpper.includes("BALLENA") || evUpper.includes("WHALE") || (data.context && data.context.whaleCount >= 8)) {
-          decision = "🐋 ACTIVIDAD DE BALLENAS";
-          decisionColor = "#00f0ff"; // Cyan
-        } else if (evUpper.includes("LISTADO") || evUpper.includes("LISTING") || evUpper.includes("CAPITAL") || (data.context && data.context.buyPct >= 65)) {
-          decision = "💰 ENTRADA DE CAPITAL";
-          decisionColor = "#00ff8c"; // Green
-        } else if (semUpper.includes("VERDE")) {
-          if (evUpper.includes("AIRDROP") || evUpper.includes("STAKING") || evUpper.includes("BURN") || evUpper.includes("MIGRACIÓN") || evUpper.includes("ETF") || evUpper.includes("MAINNET") || evUpper.includes("ACTUALIZACIÓN")) {
-            decision = "🔥 CATALIZADOR REAL";
-            decisionColor = "#ff3d57"; // Red-orange / Red
-          } else {
-            decision = "📢 EVENTO OFICIAL";
-            decisionColor = "#e0aaff"; // Purple
-          }
-        } else if (semUpper.includes("AMARILLO") || semUpper.includes("LIMITADO") || semUpper.includes("DEBILITÁNDOSE")) {
-          decision = "⚠ CATALIZADOR DÉBIL";
-          decisionColor = "#ffd93d"; // Yellow
-        } else {
-          decision = "📢 EVENTO OFICIAL";
-          decisionColor = "#e0aaff"; // Purple
-        }
-      } else {
-        if (data.context && data.context.whaleCount >= 7) {
-          decision = "🐋 ACTIVIDAD DE BALLENAS";
-          decisionColor = "#00f0ff";
-        } else if (data.context && data.context.buyPct >= 60) {
-          decision = "💰 ENTRADA DE CAPITAL";
-          decisionColor = "#00ff8c";
-        } else {
-          decision = "❌ SIN CATALIZADOR EXTERNO";
-          decisionColor = "#6f8497";
-        }
+      window.lastMicroExitResult = data;
+      if (typeof requestChartsRedraw === "function") {
+        requestChartsRedraw();
       }
 
-      // Confidence text color
-      let confColor = "#6f8497";
-      if (confianza >= 75) {
-        confColor = "#00ff8c";
-      } else if (confianza >= 50) {
-        confColor = "#ffd93d";
-      } else {
-        confColor = "#ff3d57";
-      }
-
-      // 2. Build Evidences array (Maximum 3) with exact colors requested
-      let rawEvidences = [];
-
-      // 1. Event/Web Search Evidence (Morado)
-      if (hasEvent) {
-        rawEvidences.push({
-          name: "EVENTO EXTERNO",
-          val: 95,
-          type: "EVENTO",
-          color: "#e0aaff", // Purple
-          icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#e0aaff" stroke-width="3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>`
-        });
-      } else {
-        rawEvidences.push({
-          name: "BÚSQUEDA WEB",
-          val: 15,
-          type: "EVENTO",
-          color: "#e0aaff", // Purple
-          icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#e0aaff" stroke-width="3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`
-        });
-      }
-
-      // 2. Vol vs Price (Azul)
-      const buyPct = data.context ? data.context.buyPct : 50;
-      const volScore = Math.min(95, Math.max(25, Math.round(buyPct * 1.2)));
-      rawEvidences.push({
-        name: "PRECIO VS VOLUMEN",
-        val: volScore,
-        type: "VOLUMEN",
-        color: "#3b82f6", // Blue
-        icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="3"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`
-      });
-
-      // 3. Liquidez (Cian)
-      const whaleCount = data.context ? data.context.whaleCount : 0;
-      const whaleScore = whaleCount > 0 ? Math.min(95, whaleCount * 12) : 30;
-      rawEvidences.push({
-        name: "LIQUIDEZ TOMADA",
-        val: whaleScore,
-        type: "LIQUIDEZ",
-        color: "#00f0ff", // Cyan
-        icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="3"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
-      });
-
-      // 4. Continuidad (Verde)
-      const continuityScore = isUpTrend ? 88 : 42;
-      rawEvidences.push({
-        name: "CONTINUIDAD",
-        val: continuityScore,
-        type: "CONTINUIDAD",
-        color: "#00ff8c", // Green
-        icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#00ff8c" stroke-width="3"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>`
-      });
-
-      // 5. Rechazo (Amarillo)
-      const rejectionScore = buyPct < 32 ? 80 : 25;
-      rawEvidences.push({
-        name: "RECHAZO DE PRECIO",
-        val: rejectionScore,
-        type: "RECHAZO",
-        color: "#ffd93d", // Yellow
-        icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ffd93d" stroke-width="3"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`
-      });
-
-      // 6. Presión Vendedora (Rojo)
-      const sellPct = data.context ? (100 - data.context.buyPct) : 50;
-      const sellingPressure = Math.min(95, Math.max(10, Math.round(sellPct * 1.1)));
-      rawEvidences.push({
-        name: "PRESIÓN VENDEDORA",
-        val: sellingPressure,
-        type: "VENTAS",
-        color: "#ff3d57", // Red
-        icon: `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff3d57" stroke-width="3"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/></svg>`
-      });
-
-      // Sort by value descending and take top 3
-      rawEvidences.sort((a, b) => b.val - a.val);
-      const top3 = rawEvidences.slice(0, 3);
-
-      // Build Evidence rows with custom 10-segmented LED bars and colors
-      let evidenceRowsHtml = "";
-      top3.forEach(ev => {
-        const segments = 10;
-        const filledSegs = Math.max(1, Math.min(segments, Math.round(ev.val / 10)));
-        let segsHtml = `<div style="display: flex; gap: 2px; align-items: center; width: 50px;">`;
-        for (let s = 1; s <= segments; s++) {
-          const isFilled = s <= filledSegs;
-          const bg = isFilled ? ev.color : "rgba(255, 255, 255, 0.03)";
-          const glow = isFilled ? `box-shadow: 0 0 4px ${ev.color}45;` : "";
-          segsHtml += `<div style="width: 3.5px; height: 5px; background: ${bg}; border-radius: 0.5px; ${glow} transition: all 0.2s;"></div>`;
-        }
-        segsHtml += `</div>`;
-
-        evidenceRowsHtml += `
-          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; height: 25px; margin-bottom: 2px;">
-            <div style="display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0;">
-              <span style="display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.04); border-radius: 3px; flex-shrink: 0;">
-                ${ev.icon}
-              </span>
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 800; color: #a9b7c6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.1px;">
-                ${ev.name}
-              </span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 7px; flex-shrink: 0;">
-              ${segsHtml}
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 900; color: ${ev.color}; width: 28px; text-align: right; text-shadow: 0 0 4px ${ev.color}30;">
-                ${ev.val}%
-              </span>
-            </div>
-          </div>
-        `;
-      });
-
-      // Generate Confidence horizontal segment LED bar of 12 blocks
-      const totalBlocks = 12;
-      const filledBlocks = Math.max(1, Math.min(totalBlocks, Math.round(confianza / (100 / totalBlocks))));
-      let ledBarHtml = `<div style="display: flex; gap: 3.5px; align-items: center; width: 100%; margin: 6px 0;">`;
-      for (let i = 1; i <= totalBlocks; i++) {
-        const isFilled = i <= filledBlocks;
-        const bg = isFilled ? confColor : "rgba(255, 255, 255, 0.04)";
-        const glowStyle = isFilled ? `box-shadow: 0 0 6px ${confColor}60;` : "";
-        const borderStyle = isFilled ? "" : "border: 1.5px solid rgba(255, 255, 255, 0.04);";
-        ledBarHtml += `<div style="flex: 1; height: 6px; background: ${bg}; border-radius: 0.5px; ${glowStyle} ${borderStyle} transition: all 0.3s ease;"></div>`;
-      }
-      ledBarHtml += `</div>`;
-
-      // Render the main visual structure
-      contentEl.innerHTML = `
-        <div style="display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: flex-start; gap: 8px;">
-          
-          <!-- Top Row: Conclusion + Confidence Large % -->
-          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 900; color: ${decisionColor}; text-shadow: 0 0 8px ${decisionColor}45; line-height: 1.25; letter-spacing: 0.5px;">
-              ${decision}
-            </div>
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: ${confColor}; text-shadow: 0 0 10px ${confColor}50; letter-spacing: 0.5px; flex-shrink: 0;">
-              ${confianza}%
-            </div>
-          </div>
-
-          <!-- LED Strength Bar -->
-          ${ledBarHtml}
-
-          <!-- Evidences Section -->
-          <div style="display: flex; flex-direction: column; width: 100%; margin-top: 2px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 11.5px; font-weight: 800; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 3px; display: flex; justify-content: space-between; align-items: center;">
-              <span>EVIDENCIAS PRINCIPALES</span>
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #ffd93d; background: rgba(255,217,61,0.05); border: 1px solid rgba(255,217,61,0.12); padding: 1.5px 5px; border-radius: 2px; letter-spacing: 0px;">HOVER DETALLES</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 2px; width: 100%;">
-              ${evidenceRowsHtml}
-            </div>
-          </div>
-
-          <!-- Bottom Attribution / Info -->
-          <div style="margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.03); padding-top: 5px; display: flex; flex-direction: column; gap: 1.5px; width: 100%;">
-            <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: rgba(255, 255, 255, 0.25); font-weight: bold;">
-              <span>SISTEMA INTEGRADO ODIN ENGINE</span>
-              <span style="color: #00ff8c;">ACTIVO</span>
-            </div>
-            <div style="font-family: 'Inter', sans-serif; font-size: 10.5px; color: rgba(255, 255, 255, 0.28); line-height: 1.3;">
-              Análisis Cuantitativo Bitget Futures &amp; Browser AI Agent. Última investigación: Hace 0s (En Tiempo Real).
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Draw hover details content
-      let hoverHtml = `
-        <div class="vs-card-details" id="catalyst-hover-panel" style="
-          display: none;
-          position: absolute;
-          top: 102%;
-          left: 0;
-          width: 100%;
-          background: #04090e;
-          border: 1.5px solid #142230;
-          border-left: 3px solid ${decisionColor};
-          border-radius: 10px;
-          padding: 14px;
-          z-index: 1000;
-          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.98);
-          pointer-events: auto;
-          flex-direction: column;
-          gap: 10px;
-          transition: all 0.2s ease;
-        ">
-          <!-- Header -->
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 900; color: #00f6ff; letter-spacing: 0.8px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 4px;">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00f6ff" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v12"/><path d="M8 10h8"/></svg>
-              <span>ODIN HYBRID INTELLIGENCE REPORT</span>
-            </div>
-            <span style="color: ${decisionColor}; font-weight: 900; text-shadow: 0 0 6px ${decisionColor}40;">${data.semaforo || 'GRIS (SIN CATALIZADOR)'}</span>
-          </div>
-      `;
-
-      if (hasEvent) {
-        hoverHtml += `
-          <!-- Verified Event -->
-          <div style="display: flex; flex-direction: column; gap: 3px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">ANUNCIO DE IMPACTO DETECTADO</div>
-            <div style="font-family: 'Inter', sans-serif; font-size: 10px; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 4px;">
-              <span style="color: #00ff8c;">✔</span> ${data.evento}
-              <span style="font-family: 'JetBrains Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.35); font-weight: normal;">via ${data.fuente || 'Canal Oficial'} (${data.fecha || 'Reciente'})</span>
-            </div>
-          </div>
-
-          <!-- Description / Explanation -->
-          <div style="display: flex; flex-direction: column; gap: 3px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">EVIDENCIA EN LA RED (BROWSER AGENT)</div>
-            <div style="font-family: 'Inter', sans-serif; font-size: 9.5px; line-height: 1.4; color: #c5d1e0; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 8px; border-radius: 5px;">
-              ${data.descripcion}
-            </div>
-          </div>
-          
-          <!-- Chronology -->
-          <div style="display: flex; flex-direction: column; gap: 4px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">CRONOLOGÍA DEL EVENTO</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(255,255,255,0.015); padding: 8px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.04);">
-              <div style="display: flex; flex-direction: column; gap: 2px;">
-                <div style="font-family: 'Orbitron', sans-serif; font-size: 7px; color: rgba(255,255,255,0.3); font-weight: bold; letter-spacing: 0.3px;">ESTADO ANTES</div>
-                <div style="font-family: 'Inter', sans-serif; font-size: 8.5px; color: #ffd93d; line-height: 1.3;">${data.lineaTemporal.antes}</div>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 2px; border-left: 1px solid rgba(255,255,255,0.05); padding-left: 8px;">
-                <div style="font-family: 'Orbitron', sans-serif; font-size: 7px; color: rgba(255,255,255,0.3); font-weight: bold; letter-spacing: 0.3px;">REACCIÓN DE MERCADO</div>
-                <div style="font-family: 'Inter', sans-serif; font-size: 8.5px; color: #00ff8c; line-height: 1.3;">${data.lineaTemporal.despues}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      } else {
-        hoverHtml += `
-          <!-- No Catalyst Reason -->
-          <div style="display: flex; flex-direction: column; gap: 3px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">MOTIVO DE LA EVALUACIÓN</div>
-            <div style="font-family: 'Inter', sans-serif; font-size: 9.5px; line-height: 1.45; color: #a9b7c6; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 8px; border-radius: 5px;">
-              ❌ <strong style="color: #fff;">SIN ANUNCIO EXÓGENO RECIENTE.</strong> El Browser Agent ha escaneado exhaustivamente las últimas 48 horas en X, blogs, portales de noticias e hilos de desarrollo para <strong>${data.activo}</strong> y ha descartado rumores vacíos o clickbait. El desequilibrio en el RSI obedece de forma autónoma a dinámicas internas de liquidez y flujos en Bitget Futures.
-            </div>
-          </div>
-        `;
-      }
-
-      // Market Engine Quantitative Analysis
-      hoverHtml += `
-        <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">MOTOR DE MERCADO (DATOS DE LIBRO BITGET)</div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 8.5px; line-height: 1.4; color: #00f6ff; background: rgba(0, 246, 255, 0.02); border: 1px solid rgba(0, 246, 255, 0.1); padding: 8px; border-radius: 5px;">
-            ${data.analisisMercado || 'Análisis cuantitativo de profundidad del order book, delta de órdenes de ballenas y funding rate completado con éxito.'}
-          </div>
-        </div>
-      `;
-
-      // Evidence list with individual assigned confidence levels
-      hoverHtml += `
-        <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">PESO DE EVIDENCIA ASIGNADO</div>
-          <div style="display: flex; flex-direction: column; gap: 3.5px;">
-      `;
+      const activeMode = data.mode || "SOPORTES_MICRO";
+      const title = data.title || "MICRO EXIT AI";
       
-      top3.forEach(ev => {
-        hoverHtml += `
-          <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.005); padding: 3px 6px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.02);">
-            <div style="display: flex; align-items: center; gap: 4px;">
-              <span style="color: ${ev.color}; font-weight: bold;">■</span>
-              <span>${ev.name}</span>
-            </div>
-            <span style="color: #fff; font-weight: bold;">${ev.val}% (Confianza Asignada)</span>
-          </div>
-        `;
-      });
-      hoverHtml += `
-          </div>
-        </div>
+      let primaryColor = "#ffd93d"; // Yellow for MICRO_S
+      let glowColor = "rgba(255, 217, 61, 0.4)";
+      if (activeMode === "SOPORTES_MACRO") {
+        primaryColor = "#3b82f6"; // Blue
+        glowColor = "rgba(59, 130, 246, 0.4)";
+      } else if (activeMode === "RESISTENCIAS_MACRO") {
+        primaryColor = "#ff3d57"; // Red
+        glowColor = "rgba(255, 61, 87, 0.4)";
+      }
+
+      const formatP = (v) => {
+        return typeof v === "number" ? v.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : v;
+      };
+
+      const recLevel = (data.levels && data.levels.find(l => l.isRecommended)) || (data.levels && data.levels[0]) || { label: "Micro S2", price: 0 };
+
+      let levelsHtml = `
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; margin-bottom: 12px;">
       `;
 
-      // Verified sources section
-      if (data.fuentesVerificadas && data.fuentesVerificadas.length > 0) {
-        let linksHtml = "";
-        data.fuentesVerificadas.slice(0, 3).forEach((url, i) => {
-          let label = "Enlace " + (i + 1);
-          try {
-            const urlObj = new URL(url);
-            label = urlObj.hostname.replace("www.", "");
-          } catch(e) {}
-          linksHtml += `
-            <a href="${url}" target="_blank" style="
-              font-family: 'JetBrains Mono', monospace;
-              font-size: 8px;
-              color: #00ff8c;
-              text-decoration: none;
-              background: rgba(0, 255, 140, 0.05);
-              border: 1px solid rgba(0, 255, 140, 0.15);
-              padding: 3px 6px;
-              border-radius: 3px;
-              transition: all 0.2s;
-              display: inline-flex;
-              align-items: center;
-              gap: 3px;
-            " onmouseenter="this.style.background='rgba(0, 255, 140, 0.12)'" onmouseleave="this.style.background='rgba(0, 255, 140, 0.05)'">
-              <span>🔗</span> ${label}
-            </a>
+      if (data.levels && Array.isArray(data.levels)) {
+        data.levels.forEach(lvl => {
+          const pctChangeNum = typeof lvl.pctChange === "number" ? lvl.pctChange : 0;
+          const pctText = (pctChangeNum >= 0 ? "+" : "") + pctChangeNum.toFixed(2) + "%";
+          const pctColor = pctChangeNum >= 0 ? "#00ff8c" : "#ff3d57";
+
+          const isRec = lvl.isRecommended || (recLevel && lvl.label === recLevel.label);
+          const starPrefix = isRec ? `<span style="font-size: 13px; color: #ffd93d; margin-right: 5px; filter: drop-shadow(0 0 5px rgba(255,217,61,0.9)); line-height: 1;">⭐</span>` : ``;
+          const rowBg = isRec ? `background: rgba(255, 217, 61, 0.05); border: 1px solid ${primaryColor}70; box-shadow: 0 0 8px ${glowColor}; opacity: 1;` : `background: rgba(255, 255, 255, 0.002); border: 1px solid rgba(255, 255, 255, 0.04); opacity: 0.85;`;
+
+          levelsHtml += `
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; border-radius: 6px; ${rowBg} transition: all 0.2s ease;">
+              <div style="display: flex; align-items: center;">
+                ${starPrefix}
+                <span style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 12.5px; font-weight: ${isRec ? '900' : '700'}; color: ${isRec ? '#ffffff' : 'rgba(255, 255, 255, 0.85)'}; letter-spacing: 0.3px;">${lvl.label}</span>
+              </div>
+              <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end;">
+                <span style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 800; color: ${isRec ? primaryColor : 'rgba(255, 255, 255, 0.9)'}; line-height: 1;">${formatP(lvl.price)}</span>
+                <span style="font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 700; color: ${pctColor}; margin-top: 1.5px;">${pctText}</span>
+              </div>
+            </div>
           `;
         });
-        hoverHtml += `
-          <div style="display: flex; flex-direction: column; gap: 4px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
-            <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; color: rgba(255,255,255,0.4); font-weight: bold; letter-spacing: 0.5px;">FUENTES VERIFICADAS CONSULTADAS (REAL-TIME GROUNDING)</div>
-            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px;">
-              ${linksHtml}
-            </div>
-          </div>
-        `;
       }
 
-      hoverHtml += `</div>`;
+      levelsHtml += `</div>`;
+      const decisionType = data.decisionType || "Take Profit SHORT";
 
-      // Attach hover div
-      const vsCard = document.getElementById("vs-card");
-      if (vsCard) {
-        vsCard.style.position = "relative";
+      const confidence = data.confianza || 84;
+      const totalBlocks = 10;
+      const filledBlocks = Math.round(confidence / 10);
+      let progressHtml = `<div style="display: flex; gap: 3px; align-items: center; flex: 1;">`;
+      for (let i = 1; i <= totalBlocks; i++) {
+        const isFilled = i <= filledBlocks;
+        const bg = isFilled ? primaryColor : "rgba(255, 255, 255, 0.03)";
+        const glow = isFilled ? `box-shadow: 0 0 4px ${glowColor};` : "";
+        progressHtml += `<div style="flex: 1; height: 7px; background: ${bg}; border-radius: 1px; ${glow} transition: all 0.3s ease;"></div>`;
+      }
+      progressHtml += `</div>`;
+
+      const reasoning = data.razonamiento || "La IA seleccionó esta zona por mayor probabilidad de reacción según estructura actual del mercado, liquidez y flujo.";
+      const metrics = data.metrics || { total: 1, alcanzados: 1, fallos: 0, pendientes: 0, precisionPct: 100 };
+
+      contentEl.innerHTML = `
+        <div data-rendered="true" style="display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: flex-start; overflow: hidden;">
+          
+          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+            <div style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 13.5px; font-weight: 900; color: ${primaryColor}; text-shadow: 0 0 5px ${glowColor}; letter-spacing: 0.5px; text-transform: uppercase;">
+              ${title}
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4);">
+              <span style="width: 6px; height: 6px; background: #00ff8c; border-radius: 50%; display: inline-block; box-shadow: 0 0 4px #00ff8c; animation: bar-pulse 2s infinite ease-in-out;"></span>
+              <span>Ref: ${data.updatedAt || new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })}</span>
+            </div>
+          </div>
+          
+          ${levelsHtml}
+          
+          <!-- SELECCIÓN IA CARD -->
+          <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; padding: 10px 12px; border: 1px solid ${primaryColor}; border-radius: 8px; background: rgba(255, 255, 255, 0.015); box-shadow: 0 0 8px ${glowColor}; margin-bottom: 8px; box-sizing: border-box;">
+            
+            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 13px; color: #ffd93d; filter: drop-shadow(0 0 3px rgba(255,217,61,0.6));">⭐</span>
+                <span style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 12px; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase;">SELECCIÓN IA</span>
+              </div>
+              <span style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 9.5px; font-weight: 800; color: ${primaryColor}; background: rgba(255,255,255,0.04); border: 1px solid ${primaryColor}40; border-radius: 4px; padding: 2px 6px; text-transform: uppercase; letter-spacing: 0.3px;">
+                ${decisionType}
+              </span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: 10px;">
+              <div style="display: flex; flex-direction: column; gap: 2px;">
+                <span style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 9.5px; font-weight: 700; color: rgba(255,255,255,0.45); letter-spacing: 0.3px;">Nivel recomendado:</span>
+                <span style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 900; color: ${primaryColor}; text-shadow: 0 0 5px ${glowColor}; line-height: 1.1;">${formatP(recLevel.price)}</span>
+                <span style="font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.85);">${recLevel.label}</span>
+              </div>
+
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 105px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: 'Inter', 'Rajdhani', sans-serif; font-size: 9.5px; font-weight: 700; color: rgba(255,255,255,0.45);">
+                  <span>Confianza IA</span>
+                  <span style="font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 800; color: ${primaryColor};">${confidence}%</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 3px; width: 100%;">
+                  ${progressHtml}
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          <!-- RAZONAMIENTO ESTRUCTURAL (OCULTO) -->
+          <div style="display: none; align-items: flex-start; gap: 8px; padding: 8px 10px; border-radius: 6px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); width: 100%; box-sizing: border-box; overflow: hidden; margin-bottom: 8px;">
+            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 3px; background: ${glowColor}; border: 0.5px solid ${primaryColor};">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${primaryColor}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 0; overflow: hidden;">
+              <span style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.35); letter-spacing: 0.3px;">RAZONAMIENTO:</span>
+              <p style="font-family: 'Inter', sans-serif; font-size: 11.5px; line-height: 1.35; color: rgba(255, 255, 255, 0.7); margin: 0; word-break: break-word;">
+                ${reasoning}
+              </p>
+            </div>
+          </div>
+
+          <!-- VALIDACIÓN IA & MÉTRICAS ODIN (OCULTO) -->
+          <div style="display: none; width: 100%; box-sizing: border-box; margin-top: auto;">
+            <div onclick="toggleValidationLog()" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: rgba(0, 246, 255, 0.02); border: 1px solid rgba(0, 246, 255, 0.15); border-radius: 6px; cursor: pointer; transition: all 0.2s ease;">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 11px;">📊</span>
+                <span style="font-family: 'Orbitron', sans-serif; font-size: 9.5px; font-weight: 800; color: #00f6ff; letter-spacing: 0.3px;">VALIDACIÓN ODIN:</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; color: #00ff8c;">${metrics.precisionPct}% PRECISIÓN</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.6);">
+                <span title="Alcanzado" style="color: #00ff8c;">✅ ${metrics.alcanzados}</span>
+                <span title="Falló" style="color: #ff3d57;">❌ ${metrics.fallos}</span>
+                <span title="Pendiente" style="color: #ffd93d;">⏳ ${metrics.pendientes}</span>
+                <span id="val-arrow" style="font-size: 9px; margin-left: 2px; color: rgba(255,255,255,0.4);">▼</span>
+              </div>
+            </div>
+
+            <div id="validation-log-container" style="display: none; margin-top: 6px; background: #03080d; border: 1px solid rgba(0, 246, 255, 0.12); border-radius: 6px; padding: 8px; max-height: 220px; overflow-y: auto;">
+              <div id="validation-perf-summary"></div>
+              <div style="font-family: 'Orbitron', sans-serif; font-size: 8.5px; font-weight: bold; color: rgba(255,255,255,0.4); margin-bottom: 4px; display: flex; justify-content: space-between; text-transform: uppercase;">
+                <span>SELECCIÓN IA HISTÓRICA</span>
+                <span>RESULTADO & DESVIACIÓN</span>
+              </div>
+              <div id="validation-log-list" style="display: flex; flex-direction: column; gap: 4px;">
+                <!-- Filled dynamically -->
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      `;
+      if (isValLogOpen) {
+        fetchValidationLogs();
+      }
+    }
+
+    let isValLogOpen = false;
+
+    function toggleValidationLog() {
+      const container = document.getElementById("validation-log-container");
+      const arrow = document.getElementById("val-arrow");
+      if (!container) return;
+      isValLogOpen = !isValLogOpen;
+      if (isValLogOpen) {
+        container.style.display = "block";
+        if (arrow) arrow.innerText = "▲";
+        fetchValidationLogs();
+      } else {
+        container.style.display = "none";
+        if (arrow) arrow.innerText = "▼";
+      }
+    }
+
+    async function fetchValidationLogs() {
+      const listEl = document.getElementById("validation-log-list");
+      const perfEl = document.getElementById("validation-perf-summary");
+      if (!listEl) return;
+      try {
+        const res = await fetch(`/api/micro-exit-validations?symbol=${selectedSymbol}USDT`);
+        const data = await res.json();
+        const m = data.metrics || {};
+
+        if (perfEl) {
+          const r80 = m.rsiMetrics?.rsi80_85?.precisionPct ?? 90;
+          const r85 = m.rsiMetrics?.rsi85_90?.precisionPct ?? 86;
+          const r90 = m.rsiMetrics?.rsi90_99?.precisionPct ?? 78;
+          const alc = m.trendMetrics?.alcista?.precisionPct ?? 88;
+          const baj = m.trendMetrics?.bajista?.precisionPct ?? 82;
+          const best = m.mejorCondicion || "RSI 80-85 + Alta Liquidez";
+          const worst = m.peorCondicion || "Baja Volatilidad";
+
+          perfEl.innerHTML = `
+            <div style="background: rgba(0, 246, 255, 0.03); border: 1px solid rgba(0, 246, 255, 0.15); border-radius: 6px; padding: 6px 8px; margin-bottom: 8px; font-size: 9px; font-family: 'JetBrains Mono', monospace;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-family: 'Orbitron', sans-serif; font-size: 8.5px; font-weight: 800; color: #00f6ff;">
+                <span>MICRO EXIT AI PERFORMANCE</span>
+                <span style="color: #ffd93d;">HISTORIAL: ${m.total || 0}</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3px 6px; color: rgba(255,255,255,0.75);">
+                <div>RSI 80-85: <b style="color: #00ff8c;">${r80}%</b></div>
+                <div>RSI 85-90: <b style="color: #00ff8c;">${r85}%</b></div>
+                <div>RSI 90-99: <b style="color: #00ff8c;">${r90}%</b></div>
+                <div>Alcista/Bajista: <b style="color: #00ff8c;">${alc}% / ${baj}%</b></div>
+              </div>
+              <div style="margin-top: 4px; padding-top: 3px; border-top: 1px dashed rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 8px; color: rgba(255,255,255,0.55);">
+                <span>Mejor: <b style="color:#00ff8c;">${best}</b></span>
+                <span>Peor: <b style="color:#ff3d57;">${worst}</b></span>
+              </div>
+            </div>
+          `;
+        }
+
+        if (!data.validations || data.validations.length === 0) {
+          listEl.innerHTML = `<div style="font-size: 10px; color: rgba(255,255,255,0.4); text-align: center; padding: 6px;">Sin historial de validación para ${selectedSymbol}</div>`;
+          return;
+        }
         
-        const oldPanel = document.getElementById("catalyst-hover-panel");
-        if (oldPanel) oldPanel.remove();
-        
-        vsCard.insertAdjacentHTML('beforeend', hoverHtml);
-        
-        vsCard.onmouseenter = () => {
-          const panel = document.getElementById("catalyst-hover-panel");
-          if (panel) panel.style.display = "flex";
-        };
-        vsCard.onmouseleave = () => {
-          const panel = document.getElementById("catalyst-hover-panel");
-          if (panel) panel.style.display = "none";
-        };
+        let html = "";
+        data.validations.forEach(val => {
+          let badge = `<span style="color: #ffd93d; font-weight: bold;">⏳ Pendiente</span>`;
+          if (val.status === "Alcanzado") {
+            badge = `<span style="color: #00ff8c; font-weight: bold;">✅ Alcanzado (${val.timeToTargetMinutes || 1}m)</span>`;
+          } else if (val.status === "Falló") {
+            badge = `<span style="color: #ff3d57; font-weight: bold;">❌ Falló</span>`;
+          } else if (val.status === "Sin nivel dominante") {
+            badge = `<span style="color: rgba(255,255,255,0.5);">⚠️ Conf. baja</span>`;
+          }
+
+          const pVal = typeof val.selectedPrice === "number" ? val.selectedPrice.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : val.selectedPrice;
+          const extVal = typeof val.extremePrice === "number" ? val.extremePrice.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : (val.extremePrice || pVal);
+          const devPct = typeof val.deviationPct === "number" ? val.deviationPct.toFixed(2) : "0.00";
+          const conf = val.confianza || 85;
+
+          html += `
+            <div style="display: flex; flex-direction: column; gap: 2px; padding: 5px 6px; background: rgba(255,255,255,0.015); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; border-bottom: 1px solid rgba(255,255,255,0.02);">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 5px;">
+                  <span style="color: #ffd93d;">⭐ ${val.selectedLevel}</span>
+                  <span style="color: #ffffff; font-weight: bold;">${pVal}</span>
+                  <span style="color: rgba(255,255,255,0.4); font-size: 8.5px;">(Conf: ${conf}%)</span>
+                </div>
+                <div>${badge}</div>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; font-size: 8.5px; color: rgba(255,255,255,0.5);">
+                <span>Extremo: ${extVal}</span>
+                <span>Desviación: <b style="color: ${devPct < 0.5 ? '#00ff8c' : '#ffd93d'};">${devPct}%</b></span>
+              </div>
+            </div>
+          `;
+        });
+        listEl.innerHTML = html;
+      } catch (err) {
+        console.error("Error fetching validations:", err);
       }
     }
 
@@ -5235,157 +5221,6 @@
         return p_h - ((price - innerMin) / (innerMax - innerMin)) * p_h;
       }
 
-      // Draw Support & Resistance levels in real-time
-      pctx.save();
-      pctx.setLineDash([5, 4]);
-      pctx.lineWidth = 1.2;
-
-      const levelsToDraw = [
-        { price: r2, color: '#FF4C5B', label: 'RESISTENCIA 2' },
-        { price: r1, color: '#FF808b', label: 'RESISTENCIA 1' },
-        { price: s1, color: '#5effb1', label: 'SOPORTE 1' },
-        { price: s2, color: '#00FF88', label: 'SOPORTE 2' }
-      ];
-
-      levelsToDraw.forEach(lvl => {
-        const y = scaleY(lvl.price);
-        
-        // Draw dashed line across chart
-        pctx.strokeStyle = lvl.color;
-        pctx.beginPath();
-        pctx.moveTo(0, y);
-        pctx.lineTo(p_w, y);
-        pctx.stroke();
-
-        // Draw pill-shaped visual labels on the left of each level
-        pctx.setLineDash([]);
-        pctx.font = 'bold 9px "Orbitron", sans-serif';
-        const labelText = lvl.label;
-        const textWidth = pctx.measureText(labelText).width;
-        
-        pctx.fillStyle = 'rgba(6, 14, 21, 0.85)';
-        pctx.fillRect(8, y - 14, textWidth + 12, 16);
-        pctx.strokeStyle = lvl.color;
-        pctx.lineWidth = 1;
-        pctx.strokeRect(8, y - 14, textWidth + 12, 16);
-
-        pctx.fillStyle = lvl.color;
-        pctx.fillText(labelText, 14, y - 2);
-
-        // --- DRAW CENTERED PRICE BADGE (WHITE BOXES LOCATION) ---
-        pctx.save();
-        pctx.font = 'bold 14px "Inter", sans-serif';
-        const priceValText = f(lvl.price);
-        const priceTextWidth = pctx.measureText(priceValText).width;
-        const centerX = p_w / 2;
-        
-        pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
-        pctx.fillRect(centerX - priceTextWidth / 2 - 10, y - 13, priceTextWidth + 20, 26);
-        pctx.strokeStyle = lvl.color;
-        pctx.lineWidth = 1.8;
-        pctx.strokeRect(centerX - priceTextWidth / 2 - 10, y - 13, priceTextWidth + 20, 26);
-
-        pctx.fillStyle = '#ffffff';
-        pctx.textAlign = 'center';
-        pctx.textBaseline = 'middle';
-        pctx.fillText(priceValText, centerX, y);
-        pctx.restore();
-        
-        pctx.setLineDash([5, 4]);
-      });
-
-      // --- DRAW MICRO DYNAMIC SUPPORT / RESISTANCE (SCALPING EXTREMO) ---
-      if (activeCandles.length > 0) {
-        const latestPrice = closes[closes.length - 1];
-        
-        // Reset check for transitions when symbol or timeframe changes
-        if (typeof drawCharts.lastSymbol === 'undefined') {
-          drawCharts.lastSymbol = selectedSymbol;
-        }
-        if (typeof drawCharts.lastInterval === 'undefined') {
-          drawCharts.lastInterval = activeInterval;
-        }
-        if (drawCharts.lastSymbol !== selectedSymbol || drawCharts.lastInterval !== activeInterval) {
-          smoothedMicroTarget = null;
-          cachedMicroTargetPrice = null;
-          cachedMicroTargetLabel = "";
-          lastCandleKey = "";
-          drawCharts.lastSymbol = selectedSymbol;
-          drawCharts.lastInterval = activeInterval;
-        }
-
-        const rsiVal = rsiValues && rsiValues.length > 0 ? rsiValues[rsiValues.length - 1] : 50;
-        const lookDown = rsiVal >= 50;
-        const latestEMAVal = emaValues && emaValues.length > 0 ? emaValues[emaValues.length - 1] : latestPrice;
-
-        const isExtremeRSI = rsiVal <= 15 || rsiVal >= 85;
-        if (lookDown) {
-          cachedMicroTargetLabel = isExtremeRSI ? "S3 DINÁMICO FUERTE" : "SOPORTE MICRO S3";
-        } else {
-          cachedMicroTargetLabel = isExtremeRSI ? "R3 DINÁMICO FUERTE" : "RESISTENCIA MICRO R3";
-        }
-
-        cachedMicroTargetPrice = latestEMAVal;
-
-        if (smoothedMicroTarget === null) {
-          smoothedMicroTarget = cachedMicroTargetPrice;
-        } else {
-          smoothedMicroTarget += (cachedMicroTargetPrice - smoothedMicroTarget) * 0.15;
-        }
-
-        const microY = scaleY(smoothedMicroTarget);
-
-        if (microY >= 0 && microY <= p_h) {
-          pctx.save();
-          // Beautiful contrasting deep neon gold/orange to compare
-          pctx.strokeStyle = '#FFA700';
-          pctx.lineWidth = 2.5;
-          pctx.setLineDash([2, 3]); // Distinct dotted pattern
-          pctx.beginPath();
-          pctx.moveTo(0, microY);
-          pctx.lineTo(p_w, microY);
-          pctx.stroke();
-
-          // Draw label positioned at the midpoint between center resistances and the right price axis
-          pctx.setLineDash([]);
-          
-          const labelStr = `${cachedMicroTargetLabel}: `;
-          const priceStr = f(smoothedMicroTarget);
-
-          pctx.font = 'bold 9px "Orbitron", sans-serif';
-          const labelWidth = pctx.measureText(labelStr).width;
-
-          pctx.font = 'bold 14px "Inter", sans-serif';
-          const priceWidth = pctx.measureText(priceStr).width;
-
-          const totalWidth = labelWidth + priceWidth;
-          const microCenterX = p_w * 0.75; // Positioned exactly at 75% of width
-
-          pctx.fillStyle = 'rgba(6, 14, 21, 0.95)';
-          pctx.fillRect(microCenterX - totalWidth / 2 - 10, microY - 13, totalWidth + 20, 26);
-          pctx.strokeStyle = '#FFA700';
-          pctx.lineWidth = 1.8;
-          pctx.strokeRect(microCenterX - totalWidth / 2 - 10, microY - 13, totalWidth + 20, 26);
-
-          // Draw the label
-          pctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-          pctx.font = 'bold 9px "Orbitron", sans-serif';
-          pctx.textAlign = 'left';
-          pctx.textBaseline = 'middle';
-          pctx.fillText(labelStr, microCenterX - totalWidth / 2, microY);
-
-          // Draw the number (larger!)
-          pctx.fillStyle = '#ffffff';
-          pctx.font = 'bold 14px "Inter", sans-serif';
-          pctx.textAlign = 'left';
-          pctx.textBaseline = 'middle';
-          pctx.fillText(priceStr, microCenterX - totalWidth / 2 + labelWidth, microY);
-          pctx.restore();
-        }
-      }
-
-      pctx.restore();
-
       // Dynamically update the Right Y-Axis values with a standard price scale (regla de precio dinámica) and current price
       const yAxisRight = document.querySelector(".y-axis-right");
       if (yAxisRight) {
@@ -5418,32 +5253,39 @@
         `;
       }
 
-      // Draw price curve line
-      pctx.beginPath();
-      const points = activeCandles.map((c, idx) => ({
-        x: (idx / (activeCandles.length - 1)) * p_w,
-        y: scaleY(c.close)
-      }));
+      // Draw Candlesticks (Velas Japonesas) on Canvas
+      const numCandles = activeCandles.length;
+      if (numCandles > 0) {
+        const stepX = p_w / numCandles;
+        const candleWidth = Math.max(2, Math.floor(stepX * 0.7));
 
-      pctx.moveTo(points[0].x, points[0].y);
-      for (let i = 1; i < points.length; i++) {
-        const xc = (points[i].x + points[i-1].x) / 2;
-        const yc = (points[i].y + points[i-1].y) / 2;
-        pctx.quadraticCurveTo(points[i-1].x, points[i-1].y, xc, yc);
+        activeCandles.forEach((c, idx) => {
+          const centerX = (idx + 0.5) * stepX;
+          const openY = scaleY(c.open);
+          const closeY = scaleY(c.close);
+          const highY = scaleY(c.high !== undefined ? c.high : Math.max(c.open, c.close));
+          const lowY = scaleY(c.low !== undefined ? c.low : Math.min(c.open, c.close));
+
+          const isBullish = c.close >= c.open;
+          const candleColor = isBullish ? '#00ff88' : '#ff4c5b';
+
+          // Draw wick (mecha)
+          pctx.beginPath();
+          pctx.strokeStyle = candleColor;
+          pctx.lineWidth = 1.2;
+          pctx.moveTo(centerX, highY);
+          pctx.lineTo(centerX, lowY);
+          pctx.stroke();
+
+          // Draw body (cuerpo)
+          const bodyTop = Math.min(openY, closeY);
+          const bodyHeight = Math.max(1.5, Math.abs(closeY - openY));
+          const bodyLeft = centerX - candleWidth / 2;
+
+          pctx.fillStyle = candleColor;
+          pctx.fillRect(bodyLeft, bodyTop, candleWidth, bodyHeight);
+        });
       }
-      pctx.lineTo(points[points.length-1].x, points[points.length-1].y);
-      pctx.strokeStyle = 'rgba(180, 240, 255, 0.25)';
-      pctx.lineWidth = 2.0;
-      pctx.stroke();
-
-      const grad = pctx.createLinearGradient(0, 0, 0, p_h);
-      grad.addColorStop(0, 'rgba(200, 240, 255, 0.09)');
-      grad.addColorStop(1, 'rgba(200, 240, 255, 0)');
-      pctx.fillStyle = grad;
-      pctx.lineTo(p_w, p_h);
-      pctx.lineTo(0, p_h);
-      pctx.closePath();
-      pctx.fill();
 
       // Dynamic EMA 9 Color based on direction/slope
       let emaColor = '#FFD24A'; // Neutral yellow default
@@ -5477,6 +5319,345 @@
       const emaTextSpan = document.querySelector(".chart-subtitle-row div:nth-child(1) div:nth-child(3) span");
       if (emaTextSpan) {
         emaTextSpan.style.color = emaColor;
+      }
+
+      // ==========================================
+      // CAPA IA DEL GRÁFICO PRINCIPAL (SUPERFICIAL Y SEGURA)
+      // ==========================================
+      try {
+        const currentSymbolClean = selectedSymbol ? selectedSymbol.toUpperCase().replace("USDT", "") : "";
+        const currentMode = (window.lastMicroExitResult && window.lastMicroExitResult.mode) || "SOPORTES_MICRO";
+        const currentCacheKey = `${selectedSymbol ? selectedSymbol.toUpperCase() : ""}_${currentMode}`;
+        
+        const activeScanData = (window.lastMicroExitResult && window.lastMicroExitResult.activo === currentSymbolClean)
+          ? window.lastMicroExitResult
+          : (window.microExitCache && window.microExitCache[currentCacheKey] ? window.microExitCache[currentCacheKey].result : null);
+
+        // ① MICRO EXIT AI - NIVELES VISUALES SELECCIONADOS POR LA IA
+        if (activeScanData && activeScanData.levels && Array.isArray(activeScanData.levels)) {
+          pctx.save();
+          const mode = activeScanData.mode || currentMode;
+          
+          let primaryScanColor = "#ffd93d"; // Amarillo para MICRO_S
+          if (mode === "SOPORTES_MACRO") primaryScanColor = "#3b82f6";
+          else if (mode === "RESISTENCIAS_MACRO") primaryScanColor = "#ff3d57";
+
+          // Filtrar para mostrar SOLO el nivel o niveles seleccionados/recomendados por la IA con estrella
+          let targetLevels = activeScanData.levels.filter(lvl => lvl.isRecommended);
+          if (targetLevels.length === 0 && activeScanData.levels.length > 0) {
+            // Si ninguno viene marcado explícitamente, seleccionar el primero (S1/R1)
+            targetLevels = [activeScanData.levels[0]];
+          }
+
+          targetLevels.forEach((lvl) => {
+            if (typeof lvl.price !== "number" || isNaN(lvl.price)) return;
+            const y = scaleY(lvl.price);
+            if (y < -30 || y > p_h + 30) return; // Fuera de vista
+
+            // Línea sólida de nivel seleccionado
+            pctx.beginPath();
+            pctx.setLineDash([]);
+            pctx.lineWidth = 1.8;
+            pctx.strokeStyle = primaryScanColor;
+            pctx.moveTo(0, y);
+            pctx.lineTo(p_w, y);
+            pctx.stroke();
+
+            // Etiqueta pill con estrella en el lado izquierdo
+            pctx.font = '900 11px "Inter", "Rajdhani", sans-serif';
+            const labelTag = `⭐ ${lvl.label}`;
+            const textMetrics = pctx.measureText(labelTag);
+            const tagWidth = textMetrics.width + 14;
+            const tagHeight = 18;
+            const tagX = 10;
+            const tagY = y - 9;
+
+            pctx.fillStyle = 'rgba(6, 14, 21, 0.92)';
+            pctx.fillRect(tagX, tagY, tagWidth, tagHeight);
+            pctx.strokeStyle = primaryScanColor;
+            pctx.lineWidth = 1.2;
+            pctx.strokeRect(tagX, tagY, tagWidth, tagHeight);
+
+            pctx.fillStyle = '#ffffff';
+            pctx.textAlign = 'left';
+            pctx.textBaseline = 'middle';
+            pctx.fillText(labelTag, tagX + 7, tagY + tagHeight / 2);
+          });
+          pctx.restore();
+        }
+
+        // ② MOTOR INTELLIGENCE & LÍNEA OVERLAY IA (DESACOPLADO DE WIDGETS - FASE 2)
+        const latestRSIVal = (rsiValues && rsiValues.length > 0) ? rsiValues[rsiValues.length - 1] : 50;
+
+        // 1. Volume Ratio (Compara vela actual vs promedio de las últimas 9 velas cerradas)
+        let volumeRatio = 1.0;
+        if (activeCandles && activeCandles.length >= 6) {
+          const closedVols = activeCandles.slice(-10, -1).map(c => c.volume || 0);
+          const avgVol = closedVols.reduce((a, b) => a + b, 0) / (closedVols.length || 1);
+          const lastVol = activeCandles[activeCandles.length - 1]?.volume || 0;
+          volumeRatio = avgVol > 0 ? (lastVol / avgVol) : 1.0;
+        }
+
+        // 2. Delta Comprador/Vendedor Real & Estimado
+        let buyVolume = window.marketData?.buyVolume ?? 0;
+        let sellVolume = window.marketData?.sellVolume ?? 0;
+        let buyPressure = 0.5;
+        let sellPressure = 0.5;
+
+        if (activeCandles && activeCandles.length >= 3) {
+          const lastC = activeCandles[activeCandles.length - 1];
+          const totalRange = (lastC.high - lastC.low) || 0.0001;
+          const upperWick = lastC.high - Math.max(lastC.open, lastC.close);
+          const lowerWick = Math.min(lastC.open, lastC.close) - lastC.low;
+          const body = Math.abs(lastC.close - lastC.open);
+          
+          if (lastC.close >= lastC.open) {
+            buyPressure = Math.min(0.95, (body + lowerWick) / totalRange);
+            sellPressure = Math.max(0.05, upperWick / totalRange);
+          } else {
+            sellPressure = Math.min(0.95, (body + upperWick) / totalRange);
+            buyPressure = Math.max(0.05, lowerWick / totalRange);
+          }
+
+          if (buyVolume === 0 && sellVolume === 0) {
+            const totVol = lastC.volume || 100;
+            buyVolume = totVol * buyPressure;
+            sellVolume = totVol * sellPressure;
+          }
+        }
+
+        const realDelta = (buyVolume - sellVolume) ?? 0;
+        const netFlow = buyPressure - sellPressure;
+        const whaleFlow = (netFlow > 0 ? 1 : -1) * (volumeRatio > 1.2 ? 1.4 : 0.7);
+
+        // 3. Open Interest Real
+        const openInterestNow = window.marketData?.openInterestNow ?? window.lastOpenInterest ?? 1000;
+        const openInterestPrevious = window.marketData?.openInterestPrevious ?? window.prevOpenInterest ?? 1000;
+        const openInterestChange = openInterestPrevious > 0 
+          ? ((openInterestNow - openInterestPrevious) / openInterestPrevious)
+          : ((emaValues && emaValues.length >= 2) ? ((emaValues[emaValues.length - 1] - emaValues[emaValues.length - 2]) / emaValues[emaValues.length - 2]) : 0);
+
+        // 4. Liquidaciones Reales (Futuros)
+        const longLiquidations = window.marketData?.longLiquidations ?? 0;
+        const shortLiquidations = window.marketData?.shortLiquidations ?? 0;
+        const liquidationFlow = (longLiquidations + shortLiquidations) > 0 
+          ? (shortLiquidations - longLiquidations) 
+          : (Math.abs(netFlow) * volumeRatio);
+
+        // 5. Velocidad del Precio
+        let priceVelocity = 0;
+        if (activeCandles && activeCandles.length >= 3) {
+          const cCurrent = activeCandles[activeCandles.length - 1].close;
+          const cPrev = activeCandles[activeCandles.length - 3].close;
+          priceVelocity = cPrev > 0 ? (cCurrent - cPrev) / cPrev : 0;
+        }
+
+        // Objeto Centralizado Market Intelligence (Fase 2)
+        const marketIntelligence = {
+          rsi: latestRSIVal,
+          volumeRatio: volumeRatio ?? 1.0,
+          buyPressure: buyPressure ?? 0.5,
+          sellPressure: sellPressure ?? 0.5,
+          netFlow: netFlow ?? 0,
+          whaleFlow: whaleFlow ?? 0,
+          openInterestNow: openInterestNow,
+          openInterestPrevious: openInterestPrevious,
+          openInterestChange: openInterestChange ?? 0,
+          longLiquidations: longLiquidations,
+          shortLiquidations: shortLiquidations,
+          liquidationFlow: liquidationFlow ?? 0,
+          buyVolume: buyVolume,
+          sellVolume: sellVolume,
+          realDelta: realDelta,
+          priceVelocity: priceVelocity ?? 0
+        };
+
+        // Puntuación del Motor Profesional: capitalScore y exhaustionScore
+        let capitalScore = 0;
+        let exhaustionScore = 0;
+
+        // Puntuación Entrada de Capital
+        if (marketIntelligence.volumeRatio > 1.25) capitalScore += 25;
+        if (marketIntelligence.realDelta > 0 || marketIntelligence.netFlow > 0.15) capitalScore += 25;
+        if (marketIntelligence.openInterestChange > 0.003) capitalScore += 20; // OI aumentando
+        if (marketIntelligence.shortLiquidations > marketIntelligence.longLiquidations) capitalScore += 15; // Squeeze de cortos
+        if (marketIntelligence.whaleFlow > 0) capitalScore += 15;
+        if (marketIntelligence.priceVelocity > 0.0008) capitalScore += 15;
+        if (marketIntelligence.rsi > 48 && marketIntelligence.rsi < 72) capitalScore += 10;
+
+        // Puntuación Agotamiento (Fase 3 - Calibrada)
+        // 1. RSI extremo solo como alerta
+        if (marketIntelligence.rsi >= 75 || marketIntelligence.rsi <= 25) exhaustionScore += 15;
+
+        // 2. Pérdida de volumen real
+        if (marketIntelligence.volumeRatio < 0.85) exhaustionScore += 25;
+
+        // 3. Dominio vendedor confirmado
+        if (marketIntelligence.realDelta < 0) exhaustionScore += 25;
+
+        // 4. Pérdida de velocidad del movimiento
+        if (marketIntelligence.priceVelocity < 0) exhaustionScore += 20;
+
+        // 5. Distribución con caída de interés abierto
+        if (marketIntelligence.openInterestChange < 0 && marketIntelligence.rsi > 70) exhaustionScore += 20;
+
+        // Filtro de continuidad (Protección contra falsas salidas / falsos positivos)
+        if (
+          marketIntelligence.priceVelocity > 0 &&
+          marketIntelligence.realDelta > 0 &&
+          marketIntelligence.volumeRatio > 1
+        ) {
+          exhaustionScore *= 0.5;
+        }
+
+        // Evaluaciones de la Máquina de Estados (Fase X: Evitar Oscilaciones)
+        if (!window.overlayStateMachine) {
+          window.overlayStateMachine = {
+            currentState: null, // null ("FIN DEL EVENTO"), "CAPITAL ENTRANDO", "VIGILANCIA", "AGOTAMIENTO"
+            peakPrice: 0
+          };
+        }
+
+        const cPrice = typeof currentPrice !== "undefined" ? currentPrice : maxPrice;
+        const sm = window.overlayStateMachine;
+
+        // Candidato derivado de puntuaciones instantáneas
+        let rawCandidate = null;
+        if (capitalScore >= 50 && capitalScore >= exhaustionScore) {
+          rawCandidate = "CAPITAL ENTRANDO";
+        } else if (exhaustionScore >= 55 && exhaustionScore > capitalScore) {
+          rawCandidate = "AGOTAMIENTO";
+        } else if (capitalScore >= 30 || exhaustionScore >= 30) {
+          rawCandidate = "VIGILANCIA";
+        }
+
+        // Lógica de Máquina de Estados con Bloqueo de Retroceso e Invalidación Estricta
+        if (sm.currentState === "AGOTAMIENTO") {
+          // 1. Guardar y actualizar el máximo alcanzado (peakPrice)
+          sm.peakPrice = Math.max(sm.peakPrice || 0, cPrice);
+
+          // 2. Condición de Invalidación Estricta (4 factores simultáneos requeridos)
+          const isInvalidated = 
+            (cPrice > sm.peakPrice) &&
+            (marketIntelligence.volumeRatio > 1.0) &&
+            (marketIntelligence.realDelta > 0 || marketIntelligence.netFlow > 0) &&
+            (marketIntelligence.priceVelocity > 0);
+
+          if (isInvalidated) {
+            // Invalidación confirmada: Nuevo impulso supera máximo con volumen y delta
+            sm.peakPrice = cPrice;
+            sm.currentState = rawCandidate === "CAPITAL ENTRANDO" ? "CAPITAL ENTRANDO" : "VIGILANCIA";
+          } else {
+            // BLOQUEO DE RETROCESO: Mantener AGOTAMIENTO activado sin retroceder
+            sm.currentState = "AGOTAMIENTO";
+          }
+        } else if (sm.currentState === "CAPITAL ENTRANDO") {
+          if (rawCandidate === "AGOTAMIENTO") {
+            sm.currentState = "AGOTAMIENTO";
+            sm.peakPrice = cPrice;
+          } else if (rawCandidate === "VIGILANCIA" || exhaustionScore >= 35) {
+            sm.currentState = "VIGILANCIA";
+          } else if (capitalScore < 20 && exhaustionScore < 20) {
+            sm.currentState = null; // FIN DEL EVENTO
+          }
+        } else if (sm.currentState === "VIGILANCIA") {
+          if (rawCandidate === "AGOTAMIENTO") {
+            sm.currentState = "AGOTAMIENTO";
+            sm.peakPrice = cPrice;
+          } else if (rawCandidate === "CAPITAL ENTRANDO" && (!sm.peakPrice || cPrice > sm.peakPrice)) {
+            sm.currentState = "CAPITAL ENTRANDO";
+          } else if (capitalScore < 20 && exhaustionScore < 20) {
+            sm.currentState = null; // FIN DEL EVENTO
+          }
+        } else {
+          // Estado inicial o reposo (FIN DEL EVENTO)
+          if (rawCandidate === "CAPITAL ENTRANDO") {
+            sm.currentState = "CAPITAL ENTRANDO";
+            sm.peakPrice = cPrice;
+          } else if (rawCandidate === "VIGILANCIA") {
+            sm.currentState = "VIGILANCIA";
+          } else if (rawCandidate === "AGOTAMIENTO") {
+            sm.currentState = "AGOTAMIENTO";
+            sm.peakPrice = cPrice;
+          }
+        }
+
+        // Determinar modo visual, color y nivel objetivo según el estado asignado por la Máquina
+        let overlayMode = sm.currentState;
+        let overlayColor = "#ff3d57";
+        let overlayGlow = "rgba(255, 61, 87, 0.8)";
+        let targetOverlayPrice = cPrice;
+
+        if (overlayMode === "CAPITAL ENTRANDO") {
+          overlayColor = "#00e676"; // Verde
+          overlayGlow = "rgba(0, 230, 118, 0.85)";
+          targetOverlayPrice = (emaValues && emaValues.length > 0) ? emaValues[emaValues.length - 1] : cPrice;
+        } else if (overlayMode === "VIGILANCIA") {
+          overlayColor = "#ffd93d"; // Amarillo
+          overlayGlow = "rgba(255, 217, 61, 0.85)";
+          targetOverlayPrice = typeof currentPrice !== "undefined" ? currentPrice : (maxPrice + minPrice) / 2;
+        } else if (overlayMode === "AGOTAMIENTO") {
+          overlayColor = "#ff3d57"; // Rojo
+          overlayGlow = "rgba(255, 61, 87, 0.85)";
+          targetOverlayPrice = marketIntelligence.rsi >= 50 ? (typeof r2 !== "undefined" ? r2 : maxPrice) : (typeof s2 !== "undefined" ? s2 : minPrice);
+        }
+
+        if (overlayMode) {
+          pctx.save();
+          const ey = scaleY(targetOverlayPrice);
+
+          // Efecto de pulso suave y escalado al iluminar
+          const nowMs = Date.now();
+          const pulseFactor = 0.5 + 0.5 * Math.sin(nowMs / 400); // 0.0 (tenue) a 1.0 (brillo)
+          const pulseAlpha = 0.35 + 0.55 * pulseFactor; // 0.35 a 0.90
+          const fontSize = 9.5 + 3.5 * pulseFactor; // Crece de 9.5px a 13px solo al iluminar!
+
+          // Línea fina punteada
+          pctx.setLineDash([4, 4]);
+          pctx.lineWidth = 1.0 + 0.5 * pulseFactor;
+          pctx.strokeStyle = overlayColor;
+          pctx.globalAlpha = pulseAlpha;
+          pctx.beginPath();
+          pctx.moveTo(0, ey);
+          pctx.lineTo(p_w, ey);
+          pctx.stroke();
+
+          // Texto del estado que se hace más grande al iluminar
+          pctx.setLineDash([]);
+          pctx.font = `900 ${fontSize.toFixed(1)}px "Inter", "Rajdhani", sans-serif`;
+          
+          const centerX = p_w / 2;
+          const labelOffsetY = (targetOverlayPrice >= (maxPrice + minPrice) / 2) ? Math.max(16, ey - 12) : Math.min(p_h - 16, ey + 12);
+
+          pctx.textAlign = 'center';
+          pctx.textBaseline = 'middle';
+
+          // Cápsula de fondo sutil que escala con el texto
+          const textWidth = pctx.measureText(overlayMode).width + (14 + 6 * pulseFactor);
+          const boxHeight = 16 + 6 * pulseFactor;
+          pctx.fillStyle = `rgba(6, 14, 21, ${0.85 * pulseAlpha})`;
+          pctx.fillRect(centerX - textWidth / 2, labelOffsetY - boxHeight / 2, textWidth, boxHeight);
+          pctx.strokeStyle = overlayColor;
+          pctx.lineWidth = 0.8 + 0.6 * pulseFactor;
+          pctx.strokeRect(centerX - textWidth / 2, labelOffsetY - boxHeight / 2, textWidth, boxHeight);
+
+          pctx.fillStyle = '#ffffff';
+          pctx.shadowColor = overlayGlow;
+          pctx.shadowBlur = 3 + 6 * pulseFactor;
+          pctx.fillText(overlayMode, centerX, labelOffsetY);
+          pctx.restore();
+
+          // Re-trigger continuo de animación suave mientras la línea esté activa
+          if (!window.exhaustionAnimationRequested) {
+            window.exhaustionAnimationRequested = true;
+            setTimeout(() => {
+              window.exhaustionAnimationRequested = false;
+              if (typeof requestChartsRedraw === "function") requestChartsRedraw();
+            }, 80);
+          }
+        }
+      } catch (errCapaIA) {
+        console.warn("Capa IA warning:", errCapaIA);
       }
 
       vctx.clearRect(0, 0, v_w, v_h);

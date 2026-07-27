@@ -101,6 +101,19 @@
       height: 115px;
       position: relative;
       flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      z-index: 5;
+    }
+
+    .logo-wrap .eye-canvas:hover {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.9));
+    }
+
+    .logo-wrap .eye-canvas:active {
+      transform: scale(0.94);
+      filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5));
     }
 
     /* Target/HUD rings centered exactly on the eye-canvas center */
@@ -1669,8 +1682,8 @@
       <!-- 1. LOGO ODIN -->
       <div class="logo-container" style="position: relative;">
         <div class="logo-wrap">
-          <!-- Left Side: Dynamic Vector Cyber Eye Canvas -->
-          <div class="eye-canvas">
+          <!-- Left Side: Dynamic Vector Cyber Eye Canvas (Presionable para Reset/Refresh) -->
+          <div class="eye-canvas" onclick="window.location.reload();" title="REINICIAR SISTEMA (REFRESH ODIN)">
             <!-- Targeting/HUD rings centered perfectly in eye-canvas -->
             <div class="hud-ring hud-inner"></div>
             <div class="hud-ring hud-outer"></div>
@@ -1703,21 +1716,12 @@
           </div>
 
           <!-- Right Side: Illuminated Typography Panel -->
-          <div class="logo-text-container" style="padding-right: 64px;">
+          <div class="logo-text-container" style="padding-right: 12px;">
             <div class="cyber-logo-title">ODIN</div>
             <div class="cyber-logo-subtitle">
               <span class="grey">EL OJO</span> <span class="cyan">CYBERCRYPTO</span>
             </div>
           </div>
-
-          <!-- MASTER LOCKDOWN (CANDADO) TRIGGER BUTTON -->
-          <button id="master-lockdown-btn" onclick="toggleLockdown(true)" title="BLOQUEO TOTAL DE SEGURIDAD (LOCKDOWN)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255, 61, 87, 0.1); border: 1px solid rgba(255, 61, 87, 0.4); border-radius: 8px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(255, 61, 87, 0.15); margin: 0; outline: none; padding: 0;">
-            <svg id="master-lock-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ff3d57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: all 0.3s ease; filter: drop-shadow(0 0 4px #ff3d57);">
-              <!-- Unlocked state initially -->
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-            </svg>
-          </button>
 
           <!-- Sweeping diagnostics scanline -->
           <div class="logo-scan-line"></div>
@@ -2597,6 +2601,79 @@
           playBeep(now + 0.2, 520);
         }
       } catch(e) {}
+    }
+
+    function playWhaleRadarSound() {
+      if (typeof isLockdownActive !== "undefined" && isLockdownActive) return;
+      if (typeof alarmEnabled !== "undefined" && !alarmEnabled) return;
+
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const now = ctx.currentTime;
+        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 0.8;
+
+        const playSonarPing = (startTime) => {
+          // 1. Main Submarine Sonar Ping Tone (1040 Hz)
+          const mainOsc = ctx.createOscillator();
+          const mainGain = ctx.createGain();
+
+          mainOsc.type = "sine";
+          mainOsc.frequency.setValueAtTime(1040, startTime);
+          mainOsc.frequency.exponentialRampToValueAtTime(1010, startTime + 0.45);
+
+          mainGain.gain.setValueAtTime(0, startTime);
+          mainGain.gain.linearRampToValueAtTime(0.45 * volMultiplier, startTime + 0.003);
+          mainGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.45);
+
+          mainOsc.connect(mainGain);
+          mainGain.connect(ctx.destination);
+
+          // 2. Sub-surface depth harmonic (520 Hz)
+          const subOsc = ctx.createOscillator();
+          const subGain = ctx.createGain();
+
+          subOsc.type = "sine";
+          subOsc.frequency.setValueAtTime(520, startTime);
+          subGain.gain.setValueAtTime(0, startTime);
+          subGain.gain.linearRampToValueAtTime(0.15 * volMultiplier, startTime + 0.005);
+          subGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.35);
+
+          subOsc.connect(subGain);
+          subGain.connect(ctx.destination);
+
+          // 3. Deep water reverberation echo (delayed 80ms)
+          const echoOsc = ctx.createOscillator();
+          const echoGain = ctx.createGain();
+
+          echoOsc.type = "sine";
+          echoOsc.frequency.setValueAtTime(1020, startTime + 0.08);
+          echoGain.gain.setValueAtTime(0, startTime + 0.08);
+          echoGain.gain.linearRampToValueAtTime(0.1 * volMultiplier, startTime + 0.085);
+          echoGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.40);
+
+          echoOsc.connect(echoGain);
+          echoGain.connect(ctx.destination);
+
+          // Start & Stop
+          mainOsc.start(startTime);
+          mainOsc.stop(startTime + 0.46);
+
+          subOsc.start(startTime);
+          subOsc.stop(startTime + 0.36);
+
+          echoOsc.start(startTime + 0.08);
+          echoOsc.stop(startTime + 0.41);
+        };
+
+        // Exactly 2 slow classic submarine sonar pings spaced by 0.8s
+        playSonarPing(now);
+        playSonarPing(now + 0.80);
+      } catch (e) {
+        console.warn("Whale radar sound play warning:", e);
+      }
     }
 
     /* 11. ALARMA ON/OFF INTERACTIVE */
@@ -4264,6 +4341,7 @@
         if (fills && fills.length > 0) {
           // Dynamic whale threshold based on volume & price to adapt to different assets
           const whaleThreshold = Math.max(8000, Math.min(80000, engineData.volume / 1500));
+          let newWhaleDetected = false;
           
           fills.forEach(f => {
             const p = parseFloat(f.price || f.lastPr || 0);
@@ -4297,9 +4375,15 @@
                   createdAt: Date.now(),
                   opacity: 1
                 });
+
+                newWhaleDetected = true;
               }
             }
           });
+
+          if (newWhaleDetected) {
+            playWhaleRadarSound();
+          }
         }
       } catch (err) {
         console.warn("Whale real-time tracker trade scan skipped (Connection warning)", err);
@@ -6100,7 +6184,6 @@
 
     // Start everything!
     initApp();
-    toggleLockdown(false);
 
     /* 6. COMPRADORES VS VENDEDORES DYNAMIC NEON BARS & DIVISION SLIDE */
     (function(){

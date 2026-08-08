@@ -1682,8 +1682,8 @@
       <!-- 1. LOGO ODIN -->
       <div class="logo-container" style="position: relative;">
         <div class="logo-wrap">
-          <!-- Left Side: Dynamic Vector Cyber Eye Canvas (Presionable para Reset/Refresh) -->
-          <div class="eye-canvas" onclick="window.location.reload();" title="REINICIAR SISTEMA (REFRESH ODIN)">
+          <!-- Left Side: Dynamic Vector Cyber Eye Canvas -->
+          <div class="eye-canvas" title="ODIN SNIPER AI">
             <!-- Targeting/HUD rings centered perfectly in eye-canvas -->
             <div class="hud-ring hud-inner"></div>
             <div class="hud-ring hud-outer"></div>
@@ -2719,11 +2719,92 @@
       } catch (e) {}
     }
 
-    function playOdinAlert(message = "SEÑAL DETECTADA", isLong = false) {
+    function playTsunamiWarningSound() {
+      if (typeof isLockdownActive !== "undefined" && isLockdownActive) return;
+      if (typeof alarmEnabled !== "undefined" && !alarmEnabled) return;
+
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const now = ctx.currentTime;
+        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 0.95;
+
+        // Japanese coastal tsunami warning siren simulation (1.0s strong dual-frequency emergency oscillation)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = "sawtooth";
+
+        osc1.frequency.setValueAtTime(850, now);
+        osc1.frequency.linearRampToValueAtTime(1550, now + 0.25);
+        osc1.frequency.linearRampToValueAtTime(850, now + 0.50);
+        osc1.frequency.linearRampToValueAtTime(1550, now + 0.75);
+        osc1.frequency.linearRampToValueAtTime(850, now + 1.00);
+
+        gain1.gain.setValueAtTime(0, now);
+        gain1.gain.linearRampToValueAtTime(0.6 * volMultiplier, now + 0.04);
+        gain1.gain.setValueAtTime(0.6 * volMultiplier, now + 0.90);
+        gain1.gain.exponentialRampToValueAtTime(0.0001, now + 1.00);
+
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = "sine";
+
+        osc2.frequency.setValueAtTime(440, now);
+        osc2.frequency.linearRampToValueAtTime(880, now + 0.25);
+        osc2.frequency.linearRampToValueAtTime(440, now + 0.50);
+        osc2.frequency.linearRampToValueAtTime(880, now + 0.75);
+        osc2.frequency.linearRampToValueAtTime(440, now + 1.00);
+
+        gain2.gain.setValueAtTime(0, now);
+        gain2.gain.linearRampToValueAtTime(0.4 * volMultiplier, now + 0.04);
+        gain2.gain.setValueAtTime(0.4 * volMultiplier, now + 0.90);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 1.00);
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(2800, now);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain1);
+        gain1.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 1.02);
+        osc2.stop(now + 1.02);
+
+        setTimeout(() => {
+          try { ctx.close(); } catch(e) {}
+        }, 1200);
+      } catch (e) {
+        console.warn("Tsunami sound warning:", e);
+      }
+    }
+    window.playTsunamiWarningSound = playTsunamiWarningSound;
+
+    function playOdinAlert(message = "SEÑAL DETECTADA", isLong = false, rsiVal = null) {
       if (isLockdownActive) return;
       if (!alarmEnabled) return;
 
-      if (isLong) {
+      // Check if RSI is >= 90 (explicit or in message)
+      let isRsi90 = (typeof rsiVal === "number" && rsiVal >= 90);
+      if (!isRsi90 && typeof message === "string") {
+        const matches = message.matchAll(/RSI:\s*(\d+(\.\d+)?)/gi);
+        for (const m of matches) {
+          if (parseFloat(m[1]) >= 90) {
+            isRsi90 = true;
+            break;
+          }
+        }
+      }
+
+      if (isRsi90) {
+        // ALARMA ESTILO AVISO DE TSUNAMI (1 SEGUNDO Y FUERTE PARA RSI >= 90)
+        playTsunamiWarningSound();
+      } else if (isLong) {
         // BUBBLE SOUND: unas burbujas sonido suave pero volumen super fuerte (sine oscillator)
         try {
           const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2870,8 +2951,8 @@
       }
     }
 
-    // Periodically run background scanner every 45 seconds to scan contracts and alert on new extreme signals
-    setInterval(runBackgroundScan, 45000);
+    // Periodically run background scanner every 15 seconds to scan contracts and alert on new extreme signals
+    setInterval(runBackgroundScan, 15000);
 
     /* --- REAL-TIME LIVE DATA & API CONNECTION ENGINE --- */
 
@@ -4899,7 +4980,15 @@
       }
 
       const formatP = (v) => {
-        return typeof v === "number" ? v.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : v;
+        if (typeof v !== "number" || isNaN(v)) return v;
+        const absV = Math.abs(v);
+        let dec = 4;
+        if (absV < 0.0001) dec = 8;
+        else if (absV < 0.01) dec = 6;
+        else if (absV < 1) dec = 5;
+        else if (absV < 10) dec = 4;
+        else dec = 2;
+        return v.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: dec });
       };
 
       const recLevel = (data.levels && data.levels.find(l => l.isRecommended)) || (data.levels && data.levels[0]) || { label: "Micro S2", price: 0 };
@@ -5867,12 +5956,18 @@
 
       renderTableLoadingState();
 
-      // Fetch active contracts from Bitget
+      // Fetch active contracts & tickers simultaneously from Bitget
       try {
-        const r = await fetch("https://api.bitget.com/api/v2/mix/market/contracts?productType=USDT-FUTURES");
-        const json = await r.json();
+        const [rContracts, rTickers] = await Promise.all([
+          fetch("https://api.bitget.com/api/v2/mix/market/contracts?productType=USDT-FUTURES"),
+          fetch("https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES")
+        ]);
+        const [json, tickJson] = await Promise.all([
+          rContracts.json(),
+          rTickers.json()
+        ]);
         
-        if (json && json.data && Array.isArray(json.data)) {
+        if (json && json.data && Array.isArray(json.data) && tickJson && tickJson.data && Array.isArray(tickJson.data)) {
           const bitgetSymbols = [];
           json.data.forEach(item => {
             if (item.symbolStatus === "normal" && item.isRwa !== "YES") {
@@ -5883,87 +5978,82 @@
             }
           });
 
-          const rTick = await fetch("https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES");
-          const tickJson = await rTick.json();
-          
-          if (tickJson && tickJson.data && Array.isArray(tickJson.data)) {
-            const tickerMap = {};
-            tickJson.data.forEach(t => {
-              tickerMap[t.symbol.toUpperCase()] = t;
-            });
+          const tickerMap = {};
+          tickJson.data.forEach(t => {
+            tickerMap[t.symbol.toUpperCase()] = t;
+          });
 
-            // Convert to scanning models
-            scannedSymbolsData = bitgetSymbols.map(sym => {
-              const t = tickerMap[sym];
-              return {
-                symbol: sym,
-                price: t ? parseFloat(t.lastPr) : 0,
-                change: t ? parseFloat(t.change24h) * 100 : 0,
-                volume: t ? parseFloat(t.usdtVolume) : 0,
-                rsi: 50 // initial default
-              };
-            }).filter(item => item.price > 0 && item.volume > 100000);
+          // Convert to scanning models
+          scannedSymbolsData = bitgetSymbols.map(sym => {
+            const t = tickerMap[sym];
+            return {
+              symbol: sym,
+              price: t ? parseFloat(t.lastPr) : 0,
+              change: t ? parseFloat(t.change24h) * 100 : 0,
+              volume: t ? parseFloat(t.usdtVolume) : 0,
+              rsi: 50 // initial default
+            };
+          }).filter(item => item.price > 0 && item.volume > 100000);
 
-            scannedSymbolsData.sort((a, b) => b.volume - a.volume);
+          scannedSymbolsData.sort((a, b) => b.volume - a.volume);
 
-            // Populate all Bitget contracts sorted by volume (Independent of RSI or volume filters)
-            allBitgetContracts = bitgetSymbols.map(sym => {
-              const t = tickerMap[sym];
-              return {
-                symbol: sym,
-                price: t ? parseFloat(t.lastPr) : 0,
-                change: t ? parseFloat(t.change24h) * 100 : 0,
-                volume: t ? parseFloat(t.usdtVolume) : 0,
-                rsi: null
-              };
-            }).filter(item => item.price > 0);
-            allBitgetContracts.sort((a, b) => b.volume - a.volume);
+          // Populate all Bitget contracts sorted by volume
+          allBitgetContracts = bitgetSymbols.map(sym => {
+            const t = tickerMap[sym];
+            return {
+              symbol: sym,
+              price: t ? parseFloat(t.lastPr) : 0,
+              change: t ? parseFloat(t.change24h) * 100 : 0,
+              volume: t ? parseFloat(t.usdtVolume) : 0,
+              rsi: null
+            };
+          }).filter(item => item.price > 0);
+          allBitgetContracts.sort((a, b) => b.volume - a.volume);
 
-            // Scan ALL symbols with limited concurrency to avoid 429 rate limit errors on Bitget API (Requirement 1)
-            const allCoins = scannedSymbolsData; // Scan ALL of them
-            const batchSize = 45;
-            for (let i = 0; i < allCoins.length; i += batchSize) {
-              const batch = allCoins.slice(i, i + batchSize);
-              await Promise.all(batch.map(async (coin) => {
-                try {
-                  const engineData = await ODN_ENGINE(coin.symbol, '15m');
-                  coin.rsi = engineData.rsi;
-                  coin.price = engineData.price;
-                  coin.change = engineData.change24h;
-                } catch (e) {
-                  // Keep default
-                }
-              }));
-              // Small delay between batches to respect Bitget's rate limits
-              if (i + batchSize < allCoins.length) {
-                await new Promise(res => setTimeout(res, 50));
+          // Render active asset chart immediately so the dashboard opens like lightning!
+          loadActiveAssetChart();
+
+          // Start periodic watch mode (every 4 seconds for scalping precision)
+          if (watchInterval) clearInterval(watchInterval);
+          watchInterval = setInterval(async () => {
+            await loadActiveAssetChart();
+          }, 4000);
+
+          // Scan ALL symbols with limited concurrency in background
+          const allCoins = scannedSymbolsData;
+          const batchSize = 45;
+          for (let i = 0; i < allCoins.length; i += batchSize) {
+            const batch = allCoins.slice(i, i + batchSize);
+            await Promise.all(batch.map(async (coin) => {
+              try {
+                const engineData = await ODN_ENGINE(coin.symbol, '15m');
+                coin.rsi = engineData.rsi;
+                coin.price = engineData.price;
+                coin.change = engineData.change24h;
+              } catch (e) {
+                // Keep default
               }
+            }));
+            if (i + batchSize < allCoins.length) {
+              await new Promise(res => setTimeout(res, 50));
             }
-
-            // Select default coin based on the HIGHEST RSI from the scanned list (Requirement 2)
-            if (scannedSymbolsData.length > 0) {
-              const sortedByRsi = [...scannedSymbolsData].sort((a, b) => b.rsi - a.rsi);
-              if (sortedByRsi[0] && sortedByRsi[0].rsi > 0) {
-                selectedSymbol = sortedByRsi[0].symbol;
-              }
-            }
-
-            updateExtremeOpportunitiesList();
           }
+
+          // Select default coin based on the HIGHEST RSI from the scanned list if user hasn't interacted
+          if (scannedSymbolsData.length > 0) {
+            const sortedByRsi = [...scannedSymbolsData].sort((a, b) => b.rsi - a.rsi);
+            if (sortedByRsi[0] && sortedByRsi[0].rsi > 0 && !window.userManuallySelectedSymbol) {
+              selectedSymbol = sortedByRsi[0].symbol;
+              loadActiveAssetChart();
+            }
+          }
+
+          updateExtremeOpportunitiesList();
         }
       } catch (e) {
         console.error("Launching API connection failure", e);
         updateExtremeOpportunitiesList();
       }
-
-      // Initial chart display
-      await loadActiveAssetChart();
-
-      // Start periodic watch mode (every 4 seconds for scalping precision)
-      if (watchInterval) clearInterval(watchInterval);
-      watchInterval = setInterval(async () => {
-        await loadActiveAssetChart();
-      }, 4000);
     }
 
     function renderTableLoadingState() {

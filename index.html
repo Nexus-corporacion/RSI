@@ -2899,6 +2899,8 @@
             .map(coin => coin.symbol)
         );
 
+        window.previouslyRsi90Coins = window.previouslyRsi90Coins || new Set();
+
         const batchSize = 45;
         for (let i = 0; i < allCoins.length; i += batchSize) {
           const batch = allCoins.slice(i, i + batchSize);
@@ -2923,24 +2925,40 @@
           }
         }
 
-        // Find if there are any NEW extreme coins that entered the extreme zone
+        // Find if there are any NEW extreme coins or coins crossing into RSI >= 90 / <= 10
         const nowExtreme = allCoins.filter(coin => coin.rsi <= rsiLowerLimit || coin.rsi >= rsiUpperLimit);
         let newExtremeFound = false;
         let alertedCoins = [];
         let hasLong = false;
+        let highestRsiInAlert = null;
 
         nowExtreme.forEach(coin => {
+          const is90Plus = (coin.rsi >= 90 || coin.rsi <= 10);
+          const was90Plus = window.previouslyRsi90Coins.has(coin.symbol);
+
+          if (is90Plus && !was90Plus) {
+            newExtremeFound = true;
+            if (coin.rsi <= rsiLowerLimit) hasLong = true;
+            highestRsiInAlert = Math.max(highestRsiInAlert || 0, coin.rsi);
+            alertedCoins.push(`${coin.symbol.replace("USDT", "/USDT")} (RSI: ${coin.rsi.toFixed(1)})`);
+            window.previouslyRsi90Coins.add(coin.symbol);
+          } else if (!is90Plus && was90Plus) {
+            window.previouslyRsi90Coins.delete(coin.symbol);
+          }
+
           if (!previouslyExtreme.has(coin.symbol)) {
             newExtremeFound = true;
             if (coin.rsi <= rsiLowerLimit) {
               hasLong = true;
             }
-            alertedCoins.push(`${coin.symbol.replace("USDT", "/USDT")} (RSI: ${coin.rsi.toFixed(1)})`);
+            if (!alertedCoins.some(a => a.includes(coin.symbol.replace("USDT", "/USDT")))) {
+              alertedCoins.push(`${coin.symbol.replace("USDT", "/USDT")} (RSI: ${coin.rsi.toFixed(1)})`);
+            }
           }
         });
 
         if (newExtremeFound && alertedCoins.length > 0) {
-          playOdinAlert(`EXTREMO DETECTADO: ${alertedCoins.join(", ")}`, hasLong);
+          playOdinAlert(`EXTREMO DETECTADO: ${alertedCoins.join(", ")}`, hasLong, highestRsiInAlert);
         }
 
         updateExtremeOpportunitiesList();
@@ -4217,6 +4235,17 @@
       const latestPrice = latestCandle.close;
       const latestRSI = rsiValues[rsiValues.length - 1].toFixed(1);
       const latestEMA = emaValues[emaValues.length - 1].toFixed(4);
+      
+      const latestRsiNum = parseFloat(latestRSI);
+      window.activeAssetRsi90Alerts = window.activeAssetRsi90Alerts || {};
+      if (latestRsiNum >= 90 || latestRsiNum <= 10) {
+        if (!window.activeAssetRsi90Alerts[selectedSymbol]) {
+          window.activeAssetRsi90Alerts[selectedSymbol] = true;
+          playOdinAlert(`ACTIVO EN PANTALLA EXTREMO: ${pairLabel} (RSI: ${latestRSI})`, latestRsiNum <= 10, latestRsiNum);
+        }
+      } else {
+        window.activeAssetRsi90Alerts[selectedSymbol] = false;
+      }
       
       const priceChange = latestPrice - prevCandle.close;
       const pctChange = engineData.change24h.toFixed(2);

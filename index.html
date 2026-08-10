@@ -2274,7 +2274,7 @@
               <canvas id="radar-canvas" width="160" height="160" style="width: 110px; height: 110px; display: block;"></canvas>
             </div>
             <div class="ballena-right" style="padding-left: 6px;">
-              <div class="ballena-label">CAPITAL ENTRANDO</div>
+              <div class="ballena-label">CAPITAL</div>
               <div class="ballena-valueMoney" id="capital" style="font-size: 24px;">$0M</div>
               <div class="ballena-usdt" style="margin-bottom: 4px;">(USDT)</div>
               <div class="ballena-label">ÚLTIMOS</div>
@@ -2613,64 +2613,69 @@
           ctx.resume();
         }
         const now = ctx.currentTime;
-        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 0.8;
+        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 1.0;
 
         const playSonarPing = (startTime) => {
-          // 1. Main Submarine Sonar Ping Tone (1040 Hz)
+          // Master Gain for High Impact Sonar Sound
+          const masterGain = ctx.createGain();
+          masterGain.gain.setValueAtTime(1.0 * volMultiplier, startTime);
+          masterGain.connect(ctx.destination);
+
+          // 1. Primary Sonar High-Pitch Ping (1240 Hz -> 1200 Hz with fast attack and long resonant exponential decay)
           const mainOsc = ctx.createOscillator();
           const mainGain = ctx.createGain();
 
           mainOsc.type = "sine";
-          mainOsc.frequency.setValueAtTime(1040, startTime);
-          mainOsc.frequency.exponentialRampToValueAtTime(1010, startTime + 0.45);
+          mainOsc.frequency.setValueAtTime(1240, startTime);
+          mainOsc.frequency.exponentialRampToValueAtTime(1200, startTime + 0.6);
 
           mainGain.gain.setValueAtTime(0, startTime);
-          mainGain.gain.linearRampToValueAtTime(0.45 * volMultiplier, startTime + 0.003);
-          mainGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.45);
+          mainGain.gain.linearRampToValueAtTime(0.85, startTime + 0.003); // Instant attack
+          mainGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65); // Warm exponential ring out
 
           mainOsc.connect(mainGain);
-          mainGain.connect(ctx.destination);
+          mainGain.connect(masterGain);
 
-          // 2. Sub-surface depth harmonic (520 Hz)
+          // 2. Underwater Sub-Harmonic & Resonance Body (620 Hz)
           const subOsc = ctx.createOscillator();
           const subGain = ctx.createGain();
 
           subOsc.type = "sine";
-          subOsc.frequency.setValueAtTime(520, startTime);
+          subOsc.frequency.setValueAtTime(620, startTime);
           subGain.gain.setValueAtTime(0, startTime);
-          subGain.gain.linearRampToValueAtTime(0.15 * volMultiplier, startTime + 0.005);
-          subGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.35);
+          subGain.gain.linearRampToValueAtTime(0.35, startTime + 0.004);
+          subGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.5);
 
           subOsc.connect(subGain);
-          subGain.connect(ctx.destination);
+          subGain.connect(masterGain);
 
-          // 3. Deep water reverberation echo (delayed 80ms)
+          // 3. Reverberating Echo Ping (Delayed by 85ms for depth)
           const echoOsc = ctx.createOscillator();
           const echoGain = ctx.createGain();
 
           echoOsc.type = "sine";
-          echoOsc.frequency.setValueAtTime(1020, startTime + 0.08);
-          echoGain.gain.setValueAtTime(0, startTime + 0.08);
-          echoGain.gain.linearRampToValueAtTime(0.1 * volMultiplier, startTime + 0.085);
-          echoGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.40);
+          echoOsc.frequency.setValueAtTime(1220, startTime + 0.085);
+          echoGain.gain.setValueAtTime(0, startTime + 0.085);
+          echoGain.gain.linearRampToValueAtTime(0.25, startTime + 0.09);
+          echoGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.55);
 
           echoOsc.connect(echoGain);
-          echoGain.connect(ctx.destination);
+          echoGain.connect(masterGain);
 
           // Start & Stop
           mainOsc.start(startTime);
-          mainOsc.stop(startTime + 0.46);
+          mainOsc.stop(startTime + 0.66);
 
           subOsc.start(startTime);
-          subOsc.stop(startTime + 0.36);
+          subOsc.stop(startTime + 0.51);
 
-          echoOsc.start(startTime + 0.08);
-          echoOsc.stop(startTime + 0.41);
+          echoOsc.start(startTime + 0.085);
+          echoOsc.stop(startTime + 0.56);
         };
 
-        // Exactly 2 slow classic submarine sonar pings spaced by 0.8s
+        // 2 High-Volume Sonar Pings spaced by 0.70s
         playSonarPing(now);
-        playSonarPing(now + 0.80);
+        playSonarPing(now + 0.70);
       } catch (e) {
         console.warn("Whale radar sound play warning:", e);
       }
@@ -2731,50 +2736,46 @@
         const now = ctx.currentTime;
         const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 0.95;
 
-        // Japanese coastal tsunami warning siren simulation (1.0s strong dual-frequency emergency oscillation)
-        const osc1 = ctx.createOscillator();
-        const gain1 = ctx.createGain();
-        osc1.type = "sawtooth";
+        // High-impact synthesized alert sequence (PITIDO 1 -> PITIDO 2 -> PITIDO 3)
+        const playPitido = (startTime, freqStart, freqEnd, duration) => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
 
-        osc1.frequency.setValueAtTime(850, now);
-        osc1.frequency.linearRampToValueAtTime(1550, now + 0.25);
-        osc1.frequency.linearRampToValueAtTime(850, now + 0.50);
-        osc1.frequency.linearRampToValueAtTime(1550, now + 0.75);
-        osc1.frequency.linearRampToValueAtTime(850, now + 1.00);
+          osc1.type = "sawtooth";
+          osc2.type = "sine";
 
-        gain1.gain.setValueAtTime(0, now);
-        gain1.gain.linearRampToValueAtTime(0.6 * volMultiplier, now + 0.04);
-        gain1.gain.setValueAtTime(0.6 * volMultiplier, now + 0.90);
-        gain1.gain.exponentialRampToValueAtTime(0.0001, now + 1.00);
+          osc1.frequency.setValueAtTime(freqStart, startTime);
+          osc1.frequency.exponentialRampToValueAtTime(freqEnd, startTime + duration);
 
-        const osc2 = ctx.createOscillator();
-        const gain2 = ctx.createGain();
-        osc2.type = "sine";
+          osc2.frequency.setValueAtTime(freqStart * 0.5, startTime);
+          osc2.frequency.exponentialRampToValueAtTime(freqEnd * 0.5, startTime + duration);
 
-        osc2.frequency.setValueAtTime(440, now);
-        osc2.frequency.linearRampToValueAtTime(880, now + 0.25);
-        osc2.frequency.linearRampToValueAtTime(440, now + 0.50);
-        osc2.frequency.linearRampToValueAtTime(880, now + 0.75);
-        osc2.frequency.linearRampToValueAtTime(440, now + 1.00);
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(3200, startTime);
 
-        gain2.gain.setValueAtTime(0, now);
-        gain2.gain.linearRampToValueAtTime(0.4 * volMultiplier, now + 0.04);
-        gain2.gain.setValueAtTime(0.4 * volMultiplier, now + 0.90);
-        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 1.00);
+          gain.gain.setValueAtTime(0, startTime);
+          gain.gain.linearRampToValueAtTime(0.85 * volMultiplier, startTime + 0.003);
+          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
 
-        const filter = ctx.createBiquadFilter();
-        filter.type = "lowpass";
-        filter.frequency.setValueAtTime(2800, now);
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
 
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(gain1);
-        gain1.connect(ctx.destination);
+          osc1.start(startTime);
+          osc2.start(startTime);
+          osc1.stop(startTime + duration + 0.01);
+          osc2.stop(startTime + duration + 0.01);
+        };
 
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 1.02);
-        osc2.stop(now + 1.02);
+        // PITIDO 1
+        playPitido(now, 950, 1150, 0.18);
+        // PITIDO 2
+        playPitido(now + 0.22, 1150, 1350, 0.18);
+        // PITIDO 3
+        playPitido(now + 0.44, 1350, 1600, 0.28);
 
         setTimeout(() => {
           try { ctx.close(); } catch(e) {}

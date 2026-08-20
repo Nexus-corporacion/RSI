@@ -2267,7 +2267,7 @@
         <div class="ballena-card">
           <div class="ballena-header">
             <div class="icon"></div>
-            DETECTOR DE BALLENAS
+            <span>DETECTOR DE BALLENAS</span>
           </div>
           <div class="ballena-content">
             <div class="ballena-left">
@@ -2608,78 +2608,111 @@
       if (typeof alarmEnabled !== "undefined" && !alarmEnabled) return;
 
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!window.odinAudioCtx || window.odinAudioCtx.state === 'closed') {
+          window.odinAudioCtx = new AudioCtx();
+        }
+        const ctx = window.odinAudioCtx;
         if (ctx.state === 'suspended') {
           ctx.resume();
         }
         const now = ctx.currentTime;
         const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 1.0;
 
-        const playSonarPing = (startTime) => {
-          // Master Gain for High Impact Sonar Sound
+        // AUTÉNTICO SONAR MILITAR SUBMARINO EN AGUAS PROFUNDAS (Active Military Submarine Sonar with Hydrophone Acoustics)
+        const playMilitarySubmarineSonar = (startTime, isSecondary = false) => {
           const masterGain = ctx.createGain();
-          masterGain.gain.setValueAtTime(1.0 * volMultiplier, startTime);
+          const baseGain = (isSecondary ? 0.70 : 1.05) * volMultiplier;
+          masterGain.gain.setValueAtTime(baseGain, startTime);
           masterGain.connect(ctx.destination);
 
-          // 1. Primary Sonar High-Pitch Ping (1240 Hz -> 1200 Hz with fast attack and long resonant exponential decay)
-          const mainOsc = ctx.createOscillator();
-          const mainGain = ctx.createGain();
+          // Filtro acústico subacuático de aguas abisales (Muffled Deep-Sea Hydrophone Lowpass)
+          const waterFilter = ctx.createBiquadFilter();
+          waterFilter.type = "lowpass";
+          waterFilter.frequency.setValueAtTime(820, startTime);
+          waterFilter.frequency.exponentialRampToValueAtTime(640, startTime + 4.2);
+          waterFilter.Q.setValueAtTime(4.5, startTime); // Resonancia acústica profunda
+          waterFilter.connect(masterGain);
 
-          mainOsc.type = "sine";
-          mainOsc.frequency.setValueAtTime(1240, startTime);
-          mainOsc.frequency.exponentialRampToValueAtTime(1200, startTime + 0.6);
+          const pingDuration = 4.2;
 
-          mainGain.gain.setValueAtTime(0, startTime);
-          mainGain.gain.linearRampToValueAtTime(0.85, startTime + 0.003); // Instant attack
-          mainGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65); // Warm exponential ring out
+          // 1. Ping Militar Abisal Auténtico (Tono Senoidal Puro, Suave y Profundo 640 Hz -> 595 Hz)
+          const pingOsc = ctx.createOscillator();
+          const pingGain = ctx.createGain();
+          pingOsc.type = "sine";
+          pingOsc.frequency.setValueAtTime(640, startTime);
+          pingOsc.frequency.exponentialRampToValueAtTime(610, startTime + 0.25);
+          pingOsc.frequency.exponentialRampToValueAtTime(595, startTime + pingDuration);
 
-          mainOsc.connect(mainGain);
-          mainGain.connect(masterGain);
+          pingGain.gain.setValueAtTime(0.0001, startTime);
+          pingGain.gain.linearRampToValueAtTime(0.95, startTime + 0.025); // Ataque fluido y suave subacuático sin golpe ni pico
+          pingGain.gain.exponentialRampToValueAtTime(0.0001, startTime + pingDuration);
 
-          // 2. Underwater Sub-Harmonic & Resonance Body (620 Hz)
-          const subOsc = ctx.createOscillator();
-          const subGain = ctx.createGain();
+          pingOsc.connect(pingGain);
+          pingGain.connect(waterFilter);
 
-          subOsc.type = "sine";
-          subOsc.frequency.setValueAtTime(620, startTime);
-          subGain.gain.setValueAtTime(0, startTime);
-          subGain.gain.linearRampToValueAtTime(0.35, startTime + 0.004);
-          subGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.5);
+          // 2. Modulación LFO de Onda de Choque en Masa de Agua (Ondulación subacuática lenta)
+          const waterLfo = ctx.createOscillator();
+          const waterLfoGain = ctx.createGain();
+          waterLfo.type = "sine";
+          waterLfo.frequency.setValueAtTime(4.2, startTime);
+          waterLfo.frequency.exponentialRampToValueAtTime(1.4, startTime + 3.0);
+          waterLfoGain.gain.setValueAtTime(7.0, startTime);
+          waterLfoGain.gain.exponentialRampToValueAtTime(1.5, startTime + 3.5);
+          waterLfo.connect(pingOsc.frequency);
 
-          subOsc.connect(subGain);
-          subGain.connect(masterGain);
+          // 3. Cadena de Ecos y Reflexiones Abisales de Hidrófono (4 ecos con resonancia submarina)
+          const spawnOceanEcho = (delaySec, freq, gainLevel, dur, filterFreq) => {
+            const eOsc = ctx.createOscillator();
+            const eGain = ctx.createGain();
+            const eFilter = ctx.createBiquadFilter();
 
-          // 3. Reverberating Echo Ping (Delayed by 85ms for depth)
-          const echoOsc = ctx.createOscillator();
-          const echoGain = ctx.createGain();
+            eFilter.type = "lowpass";
+            eFilter.frequency.setValueAtTime(filterFreq, startTime + delaySec);
+            eFilter.Q.setValueAtTime(3.2, startTime + delaySec);
 
-          echoOsc.type = "sine";
-          echoOsc.frequency.setValueAtTime(1220, startTime + 0.085);
-          echoGain.gain.setValueAtTime(0, startTime + 0.085);
-          echoGain.gain.linearRampToValueAtTime(0.25, startTime + 0.09);
-          echoGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.55);
+            eOsc.type = "sine";
+            eOsc.frequency.setValueAtTime(freq, startTime + delaySec);
+            eOsc.frequency.exponentialRampToValueAtTime(freq - 15, startTime + delaySec + dur);
 
-          echoOsc.connect(echoGain);
-          echoGain.connect(masterGain);
+            eGain.gain.setValueAtTime(0.0001, startTime + delaySec);
+            eGain.gain.linearRampToValueAtTime(gainLevel, startTime + delaySec + 0.02);
+            eGain.gain.exponentialRampToValueAtTime(0.0001, startTime + delaySec + dur);
 
-          // Start & Stop
-          mainOsc.start(startTime);
-          mainOsc.stop(startTime + 0.66);
+            eOsc.connect(eGain);
+            eGain.connect(eFilter);
+            eFilter.connect(masterGain);
 
-          subOsc.start(startTime);
-          subOsc.stop(startTime + 0.51);
+            eOsc.start(startTime + delaySec);
+            eOsc.stop(startTime + delaySec + dur + 0.05);
+          };
 
-          echoOsc.start(startTime + 0.085);
-          echoOsc.stop(startTime + 0.56);
+          // Eco 1: Rebote de masa de agua cercana (+360ms)
+          spawnOceanEcho(0.36, 615, 0.40, 2.8, 720);
+          // Eco 2: Reflexión de casco / lecho (+820ms)
+          spawnOceanEcho(0.82, 600, 0.28, 2.6, 620);
+          // Eco 3: Retorno de fondo de fosa marina (+1450ms)
+          spawnOceanEcho(1.45, 585, 0.18, 2.3, 530);
+          // Eco 4: Eco lejano desvaneciéndose en el abismo (+2200ms)
+          spawnOceanEcho(2.20, 570, 0.09, 2.0, 440);
+
+          // Iniciar y detener
+          pingOsc.start(startTime);
+          waterLfo.start(startTime);
+
+          pingOsc.stop(startTime + pingDuration + 0.05);
+          waterLfo.stop(startTime + pingDuration + 0.05);
         };
 
-        // 2 High-Volume Sonar Pings spaced by 0.70s
-        playSonarPing(now);
-        playSonarPing(now + 0.70);
+        // 2 Pings militares profundos espaciados con eco abisal
+        playMilitarySubmarineSonar(now, false);
+        playMilitarySubmarineSonar(now + 2.7, true);
+
       } catch (e) {
         console.warn("Whale radar sound play warning:", e);
       }
     }
+    window.playWhaleRadarSound = playWhaleRadarSound;
 
     /* 11. ALARMA ON/OFF INTERACTIVE */
     let alarmEnabled = true;
@@ -2729,59 +2762,72 @@
       if (typeof alarmEnabled !== "undefined" && !alarmEnabled) return;
 
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!window.odinAudioCtx || window.odinAudioCtx.state === 'closed') {
+          window.odinAudioCtx = new AudioCtx();
+        }
+        const ctx = window.odinAudioCtx;
         if (ctx.state === 'suspended') {
           ctx.resume();
         }
         const now = ctx.currentTime;
-        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 0.95;
+        const volMultiplier = (typeof volume !== "undefined" && volume && volume.value) ? (volume.value / 100) : 1.0;
 
-        // High-impact synthesized alert sequence (PITIDO 1 -> PITIDO 2 -> PITIDO 3)
-        const playPitido = (startTime, freqStart, freqEnd, duration) => {
-          const osc1 = ctx.createOscillator();
-          const osc2 = ctx.createOscillator();
-          const gain = ctx.createGain();
+        // BOCINA INDUSTRIAL / BUZZER DE GABINETE DE INCENDIO (4 PULSOS GRAVES "BUUB - BUUB - BUUB - BUUB")
+        const playHornPulse = (startTime) => {
+          const pulseDur = 0.36; // Ligeramente más largo y pausado para realismo industrial
+
+          // Oscilador 1: Tono fundamental grave de bocina electromecánica (onda cuadrada 230 Hz)
+          const oscSquare = ctx.createOscillator();
+          oscSquare.type = "square";
+          oscSquare.frequency.setValueAtTime(230, startTime);
+
+          // Oscilador 2: Sub-armónico de impacto y cuerpo vibrante (onda diente de sierra 115 Hz)
+          const oscSaw = ctx.createOscillator();
+          oscSaw.type = "sawtooth";
+          oscSaw.frequency.setValueAtTime(115, startTime);
+
+          // Oscilador 3: Armónico de resonancia de diafragma metálico (460 Hz)
+          const oscHarm = ctx.createOscillator();
+          oscHarm.type = "sawtooth";
+          oscHarm.frequency.setValueAtTime(460, startTime);
+
+          // Filtro para emular la caja de resonancia metálica del gabinete (Bandpass potente en 650 Hz)
           const filter = ctx.createBiquadFilter();
+          filter.type = "bandpass";
+          filter.frequency.setValueAtTime(650, startTime);
+          filter.Q.setValueAtTime(1.4, startTime);
 
-          osc1.type = "sawtooth";
-          osc2.type = "sine";
+          // Ganancia de volumen extra alto con ataque seco instantáneo
+          const gain = ctx.createGain();
+          const maxVol = Math.min(1.25 * volMultiplier, 1.35);
+          gain.gain.setValueAtTime(0.0001, startTime);
+          gain.gain.linearRampToValueAtTime(maxVol, startTime + 0.006);
+          gain.gain.setValueAtTime(maxVol, startTime + pulseDur - 0.02);
+          gain.gain.linearRampToValueAtTime(0.0001, startTime + pulseDur);
 
-          osc1.frequency.setValueAtTime(freqStart, startTime);
-          osc1.frequency.exponentialRampToValueAtTime(freqEnd, startTime + duration);
-
-          osc2.frequency.setValueAtTime(freqStart * 0.5, startTime);
-          osc2.frequency.exponentialRampToValueAtTime(freqEnd * 0.5, startTime + duration);
-
-          filter.type = "lowpass";
-          filter.frequency.setValueAtTime(3200, startTime);
-
-          gain.gain.setValueAtTime(0, startTime);
-          gain.gain.linearRampToValueAtTime(0.85 * volMultiplier, startTime + 0.003);
-          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-
-          osc1.connect(filter);
-          osc2.connect(filter);
+          oscSquare.connect(filter);
+          oscSaw.connect(filter);
+          oscHarm.connect(filter);
           filter.connect(gain);
           gain.connect(ctx.destination);
 
-          osc1.start(startTime);
-          osc2.start(startTime);
-          osc1.stop(startTime + duration + 0.01);
-          osc2.stop(startTime + duration + 0.01);
+          oscSquare.start(startTime);
+          oscSaw.start(startTime);
+          oscHarm.start(startTime);
+          oscSquare.stop(startTime + pulseDur + 0.01);
+          oscSaw.stop(startTime + pulseDur + 0.01);
+          oscHarm.stop(startTime + pulseDur + 0.01);
         };
 
-        // PITIDO 1
-        playPitido(now, 950, 1150, 0.18);
-        // PITIDO 2
-        playPitido(now + 0.22, 1150, 1350, 0.18);
-        // PITIDO 3
-        playPitido(now + 0.44, 1350, 1600, 0.28);
+        // 4 Pulsos al compás exacto de alarma de gabinete industrial (BUUB - BUUB - BUUB - BUUB)
+        playHornPulse(now);
+        playHornPulse(now + 0.48);
+        playHornPulse(now + 0.96);
+        playHornPulse(now + 1.44);
 
-        setTimeout(() => {
-          try { ctx.close(); } catch(e) {}
-        }, 1200);
       } catch (e) {
-        console.warn("Tsunami sound warning:", e);
+        console.warn("Naval alarm sound warning:", e);
       }
     }
     window.playTsunamiWarningSound = playTsunamiWarningSound;
